@@ -8,12 +8,14 @@
 	export let exact: boolean;
 	export let order: number;
 	export let toggled: boolean;
+	export let toggle: Function;
 	
 	let w = 0;
 	let ww = 0;
 	
 	const nav = () => {
 		navigate(href, { replace: exact });
+		toggle();
 	};
 </script>
 
@@ -21,7 +23,7 @@
 
 <div class="link"
      on:click={() => nav()}
-     style={ww < 768 ? `opacity: ${toggled ? 1 : 0}; transform: translateY(${toggled ? 0 : 12}px); transition: opacity .5s ease-in-out ${toggled ? order * 0.3: 1.2 - order * 0.3}s` : ''}
+     style={ww < 768 ? `opacity: ${toggled ? 1 : 0}; transform: translateY(${toggled ? 0 : 12}px); transition: all .3s ease-in-out ${toggled ? order * 0.1: 0.2 - order * 0.05}s` : ''}
 >
 	<i class="{la}"></i>
 	<div class="box"
@@ -50,7 +52,7 @@
 		
 		&:not(:last-child) {
 			@include breakpoint('md', 'dn') {
-				border-bottom: 1px solid $color-white;
+				border-bottom: 1px solid $color-grey-100;
 			}
 		}
 		

@@ -34,9 +34,16 @@
 	];
 	
 	let toggled = false;
+	let toggle = () => {
+		if (window.innerWidth < 768) {
+			toggled = !toggled;
+		} else {
+			toggled = false;
+		}
+	};
 </script>
 
-<nav>
+<nav class="navbar">
 	<div>
 		<div class="title">
 			<img alt="BSthun Flat Logo" src={ImgBSthunFlat}>
@@ -51,11 +58,12 @@
 				               la={item.la}
 				               order={i + 1}
 				               toggled={toggled}
+				               toggle={toggle}
 				/>
 			{/each}
 		</div>
 		
-		<div class="hamburger" on:click={() => toggled = !toggled}>
+		<div class="hamburger" on:click={toggle}>
 			<i class="las la-grip-lines"></i>
 		</div>
 		
@@ -64,17 +72,24 @@
 </nav>
 
 <style lang="scss">
+	//.navbar {
+	//	height: $size-navbar-height;
+	//}
+	
 	nav {
+		position: fixed;
 		height: $size-navbar-height;
 		width: 100%;
-		color: $color-grey-100;
-		background-color: $color-bluegrey-900;
+		color: $color-grey-200;
+		background-color: $color-black-soften;
+		border-bottom: 1px solid $color-border;
+		z-index: 1201;
 		
 		> div {
 			position: relative;
 			width: 100%;
 			height: 100%;
-			max-width: map-get($breakpoints, 'lg');
+			max-width: map-get($breakpoints, 'xl');
 			margin: auto;
 			display: flex;
 			align-items: center;
@@ -83,7 +98,7 @@
 			.title {
 				display: flex;
 				margin-left: 16px;
-				z-index: 124;
+				z-index: 1204;
 				
 				@include breakpoint('md', 'dn') {
 					margin-left: 52px;
@@ -102,7 +117,7 @@
 			
 			.navigator {
 				display: flex;
-				z-index: 123;
+				z-index: 1203;
 				
 				&:not(.scaled) {
 					@include breakpoint('md', 'dn') {
@@ -127,7 +142,7 @@
 			
 			.hamburger {
 				position: absolute;
-				z-index: 125;
+				z-index: 1205;
 				left: 16px;
 				font-size: 24px;
 				cursor: pointer;
@@ -139,7 +154,7 @@
 			
 			.circular {
 				position: absolute;
-				z-index: 9;
+				z-index: 1200;
 				border-radius: $size-infinity;
 				left: #{24px - 128px};
 				top: #{$size-navbar-height / 2 - 128px};
@@ -147,13 +162,13 @@
 				width: 256px;
 				height: 256px;
 				transform: scale3d(0, 0, 1);
-				transition: all 0.7s ease-in-out 1s;
+				transition: all 0.5s ease-in-out 0.2s;
 				
-				background-color: $color-bluegrey-800;
+				background-color: $color-bluegrey-700;
 				
 				&.scaled {
 					transform: scale3d(10, 10, 1);
-					transition: all 0.7s ease-in-out;
+					transition: all 0.5s ease-in-out;
 				}
 			}
 		}
