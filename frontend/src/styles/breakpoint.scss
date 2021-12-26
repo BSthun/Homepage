@@ -1,0 +1,32 @@
+$breakpoints: (
+		sm: 576px,
+		md: 768px,
+		lg: 1024px
+);
+
+$breakpoints-dn: (
+		sm: 575.9px,
+		md: 767.9px,
+		lg: 1023.9px
+);
+
+$breakpoint-directions: (
+		up: min-width,
+		dn: max-width,
+);
+
+@mixin breakpoint($breakpoint, $direction) {
+	@if map-has-key($breakpoints, $breakpoint) and map-has-key($breakpoint-directions, $direction) {
+		@if $direction == 'up' {
+			@media (#{inspect(map-get($breakpoint-directions, $direction))}: #{inspect(map-get($breakpoints, $breakpoint))}) {
+				@content;
+			}
+		} @else {
+			@media (#{inspect(map-get($breakpoint-directions, $direction))}: #{inspect(map-get($breakpoints-dn, $breakpoint))}) {
+				@content;
+			}
+		}
+	} @else {
+		@warn 'Unfortunately, no value could be retrieved from \'#{$breakpoint}\', \'#{$direction}\'';
+	}
+}

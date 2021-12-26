@@ -1,30 +1,32 @@
 <script lang="ts">
-	export let name: string;
+	import { Route, Router } from "svelte-navigator";
+	import Home from './_home/Home.svelte';
+	import NotFound from './_splash/NotFound.svelte';
+	import Navbar from './components/navbar/Navbar.svelte';
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<svelte:head>
+	<title>BSthun</title>
+</svelte:head>
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
+<div>
+	<Router>
+		<Navbar />
+		<Route meta="{{ name: 'blog' }}" path="/">
+			<Home />
+		</Route>
+		<Route path="/about">
+			<Home />
+		</Route>
+		<Route>
+			<NotFound />
+		</Route>
+	</Router>
+</div>
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+<style global lang="scss">
+	// Base StyleSheets
+	@import 'src/styles/base';
+	@import 'src/styles/font';
+	@import 'src/styles/icon';
 </style>
