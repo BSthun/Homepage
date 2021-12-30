@@ -81,7 +81,7 @@
 		height: $size-navbar-height;
 		width: 100%;
 		color: $color-grey-200;
-		background-color: $color-black-soften;
+		background-color: $color-navbar-bg-scrolled;
 		border-bottom: 1px solid $color-border;
 		z-index: 1201;
 		
@@ -158,17 +158,20 @@
 				border-radius: $size-infinity;
 				left: #{24px - 128px};
 				top: #{$size-navbar-height / 2 - 128px};
-				transform-origin: center;
 				width: 256px;
 				height: 256px;
-				transform: scale3d(0, 0, 1);
-				transition: all 0.5s ease-in-out 0.2s;
-				
 				background-color: $color-bluegrey-700;
+				
+				transform: scale3d(0, 0, 1);
+				transform-origin: center;
+				transition-property: all;
+				transition-duration: 0.5s;
+				transition-timing-function: $animate-easing-nav;
+				transition-delay: .2s;
 				
 				&.scaled {
 					transform: scale3d(10, 10, 1);
-					transition: all 0.5s ease-in-out;
+					transition-delay: 0s;
 				}
 			}
 		}

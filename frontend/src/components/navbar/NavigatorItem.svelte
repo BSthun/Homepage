@@ -62,7 +62,7 @@
 		
 		.box {
 			width: 0;
-			overflow: hidden;
+			overflow-x: hidden;
 			transition: width 0.3s ease-in-out;
 			
 			p {
