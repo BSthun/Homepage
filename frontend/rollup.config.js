@@ -2,38 +2,15 @@ import commonjs from '@rollup/plugin-commonjs';
 import image from '@rollup/plugin-image';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import * as fs from 'fs';
 import css from 'rollup-plugin-css-only';
+import dev from 'rollup-plugin-dev';
 import livereload from 'rollup-plugin-livereload';
 import svelte from 'rollup-plugin-svelte';
 import { terser } from 'rollup-plugin-terser';
 import preprocess from 'svelte-preprocess';
 
 const production = !process.env.ROLLUP_WATCH;
-
-function serve() {
-	let server;
-	
-	function toExit() {
-		if (server) {
-			server.kill(0);
-		}
-	}
-	
-	return {
-		writeBundle() {
-			if (server) {
-				return;
-			}
-			server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
-				stdio: ['ignore', 'inherit', 'inherit'],
-				shell: true,
-			});
-			
-			process.on('SIGTERM', toExit);
-			process.on('exit', toExit);
-		},
-	};
-}
 
 export default {
 	input: 'src/main.ts',
@@ -52,10 +29,18 @@ export default {
 			preprocess: preprocess({
 				sourceMap: !production,
 				scss: {
+					
 					// * Removed due to import manually for code suggestions
 					// prependData: `@import 'src/styles/_index.scss';`,
 				},
 			}),
+			onwarn: (warning, handler) => {
+				const { code, message } = warning;
+				if (code === 'css-unused-selector') {
+					return;
+				}
+				handler(warning);
+			},
 		}),
 		
 		// we'll extract any component CSS out into
@@ -81,7 +66,26 @@ export default {
 		
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
-		!production && serve(),
+		!production && dev({
+			dirs: ['public'],
+			basePath: '/',
+			silent: false,
+			host: '0.0.0.0',
+			port: 3000,
+			spa: true,
+			server: {
+				https: {
+					key: fs.readFileSync('./res/key.pem'),
+					cert: fs.readFileSync('./res/cert.pem'),
+				},
+			},
+			proxy: [
+				{
+					from: '/api',
+					to: 'http://127.0.0.1:3001/api',
+				},
+			],
+		}),
 		
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production

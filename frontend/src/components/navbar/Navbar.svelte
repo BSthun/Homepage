@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ImgBSthunFlat from '../../images/logo/bsthun-flat-white.svg';
 	import { useLocation } from 'svelte-navigator';
-	import type { NavbarItem } from './types';
+	import ImgBSthunFlat from '../../images/logo/bsthun-flat-white.svg';
 	import NavigatorItem from './NavigatorItem.svelte';
+	import type { NavbarItem } from './types';
 	
 	const location = useLocation();
 	
@@ -51,14 +51,15 @@
 		</div>
 		<div class={`navigator ${toggled && 'scaled'}`}>
 			{#each items as item, i}
-				<NavigatorItem active={item.href === '/' ? $location.pathname === '/': $location.pathname.startsWith(item.href)}
-				               exact={item.href === $location.pathname}
-				               title={item.title}
-				               href={item.href}
-				               la={item.la}
-				               order={i + 1}
-				               toggled={toggled}
-				               toggle={toggle}
+				<NavigatorItem
+				  active={item.href === '/' ? $location.pathname === '/': $location.pathname.startsWith(item.href)}
+				  exact={item.href === $location.pathname}
+				  title={item.title}
+				  href={item.href}
+				  la={item.la}
+				  order={i + 1}
+				  toggled={toggled}
+				  toggle={toggle}
 				/>
 			{/each}
 		</div>
@@ -158,7 +159,7 @@
 				z-index: 1200;
 				border-radius: $size-infinity;
 				left: #{24px - 128px};
-				top: #{$size-navbar-height / 2 - 128px};
+				top: #{$size-navbar-height * 0.5 - 128px};
 				width: 256px;
 				height: 256px;
 				background-color: $color-bluegrey-700;

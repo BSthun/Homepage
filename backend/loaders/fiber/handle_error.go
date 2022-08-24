@@ -3,13 +3,16 @@ package fiber
 import (
 	"strings"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+
+	"backend/types/response"
 )
 
-func errorHandler(ctx *fiber.Ctx, err error) error {
+func ErrorHandler(ctx *fiber.Ctx, err error) error {
 	// Case of *fiber.Error.
 	if e, ok := err.(*fiber.Error); ok {
-		return ctx.Status(e.Code).JSON(responder.ErrorResponse{
+		return ctx.Status(e.Code).JSON(&response.ErrorResponse{
 			Success: false,
 			Code:    strings.ReplaceAll(strings.ToUpper(e.Error()), " ", "_"),
 			Message: e.Error(),
@@ -17,13 +20,13 @@ func errorHandler(ctx *fiber.Ctx, err error) error {
 		})
 	}
 
-	if e, ok := err.(*responder.GenericError); ok {
+	if e, ok := err.(*response.ErrorInstance); ok {
 		if e.Code == "" {
 			e.Code = "GENERIC_ERROR"
 		}
 
 		if e.Err != nil {
-			return ctx.Status(fiber.StatusBadRequest).JSON(responder.ErrorResponse{
+			return ctx.Status(fiber.StatusBadRequest).JSON(&response.ErrorResponse{
 				Success: false,
 				Code:    e.Code,
 				Message: e.Message,
@@ -31,7 +34,7 @@ func errorHandler(ctx *fiber.Ctx, err error) error {
 			})
 		}
 
-		return ctx.Status(fiber.StatusBadRequest).JSON(responder.ErrorResponse{
+		return ctx.Status(fiber.StatusBadRequest).JSON(&response.ErrorResponse{
 			Success: false,
 			Code:    e.Code,
 			Message: e.Message,
@@ -60,7 +63,7 @@ func errorHandler(ctx *fiber.Ctx, err error) error {
 
 		message := strings.Join(lists[:], ", ")
 
-		return ctx.Status(fiber.StatusBadRequest).JSON(responder.ErrorResponse{
+		return ctx.Status(fiber.StatusBadRequest).JSON(&response.ErrorResponse{
 			Success: false,
 			Code:    "VALIDATION_FAILED",
 			Message: "Validation failed on field " + message,
@@ -68,12 +71,10 @@ func errorHandler(ctx *fiber.Ctx, err error) error {
 		})
 	}
 
-	return ctx.Status(fiber.StatusInternalServerError).JSON(
-		responder.ErrorResponse{
-			Success: false,
-			Code:    "UNKNOWN_SERVER_SIDE_ERROR",
-			Message: "Unknown server side error",
-			Error:   err.Error(),
-		},
-	)
+	return ctx.Status(fiber.StatusInternalServerError).JSON(&response.ErrorResponse{
+		Success: false,
+		Code:    "UNKNOWN_SERVER_SIDE_ERROR",
+		Message: "Unknown server side error",
+		Error:   err.Error(),
+	})
 }
