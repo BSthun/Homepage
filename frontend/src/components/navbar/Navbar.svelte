@@ -72,16 +72,17 @@
 </nav>
 
 <style lang="scss">
-	//.navbar {
-	//	height: $size-navbar-height;
-	//}
+	@import 'src/styles/_index.scss';
 	
 	nav {
 		position: fixed;
+		top: 0;
 		height: $size-navbar-height;
 		width: 100%;
 		color: $color-grey-200;
-		background-color: $color-navbar-bg-scrolled;
+		background: $color-navbar-bg-scrolled;
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
 		border-bottom: 1px solid $color-border;
 		z-index: 1201;
 		

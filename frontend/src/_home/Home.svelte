@@ -6,18 +6,24 @@
 	}
 </script>
 
-<main>
-	<div>
-		<h1>Hello</h1>
-		<button on:click={handleClick}>
-			Clicked {count} {count === 1 ? 'time' : 'times'}
-		</button>
-	</div>
-</main>
+<div class="home">
+	<h1>Hello 222222</h1>
+	<button on:click={handleClick}>
+		Clicked {count} {count === 1 ? 'time' : 'times'}
+	</button>
+</div>
+
+<svelte:head>
+	<title>Home - BSthun</title>
+</svelte:head>
 
 <style lang="scss">
-	div {
-		padding: 0;
+	@import 'src/styles/_index.scss';
+	
+	.home {
+		min-height: 100vh;
+		background-color: $color-grey-900;
+		padding-top: $size-navbar-height;
 		
 		h1 {
 			padding: 2px;

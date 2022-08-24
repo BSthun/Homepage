@@ -46,13 +46,14 @@ export default {
 	plugins: [
 		svelte({
 			compilerOptions: {
-				// enable run-time checks when not in production
+				// * Enable run-time checks when not in production
 				dev: !production,
 			},
 			preprocess: preprocess({
 				sourceMap: !production,
 				scss: {
-					prependData: `@import 'src/styles/_index.scss';`,
+					// * Removed due to import manually for code suggestions
+					// prependData: `@import 'src/styles/_index.scss';`,
 				},
 			}),
 		}),
