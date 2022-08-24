@@ -11,5 +11,7 @@ type config struct {
 	Cors         []string `yaml:"cors" validate:"required"`
 
 	JwtSecret string `yaml:"jwt_secret" validate:"required"`
-	MySqlDsn  string `yaml:"mysql_dsn" validate:"required"`
+
+	MySqlDsn     string `yaml:"mysql_dsn" validate:"required"`
+	MySqlMigrate bool   `yaml:"mysql_migrate" validate:"required"`
 }
