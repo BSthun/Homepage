@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { Route, Router } from "svelte-navigator";
+	import { Route, Router } from 'svelte-navigator';
 	import Home from './_home/Home.svelte';
+	import Photo from './_photo/Photo.svelte';
 	import NotFound from './_splash/NotFound.svelte';
 	import Navbar from './components/navbar/Navbar.svelte';
 </script>
@@ -12,11 +13,11 @@
 <div>
 	<Router>
 		<Navbar />
-		<Route meta="{{ name: 'blog' }}" path="/">
+		<Route path="/">
 			<Home />
 		</Route>
-		<Route path="/about">
-			<Home />
+		<Route path="/photo">
+			<Photo />
 		</Route>
 		<Route>
 			<NotFound />
@@ -26,7 +27,7 @@
 
 <style global lang="scss">
 	// Base StyleSheets
-	@import 'src/styles/base';
-	@import 'src/styles/font';
-	@import 'src/styles/icon';
+	@import 'styles/core/base';
+	@import 'styles/core/font';
+	@import 'styles/core/icon';
 </style>

@@ -1,0 +1,7 @@
+@import '../variables';
+
+@mixin default-paging {
+	min-height: 100vh;
+	background-color: $color-grey-900;
+	padding-top: $size-navbar-height;
+}

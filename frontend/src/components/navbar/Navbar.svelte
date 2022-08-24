@@ -27,9 +27,9 @@
 		},
 		{
 			context: null,
-			title: 'Photograph',
+			title: 'Photo',
 			la: 'las la-camera',
-			href: '/photograph',
+			href: '/photo',
 		},
 	];
 	
