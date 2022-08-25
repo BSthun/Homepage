@@ -1,7 +1,20 @@
 <script lang="ts">
+	import { onMount, setContext } from 'svelte';
+	import { axios, caller } from '../utils/api';
 	import Container from '../components/layout/Container.svelte';
+	import { useParams } from "svelte-navigator";
 	
 	let title = "Album"
+	let state: any = {
+		album: {}
+	}
+	
+	onMount(() => {
+		caller(axios.get('/photo/entity/album/detail')).then((res) => {
+			state = res.data;
+			setContext('state', res.data);
+		});
+	});
 </script>
 
 <svelte:head>

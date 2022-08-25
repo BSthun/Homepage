@@ -74,7 +74,7 @@ func migrate() error {
 		new(model.PhotoPerson),
 		new(model.PhotoSection),
 		new(model.TrackSession),
-		new(model.TrackEvent),
+		new(model.TrackLog),
 	); err != nil {
 		return err
 	}

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 
 	"backend/loaders/mysql"
-	"backend/types/enum"
 	"backend/types/model"
 	"backend/types/response"
 	"backend/utils/value"
@@ -12,12 +11,13 @@ import (
 
 type Session struct {
 	Id          uint64         `json:"id"`
-	TrackTag    enum.Tag       `json:"track_tag"`
+	TrackTag    string         `json:"track_tag"`
 	TrackDetail map[string]any `json:"track_detail"`
 }
 
-func (r *Session) SetTag(tag enum.Tag) {
+func (r *Session) SetTag(tag string) {
 	r.TrackTag = tag
+	r.TrackDetail = make(map[string]any)
 }
 
 func (r *Session) SetDetail(key string, value any) {

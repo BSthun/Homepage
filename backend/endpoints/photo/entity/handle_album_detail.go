@@ -18,8 +18,8 @@ func AlbumDetailHandler(c *fiber.Ctx) error {
 	s.SetTag("photo/entity/view-album-detail")
 
 	// * Parse query
-	var query *payload.AlbumQuery
-	if err := c.QueryParser(&query); err != nil {
+	query := new(payload.AlbumQuery)
+	if err := c.QueryParser(query); err != nil {
 		return response.Error(false, "Unable to parse body", err)
 	}
 	s.SetDetail("album-slug", query.AlbumSlug)

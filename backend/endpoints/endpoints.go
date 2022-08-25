@@ -14,7 +14,7 @@ func Init(router fiber.Router) {
 	account.Get("/state", accountState.StateHandler)
 
 	// * Photo
-	photo := router.Group("/photo")
+	photo := router.Group("/photo", middlewares.Session)
 	photo.Get("/entity/album/detail", photoEntity.AlbumDetailHandler)
 	photo.Get("/entity/section/detail", photoEntity.SectionDetailHandler)
 	photo.Get("/entity/photo/list", photoEntity.PhotoListHandler)

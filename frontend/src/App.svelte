@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, setContext } from 'svelte';
 	import { Route, Router } from 'svelte-navigator';
-	import { axios, caller } from '../utils/api';
+	import { axios, caller } from './utils/api';
 	import Home from './_home/Home.svelte';
 	import NotFound from './_page/NotFound.svelte';
 	import Album from './_photo/Album.svelte';
@@ -12,9 +12,9 @@
 	let state = null;
 	
 	onMount(() => {
-		caller(axios.get("/account/state")).then((res) => {
-			state = res.data
-			setContext("state", res.data)
+		caller(axios.get('/account/state')).then((res) => {
+			state = res.data;
+			setContext('state', res.data);
 		});
 	});
 </script>
@@ -24,8 +24,8 @@
 </svelte:head>
 
 <div>
-	{#if (state !== null)}
-		<Router>
+	<Router>
+		{#if (state !== null)}
 			<Navbar />
 			<Route path="/">
 				<Home />
@@ -33,18 +33,18 @@
 			<Route path="/photo">
 				<Photo />
 			</Route>
-			<Route path="/photo/album">
+			<Route path="/photo/album/:album-slug">
 				<Album />
 			</Route>
 			<Route>
 				<NotFound />
 			</Route>
-		</Router>
-	{:else }
-		<div class="loading">
-			<CircularProgress />
-		</div>
-	{/if}
+		{:else }
+			<div class="loading">
+				<CircularProgress />
+			</div>
+		{/if}
+	</Router>
 </div>
 
 <style global lang="scss">
@@ -53,7 +53,8 @@
 	@import 'node_modules/@smui/circular-progress/style';
 	
 	.loading {
-		@include default-paging;
+		min-height: 100vh;
+		background-color: $color-grey-900;
 		display: flex;
 		justify-content: center;
 		align-items: center;

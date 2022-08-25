@@ -1,5 +1,4 @@
 <script lang="ts">
-
 import Container from '../components/layout/Container.svelte';
 </script>
 
