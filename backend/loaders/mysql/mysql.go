@@ -69,10 +69,8 @@ func migrate() error {
 	// * Migrate model
 	if err := Db.AutoMigrate(
 		new(model.PhotoAlbum),
-		new(model.PhotoCamera),
 		new(model.PhotoItem),
 		new(model.PhotoItemPerson),
-		new(model.PhotoItemSection),
 		new(model.PhotoPerson),
 		new(model.PhotoSection),
 	); err != nil {
