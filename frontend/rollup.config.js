@@ -1,13 +1,13 @@
 import commonjs from '@rollup/plugin-commonjs';
 import image from '@rollup/plugin-image';
 import resolve from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
 import * as fs from 'fs';
 import css from 'rollup-plugin-css-only';
 import dev from 'rollup-plugin-dev';
 import livereload from 'rollup-plugin-livereload';
 import svelte from 'rollup-plugin-svelte';
 import { terser } from 'rollup-plugin-terser';
+import typescript from 'rollup-plugin-typescript2';
 import preprocess from 'svelte-preprocess';
 
 const production = !process.env.ROLLUP_WATCH;

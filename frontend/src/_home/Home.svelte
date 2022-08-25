@@ -20,9 +20,7 @@
 	@import 'src/styles/_index.scss';
 	
 	.home {
-		min-height: 100vh;
-		background-color: $color-grey-900;
-		padding-top: $size-navbar-height;
+		@include default-paging;
 		
 		h1 {
 			padding: 2px;
