@@ -11,3 +11,7 @@ type PhotoItem struct {
 	Ratio         float32            `json:"ratio"`
 	Exif          *presentation.Exif `json:"exif"`
 }
+
+type PhotoQuery struct {
+	PhotoId uint64 `json:"photo_id" query:"photo_id"`
+}
