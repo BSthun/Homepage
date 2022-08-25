@@ -13,5 +13,5 @@ type config struct {
 	JwtSecret string `yaml:"jwt_secret" validate:"required"`
 
 	MySqlDsn     string `yaml:"mysql_dsn" validate:"required"`
-	MySqlMigrate bool   `yaml:"mysql_migrate" validate:"required"`
+	MySqlMigrate bool   `yaml:"mysql_migrate"`
 }

@@ -15,7 +15,7 @@ import (
 	loggerUtils "backend/utils/logger"
 )
 
-var Db *gorm.DB
+var DB *gorm.DB
 
 func Init() {
 	// Initialize GORM instance using previously opened SQL connection
@@ -52,7 +52,7 @@ func Init() {
 	}); err != nil {
 		loggerUtils.Log(logrus.Fatal, "UNABLE TO LOAD GORM MYSQL DATABASE")
 	} else {
-		Db = db
+		DB = db
 	}
 
 	// Initialize model migrations
@@ -67,12 +67,14 @@ func Init() {
 
 func migrate() error {
 	// * Migrate model
-	if err := Db.AutoMigrate(
+	if err := DB.AutoMigrate(
 		new(model.PhotoAlbum),
 		new(model.PhotoItem),
 		new(model.PhotoItemPerson),
 		new(model.PhotoPerson),
 		new(model.PhotoSection),
+		new(model.TrackSession),
+		new(model.TrackEvent),
 	); err != nil {
 		return err
 	}

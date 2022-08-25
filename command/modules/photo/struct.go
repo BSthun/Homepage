@@ -39,7 +39,7 @@ type Exif struct {
 	Aperture        string    `json:"aperture"`
 	Brightness      string    `json:"brightness"`
 	Credit          string    `json:"credit"`
-	Timestamp       time.Time `json:"Timestamp"`
+	Timestamp       time.Time `json:"timestamp"`
 	ExposureTime    string    `json:"exposure_time"`
 	FocalLength     string    `json:"focal_length"`
 	FocalLength35mm string    `json:"focal_length_35mm"`

@@ -9,8 +9,8 @@ import (
 
 var Recover = func() fiber.Handler {
 	if config.C.Environment == 1 {
-		return func(ctx *fiber.Ctx) error {
-			return ctx.Next()
+		return func(c *fiber.Ctx) error {
+			return c.Next()
 		}
 	}
 
