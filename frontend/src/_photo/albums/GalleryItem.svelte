@@ -8,7 +8,6 @@
 	const gallery = getContext('gallery');
 	
 	const onClick = () => {
-		console.log(11);
 		gallery.update((value) => ({
 			...value,
 			expand: index,
@@ -34,14 +33,13 @@
 			</div>
 			<div class="r-1">
 				<span class="material-symbols-outlined">crop</span>
-				<h5>{item.exif.focal_length}mm ({item.exif.focal_length_35mm}mm film)</h5>
+				<h5>{item.exif.focal_length}mm</h5>
 			</div>
 			<div class="r-1">
 				<span class="material-symbols-outlined">deblur</span>
 				<h5>ISO {item.exif.iso_speed}</h5>
 			</div>
 		</div>
-	
 	</div>
 </div>
 

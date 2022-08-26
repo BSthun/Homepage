@@ -6,34 +6,41 @@
 	import GalleryDetail from './GalleryDetail.svelte';
 	import GalleryItem from './GalleryItem.svelte';
 	
-	const bind = getContext('bind');
-	
-	const gallery = writable<any>({
-		page: 0,
-		items: [],
-		expand: null,
-	});
-	setContext('gallery', gallery);
-	
 	export let id: number;
 	export let count: number;
 	
-	const fetch = () => {
-		caller(axios.get(`/photo/entity/photo/list`, {
-			params: {
-				section_id: id,
-				page_no: $gallery.page,
-			},
-		}))
-			.then((res) => {
-				$gallery.items = $gallery.items.concat(res.data.items);
-			})
-			.catch((err) => {
-				$bind.openSnackbar(err.message);
-			});
-	};
+	const bind = getContext('bind');
 	
-	onMount(fetch);
+	const gallery = writable<any>({
+		count: count,
+		page: 0,
+		items: [],
+		expand: null,
+		fetching: false,
+		fetch: () => {
+			if ($gallery.fetching == true) return;
+			$gallery.fetching = true;
+			caller(axios.get(`/photo/entity/photo/list`, {
+				params: {
+					section_id: id,
+					page_no: $gallery.page,
+				},
+			}))
+				.then((res) => {
+					$gallery.page++;
+					$gallery.items = $gallery.items.concat(res.data.items);
+				})
+				.catch((err) => {
+					$bind.openSnackbar(err.message);
+				})
+				.finally(() => {
+					$gallery.fetching = false;
+				});
+		},
+	});
+	setContext('gallery', gallery);
+	
+	onMount($gallery.fetch);
 </script>
 
 <div class="gallery">
@@ -44,7 +51,7 @@
 	</div>
 	<InfiniteScroll
 		more={$gallery.items.length !== count}
-		on:load={() => {$gallery.page++; fetch()}}
+		on:load={$gallery.fetch()}
 		threshold={700 > window.innerHeight ? 800 : window.innerHeight - 100}
 	/>
 	<GalleryDetail />
