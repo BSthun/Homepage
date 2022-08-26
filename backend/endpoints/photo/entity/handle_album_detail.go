@@ -38,18 +38,23 @@ func AlbumDetailHandler(c *fiber.Ctx) error {
 	}
 
 	// * Query album sections
-	var albumSections []*payload.AlbumSection
-	if result := mysql.DB.Find(&albumSections, "photo_album_id = ?", photoAlbum.Id); result.Error != nil {
+	var albumSections []*payload.ExtendedPhotoSection
+
+	if result := mysql.DB.Model(new(model.PhotoSection)).
+		Select("photo_sections.*, (SELECT COUNT(*) FROM photo_items WHERE photo_section_id = photo_sections.id) AS photo_count, (SElECT CONCAT(root, thumbnail_path) FROM photo_items WHERE photo_section_id = photo_sections.id ORDER BY RAND() LIMIT 1) as thumbnail_url").
+		Find(&albumSections, "photo_album_id = ?", photoAlbum.Id); result.Error != nil {
 		return response.Error(true, "Unable to query list of album sections")
 	}
 
-	sections, _ := value.Iterate(albumSections, func(albumSection *payload.AlbumSection) (*payload.AlbumSection, *response.ErrorInstance) {
+	sections, _ := value.Iterate(albumSections, func(albumSection *payload.ExtendedPhotoSection) (*payload.AlbumSection, *response.ErrorInstance) {
 		return &payload.AlbumSection{
-			Id:        albumSection.Id,
-			Title:     albumSection.Title,
-			Subtitle:  albumSection.Subtitle,
-			Date:      albumSection.Date,
-			UpdatedAt: albumSection.UpdatedAt,
+			Id:           *albumSection.Id,
+			Title:        *albumSection.Title,
+			Subtitle:     *albumSection.Subtitle,
+			Date:         albumSection.Date,
+			PhotoCount:   albumSection.PhotoCount,
+			ThumbnailUrl: albumSection.ThumbnailUrl,
+			UpdatedAt:    albumSection.UpdatedAt,
 		}, nil
 	})
 

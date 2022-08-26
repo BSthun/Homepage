@@ -12,7 +12,7 @@ func CheckAlbumAccess(session *common.Session, albumId uint64, albumToken string
 	if result := mysql.DB.
 		Model(new(model.PhotoSessionAlbum)).
 		Select("COUNT(*)").
-		Where("track_session_id = ? AND photo_album_id = ?", session.Id, albumId); result.Error != nil {
+		First(&count, "track_session_id = ? AND photo_album_id = ?", session.Id, albumId); result.Error != nil {
 		return response.Error(true, "Unable to check album permission", result.Error)
 	}
 
@@ -21,7 +21,7 @@ func CheckAlbumAccess(session *common.Session, albumId uint64, albumToken string
 			return response.Error(false, "No album access permission")
 		}
 
-		sessionAlbum := model.PhotoSessionAlbum{
+		sessionAlbum := &model.PhotoSessionAlbum{
 			TrackSession:   nil,
 			TrackSessionId: &session.Id,
 			PhotoAlbum:     nil,

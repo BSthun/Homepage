@@ -6,7 +6,7 @@ import Container from '../components/layout/Container.svelte';
 	<title>Photo - BSthun</title>
 </svelte:head>
 
-<div class="photo">
+<div class="album">
 	<Container>
 		<h1 class="title">Photo</h1>
 	</Container>
@@ -15,7 +15,7 @@ import Container from '../components/layout/Container.svelte';
 <style lang="scss">
 	@import 'src/styles/_index.scss';
 	
-	.photo {
+	.album {
 		min-height: 100vh;
 		background-color: $color-grey-900;
 		padding-top: $size-navbar-height;

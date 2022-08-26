@@ -1,4 +1,8 @@
 <script>
+	import { getContext } from 'svelte';
+	
+	const sad = getContext('state');
+	const bind = getContext('bind');
 	let count = 0;
 	
 	function handleClick() {

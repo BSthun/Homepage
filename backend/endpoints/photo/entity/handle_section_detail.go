@@ -17,15 +17,19 @@ func SectionDetailHandler(c *fiber.Ctx) error {
 	s.SetTag("photo/entity/view-section-detail")
 
 	// * Parse query
-	var query *payload.SectionQuery
-	if err := c.QueryParser(&query); err != nil {
+	query := new(payload.SectionQuery)
+	if err := c.QueryParser(query); err != nil {
 		return response.Error(false, "Unable to parse body", err)
 	}
 	s.SetDetail("section-id", query.SectionId)
 
 	// * Query section detail
-	var photoSection *model.PhotoSection
-	if result := mysql.DB.Preload("PhotoAlbum").First(&photoSection, query.SectionId); result.Error != nil {
+	var photoSection *payload.ExtendedPhotoSection
+
+	if result := mysql.DB.Model(new(model.PhotoSection)).
+		Preload("PhotoAlbum").
+		Select("photo_sections.*, (SELECT COUNT(*) FROM photo_items WHERE photo_section_id = photo_sections.id) AS photo_count").
+		First(&photoSection, "id = ?", query.SectionId); result.Error != nil {
 		return response.Error(false, "Unable to query album section", result.Error)
 	}
 
@@ -42,11 +46,13 @@ func SectionDetailHandler(c *fiber.Ctx) error {
 	_ = s.Commit(nil)
 	return c.JSON(response.Info(map[string]any{
 		"section": &payload.AlbumSection{
-			Id:        *photoSection.Id,
-			Title:     *photoSection.Title,
-			Subtitle:  *photoSection.Subtitle,
-			Date:      photoSection.Date,
-			UpdatedAt: photoSection.UpdatedAt,
+			Id:           *photoSection.Id,
+			Title:        *photoSection.Title,
+			Subtitle:     *photoSection.Subtitle,
+			Date:         photoSection.Date,
+			PhotoCount:   photoSection.PhotoCount,
+			ThumbnailUrl: nil,
+			UpdatedAt:    photoSection.UpdatedAt,
 		},
 		"album": &payload.AlbumDetail{
 			Id:       *photoSection.PhotoAlbum.Id,

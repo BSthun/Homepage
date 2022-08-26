@@ -1,21 +1,26 @@
 <script lang="ts">
 	import { onMount, setContext } from 'svelte';
-	import { Route, Router } from 'svelte-navigator';
-	import { axios, caller } from './utils/api';
-	import Home from './_home/Home.svelte';
-	import NotFound from './_page/NotFound.svelte';
-	import Album from './_photo/Album.svelte';
-	import Photo from './_photo/Photo.svelte';
+	import { writable } from 'svelte/store';
+	import AppRouter from './AppRouter.svelte';
 	import CircularProgress from './components/indicator/CircularProgress.svelte';
-	import Navbar from './components/navbar/Navbar.svelte';
+	import SnackBar from './components/indicator/SnackBar.svelte';
+	import Loader from './components/layout/Loader.svelte';
+	import { axios, caller } from './utils/api';
 	
-	let state = null;
+	let state = writable<any>(null);
+	let bind = writable<any>({});
+	setContext('state', state);
+	setContext('bind', bind);
 	
 	onMount(() => {
-		caller(axios.get('/account/state')).then((res) => {
-			state = res.data;
-			setContext('state', res.data);
-		});
+		$bind.setLoading(true)
+		caller(axios.get('/account/state'))
+			.then((res) => {
+				state.set(res.data);
+			})
+			.catch((err) => {
+				$bind.openSnackbar(err.message)
+			});
 	});
 </script>
 
@@ -24,39 +29,20 @@
 </svelte:head>
 
 <div>
-	<Router>
-		{#if (state !== null)}
-			<Navbar />
-			<Route path="/">
-				<Home />
-			</Route>
-			<Route path="/photo">
-				<Photo />
-			</Route>
-			<Route path="/photo/album/:album-slug">
-				<Album />
-			</Route>
-			<Route>
-				<NotFound />
-			</Route>
-		{:else }
-			<div class="loading">
-				<CircularProgress />
-			</div>
-		{/if}
-	</Router>
+	{#if ($state !== null)}
+		<AppRouter />
+	{:else}
+		<div class="loading">
+			<CircularProgress />
+		</div>
+	{/if}
+	<SnackBar />
+	<Loader />
 </div>
 
 <style global lang="scss">
 	// Base StyleSheets
 	@import 'styles';
 	@import 'node_modules/@smui/circular-progress/style';
-	
-	.loading {
-		min-height: 100vh;
-		background-color: $color-grey-900;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+	@import 'node_modules/@smui/snackbar/style';
 </style>

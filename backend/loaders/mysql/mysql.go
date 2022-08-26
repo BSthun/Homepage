@@ -73,6 +73,7 @@ func migrate() error {
 		new(model.PhotoItemPerson),
 		new(model.PhotoPerson),
 		new(model.PhotoSection),
+		new(model.PhotoSessionAlbum),
 		new(model.TrackSession),
 		new(model.TrackLog),
 	); err != nil {
