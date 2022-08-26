@@ -1,20 +1,35 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
 	import { navigate } from 'svelte-navigator';
 	import SectionMeta from './SectionMeta.svelte';
 	
 	export let item: object;
 	
-	$: console.log(item);
+	const thumbnails = item.thumbnail_url.split(',');
+	let thumbnail = 0;
+	let interval: NodeJS.Timer;
+	
+	$: console.log(thumbnails);
 	
 	const onClick = () => {
 		navigate('/photo/section/' + item.id);
 	};
+	
+	onMount(() => {
+		interval = setInterval(() => {
+			thumbnail = (thumbnail + 1) % thumbnails.length;
+		}, 1000);
+	});
+	
+	onDestroy(() => {
+		clearInterval(interval);
+	});
 </script>
 
 <div class="section-item" on:click={() => onClick()}>
 	<div
 		class="image"
-		style="background-image: url('https://www.bsthun.com/photograph/photograph_1_thumbnail.jpg')"
+		style={`background-image: url(${thumbnails[thumbnail]})`}
 	></div>
 	<div class="info">
 		<SectionMeta item={{ section: item}} />
@@ -43,6 +58,8 @@
 		position: absolute;
 		inset: 0;
 		z-index: 0;
+		background-size: cover;
+		background-position: center;
 	}
 	
 	.info {

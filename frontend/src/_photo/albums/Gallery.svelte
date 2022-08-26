@@ -1,10 +1,16 @@
 <script lang="ts">
-	import { getContext, onMount } from 'svelte';
+	import { getContext, onMount, setContext } from 'svelte';
+	import { writable } from 'svelte/store';
 	import InfiniteScroll from '../../components/extension/InfiniteScroll.svelte';
 	import { axios, caller } from '../../utils/api';
 	import GalleryItem from './GalleryItem.svelte';
 	
 	const bind = getContext('bind');
+	
+	const gallery = writable<any>({
+		expand: null,
+	});
+	setContext('gallery', gallery);
 	
 	export let id: number;
 	export let count: number;

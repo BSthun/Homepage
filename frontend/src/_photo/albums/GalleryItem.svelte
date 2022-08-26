@@ -5,11 +5,10 @@
 </script>
 
 <div class="gallery-item">
-	<img class="img" src={item.root + item.thumbnail_path} />
+	<img class="img" alt={item.title} src={item.root + item.thumbnail_path} />
 	<div class="overlay">
 		<h4>{item.title}</h4>
 		<div class="r-1">
-			<span class="material-symbols-outlined">schedule</span>
 			<h5>{moment(item.exif.timestamp).calendar()}</h5>
 		</div>
 		<div class="r-2" style={item.ratio < 1 && "display: none;"}>
@@ -19,7 +18,7 @@
 			</div>
 			<div class="r-1">
 				<span class="material-symbols-outlined">shutter_speed</span>
-				<h5>{item.exif.exposure_time}s.</h5>
+				<h5>{item.exif.exposure_time}s</h5>
 			</div>
 			<div class="r-1">
 				<span class="material-symbols-outlined">crop</span>
@@ -52,7 +51,7 @@
 		
 		&:hover {
 			img {
-				filter: blur(4px) brightness(0.9);
+				filter: blur(4px) brightness(0.8);
 			}
 			
 			.overlay {
