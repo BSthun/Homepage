@@ -37,6 +37,7 @@ func PhotoListHandler(c *fiber.Ctx) error {
 		return &payload.PhotoItem{
 			Id:            *photoItem.Id,
 			Title:         splitPath[len(splitPath)-1],
+			Root:          *photoItem.Root,
 			ImagePath:     *photoItem.ImagePath,
 			ThumbnailPath: *photoItem.ThumbnailPath,
 			RawPath:       *photoItem.RawPath,

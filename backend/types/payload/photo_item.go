@@ -5,6 +5,7 @@ import "backend/types/presentation"
 type PhotoItem struct {
 	Id            uint64             `json:"id"`
 	Title         string             `json:"title"`
+	Root          string             `json:"root"`
 	ImagePath     string             `json:"image_path"`
 	ThumbnailPath string             `json:"thumbnail_path"`
 	RawPath       string             `json:"raw_path"`

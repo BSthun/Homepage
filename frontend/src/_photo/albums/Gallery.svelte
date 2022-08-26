@@ -31,12 +31,26 @@
 </script>
 
 <div class="gallery">
-	{#each items as item, i}
-		<GalleryItem item={item} />
-	{/each}
+	<div class="gallery-view">
+		{#each items as item, i}
+			<GalleryItem item={item} />
+		{/each}
+	</div>
 	<InfiniteScroll
 		more={items.length !== count}
 		on:load={() => {page++; fetch()}}
-		threshold={200}
+		threshold={700 > window.innerHeight ? 800 : window.innerHeight - 100}
 	/>
 </div>
+
+<style lang="scss">
+	.gallery-view {
+		margin-top: 16px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+	}
+</style>
