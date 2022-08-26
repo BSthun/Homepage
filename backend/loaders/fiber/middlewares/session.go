@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -65,6 +66,15 @@ var Session = func() fiber.Handler {
 				SameSite:    "",
 				SessionOnly: false,
 			})
+		} else {
+			ips := strings.Split(*session.IpAddress, ",")
+			if !value.Contain(ips, c.Get("X-Real-IP")) {
+				ips = append(ips, c.Get("X-Real-IP"))
+				session.IpAddress = value.Ptr(strings.Join(ips, ","))
+				if result := mysql.DB.Save(session); result.Error != nil {
+					return response.Error(true, "Failed to update session", result.Error)
+				}
+			}
 		}
 
 		c.Locals("session", &common.Session{
