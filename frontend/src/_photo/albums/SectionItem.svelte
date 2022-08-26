@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { navigate } from 'svelte-navigator';
 	import moment from 'moment';
+	import SectionMeta from './SectionMeta.svelte';
 	
 	export let item: object;
 	
@@ -16,16 +17,7 @@
 		class="image"
 		style="background-image: url('https://www.bsthun.com/photograph/photograph_1_thumbnail.jpg')"
 	></div>
-	<div class="info">
-		<h1>{item.title}</h1>
-		<h4>{item.subtitle}</h4>
-		<div class="info-meta">
-			<i class="las la-image"></i>
-			<h4>{item.photo_count}</h4>
-			<i class="las la-clock"></i>
-			<h4>{moment(item.date).calendar()}</h4>
-		</div>
-	</div>
+	<SectionMeta item={item}>
 	<div class="overlay"></div>
 	<div class="image-overlay"></div>
 </div>

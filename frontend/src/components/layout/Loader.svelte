@@ -13,7 +13,6 @@
 	}));
 </script>
 
-
 {#if (load !== null && load !== false)}
 	<div class="loader">
 		{#if (load === true)}
@@ -37,7 +36,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		gap: 12;
+		gap: 12px;
 		z-index: 1000;
 	}
 </style>

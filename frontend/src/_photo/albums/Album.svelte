@@ -46,7 +46,7 @@
 		<h1 class="title">Photo</h1>
 		<div class="grid">
 			{#each state.album.sections || [] as item, i}
-				<SectionItem item={item} />
+				<SectionItem item={{ section: item}} />
 			{/each}
 		</div>
 	</Container>
@@ -56,9 +56,7 @@
 	@import '../../styles/index';
 	
 	.album {
-		min-height: 100vh;
-		background-color: $color-grey-900;
-		padding-top: $size-navbar-height;
+		@include default-paging;
 	}
 	
 	.title {
