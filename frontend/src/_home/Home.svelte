@@ -1,13 +1,19 @@
 <script>
-	import { getContext } from 'svelte';
+	import {
+		getContext,
+		onMount,
+	} from 'svelte';
 	
-	const sad = getContext('state');
 	const bind = getContext('bind');
 	let count = 0;
 	
 	function handleClick() {
 		count += 1;
 	}
+	
+	onMount(() => {
+		$bind.setLoading(false);
+	})
 </script>
 
 <div class="home">

@@ -1,9 +1,16 @@
 <script lang="ts">
+	import { getContext, onMount } from 'svelte';
 	import Container from '../components/layout/Container.svelte';
 	
 	export let title = '404 Page Not Found';
 	export let description = 'The page you are looking for is currently not exist on this website, try checking the URL and navigate again.';
 	export let code = 'ERR_NONEXISTENT_PAGE';
+	
+	const bind = getContext('bind');
+	
+	onMount(() => {
+		$bind.setLoading(false);
+	})
 </script>
 
 <svelte:head>

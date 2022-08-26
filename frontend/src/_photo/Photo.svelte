@@ -1,5 +1,12 @@
 <script lang="ts">
-import Container from '../components/layout/Container.svelte';
+	import { getContext, onMount } from 'svelte';
+	import Container from '../components/layout/Container.svelte';
+	
+	const bind = getContext('bind');
+	
+	onMount(() => {
+		$bind.setLoading(false);
+	});
 </script>
 
 <svelte:head>

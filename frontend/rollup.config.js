@@ -29,7 +29,6 @@ export default {
 			preprocess: preprocess({
 				sourceMap: !production,
 				scss: {
-					
 					// * Removed due to import manually for code suggestions
 					// prependData: `@import 'src/styles/_index.scss';`,
 				},

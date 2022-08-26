@@ -9,7 +9,7 @@
 	const gallery = getContext('gallery');
 	
 	const onClick = () => {
-		$: trackLog("gallery/expand", null, item.id)
+		trackLog('gallery/expand', null, item.id);
 		gallery.update((value) => ({
 			...value,
 			expand: index,

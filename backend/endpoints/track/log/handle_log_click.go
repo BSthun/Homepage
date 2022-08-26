@@ -23,7 +23,9 @@ func SectionDetailHandler(c *fiber.Ctx) error {
 	if body.BeginningState != "" {
 		s.SetDetail("begin", body.BeginningState)
 	}
-	s.SetDetail("end", body.EndingState)
+	if body.EndingState != "" {
+		s.SetDetail("end", body.EndingState)
+	}
 
 	_ = s.Commit(nil)
 	return c.JSON(response.Info(map[string]any{

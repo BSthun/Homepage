@@ -2,6 +2,6 @@ package payload
 
 type LogBody struct {
 	Event          string `json:"event"`
-	BeginningState string `json:"beginning_state"`
-	EndingState    string `json:"ending_state"`
+	BeginningState any    `json:"beginning_state"`
+	EndingState    any    `json:"ending_state"`
 }

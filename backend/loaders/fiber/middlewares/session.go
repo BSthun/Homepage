@@ -17,7 +17,18 @@ import (
 var Session = func() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var session *model.TrackSession
+		var newSession bool
 		if c.Cookies("session_id") == "" {
+			newSession = true
+		} else {
+			if result := mysql.DB.First(&session, c.Cookies("session_id")); result.Error != nil {
+				newSession = true
+			} else if *session.Token != c.Cookies("session_token") {
+				newSession = true
+			}
+		}
+
+		if newSession {
 			session = &model.TrackSession{
 				Id:        nil,
 				Token:     text.Random(text.RandomSet.MixedAlphaNum, 16),
@@ -36,7 +47,7 @@ var Session = func() fiber.Handler {
 				Path:        "/",
 				Domain:      "",
 				MaxAge:      0,
-				Expires:     time.Now().Add(365 * 24 * time.Hour),
+				Expires:     time.Now().Add(7 * 24 * time.Hour),
 				Secure:      false,
 				HTTPOnly:    false,
 				SameSite:    "",
@@ -48,19 +59,12 @@ var Session = func() fiber.Handler {
 				Path:        "/",
 				Domain:      "",
 				MaxAge:      0,
-				Expires:     time.Now().Add(365 * 24 * time.Hour),
+				Expires:     time.Now().Add(7 * 24 * time.Hour),
 				Secure:      false,
 				HTTPOnly:    false,
 				SameSite:    "",
 				SessionOnly: false,
 			})
-		} else {
-			if result := mysql.DB.First(&session, c.Cookies("session_id")); result.Error != nil {
-				return response.Error(true, "Failed to find session", result.Error)
-			}
-			if *session.Token != c.Cookies("session_token") {
-				return response.Error(true, "Invalid session token", nil)
-			}
 		}
 
 		c.Locals("session", &common.Session{
