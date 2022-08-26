@@ -46,7 +46,7 @@
 		<h1 class="title">Photo</h1>
 		<div class="grid">
 			{#each state.album.sections || [] as item, i}
-				<SectionItem item={{ section: item}} />
+				<SectionItem item={item} />
 			{/each}
 		</div>
 	</Container>

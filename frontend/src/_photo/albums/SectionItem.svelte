@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { navigate } from 'svelte-navigator';
-	import moment from 'moment';
 	import SectionMeta from './SectionMeta.svelte';
 	
 	export let item: object;
@@ -17,7 +16,9 @@
 		class="image"
 		style="background-image: url('https://www.bsthun.com/photograph/photograph_1_thumbnail.jpg')"
 	></div>
-	<SectionMeta item={item}>
+	<div class="info">
+		<SectionMeta item={{ section: item}} />
+	</div>
 	<div class="overlay"></div>
 	<div class="image-overlay"></div>
 </div>
@@ -47,27 +48,8 @@
 	.info {
 		position: absolute;
 		bottom: 0;
-		display: flex;
-		gap: 4px;
-		flex-direction: column;
 		z-index: 10;
 		padding: 24px;
-		
-		.info-meta {
-			display: flex;
-			align-items: center;
-			margin-top: 4px;
-			
-			i {
-				font-size: 22px;
-				padding-right: 6px;
-			}
-			
-			h4 {
-				font-weight: 400;
-				padding-right: 12px;
-			}
-		}
 	}
 	
 	.overlay {

@@ -30,16 +30,15 @@
 	
 	.row {
 		display: flex;
-		align-items: center;
 		margin-top: 8px;
 		
 		@include breakpoint('md', 'dn') {
 			flex-direction: column;
-			align-items: flex-start;
 		}
 		
 		.r-1 {
 			display: flex;
+			align-items: center;
 			
 			i {
 				font-size: 22px;
