@@ -1,9 +1,9 @@
 <script lang="ts">
-	import moment from 'moment';
 	import { getContext, onMount } from 'svelte';
 	import { useParams } from 'svelte-navigator';
 	import Container from '../../components/layout/Container.svelte';
 	import { axios, caller } from '../../utils/api';
+	import SectionGallery from './Gallery.svelte';
 	import SectionMeta from './SectionMeta.svelte';
 	
 	const params = useParams();
@@ -44,10 +44,9 @@
 		<div class="title">
 			<SectionMeta item={state} />
 		</div>
-		<div class="grid">
-			{#each state.album.sections || [] as item, i}
-			{/each}
-		</div>
+		{#if (state.section.id !== undefined)}
+			<SectionGallery id="{state.section.id}" count={state.section.photo_count} />
+		{/if}
 	</Container>
 </div>
 

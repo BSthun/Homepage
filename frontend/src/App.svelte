@@ -4,7 +4,7 @@
 	import AppRouter from './AppRouter.svelte';
 	import CircularProgress from './components/indicator/CircularProgress.svelte';
 	import SnackBar from './components/indicator/SnackBar.svelte';
-	import Loader from './components/layout/Loader.svelte';
+	import Loader from './components/indicator/Loader.svelte';
 	import { axios, caller } from './utils/api';
 	
 	let state = writable<any>(null);

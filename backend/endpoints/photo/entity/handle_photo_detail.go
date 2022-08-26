@@ -19,8 +19,8 @@ func PhotoListHandler(c *fiber.Ctx) error {
 	s.SetTag("photo/entity/view-photo-list")
 
 	// * Parse query
-	var query *payload.SectionPhotoQuery
-	if err := c.QueryParser(&query); err != nil {
+	query := new(payload.SectionPhotoQuery)
+	if err := c.QueryParser(query); err != nil {
 		return response.Error(false, "Unable to parse body", err)
 	}
 	s.SetDetail("section-id", query.SectionId)
@@ -28,13 +28,7 @@ func PhotoListHandler(c *fiber.Ctx) error {
 
 	// * Query photo detail
 	var photoItems []*model.PhotoItem
-	if result := mysql.DB.Find(&photoItems, "photo_section_id = ?", query.SectionId).Offset(20 * query.PageNo).Limit(20); result.Error != nil {
-		return response.Error(false, "Unable to query photo items", result.Error)
-	}
-
-	// * Query photo count
-	var photoCount uint64
-	if result := mysql.DB.Model(new(model.PhotoItem)).Select("COUNT(*)").First(&photoCount, "photo_section_id = ?", query.SectionId); result.Error != nil {
+	if result := mysql.DB.Offset(20*query.PageNo).Limit(20).Find(&photoItems, "photo_section_id = ?", query.SectionId); result.Error != nil {
 		return response.Error(false, "Unable to query photo items", result.Error)
 	}
 
