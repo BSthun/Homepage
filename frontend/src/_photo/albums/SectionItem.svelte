@@ -9,8 +9,6 @@
 	let thumbnail = 0;
 	let interval: NodeJS.Timer;
 	
-	$: console.log(thumbnails);
-	
 	const onClick = () => {
 		navigate('/photo/section/' + item.id);
 	};

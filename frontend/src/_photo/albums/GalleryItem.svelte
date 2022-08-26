@@ -1,11 +1,23 @@
 <script lang="ts">
 	import moment from 'moment';
+	import { getContext } from 'svelte';
 	
 	export let item: Object;
+	export let index: number;
+	
+	const gallery = getContext('gallery');
+	
+	const onClick = () => {
+		console.log(11);
+		gallery.update((value) => ({
+			...value,
+			expand: index,
+		}));
+	};
 </script>
 
-<div class="gallery-item">
-	<img class="img" alt={item.title} src={item.root + item.thumbnail_path} />
+<div class="gallery-item" on:click={onClick}>
+	<img alt={item.title} class="img" src={item.root + item.thumbnail_path} />
 	<div class="overlay">
 		<h4>{item.title}</h4>
 		<div class="r-1">
@@ -40,6 +52,7 @@
 		border-radius: 4px;
 		overflow: hidden;
 		position: relative;
+		cursor: pointer;
 		
 		@include breakpoint('md', 'up') {
 			height: 400px;

@@ -3,11 +3,14 @@
 	import { writable } from 'svelte/store';
 	import InfiniteScroll from '../../components/extension/InfiniteScroll.svelte';
 	import { axios, caller } from '../../utils/api';
+	import GalleryDetail from './GalleryDetail.svelte';
 	import GalleryItem from './GalleryItem.svelte';
 	
 	const bind = getContext('bind');
 	
 	const gallery = writable<any>({
+		page: 0,
+		items: [],
 		expand: null,
 	});
 	setContext('gallery', gallery);
@@ -15,18 +18,15 @@
 	export let id: number;
 	export let count: number;
 	
-	let page: number = 0;
-	let items: [] = [];
-	
 	const fetch = () => {
 		caller(axios.get(`/photo/entity/photo/list`, {
 			params: {
 				section_id: id,
-				page_no: page,
+				page_no: $gallery.page,
 			},
 		}))
 			.then((res) => {
-				items = items.concat(res.data.items);
+				$gallery.items = $gallery.items.concat(res.data.items);
 			})
 			.catch((err) => {
 				$bind.openSnackbar(err.message);
@@ -38,15 +38,16 @@
 
 <div class="gallery">
 	<div class="gallery-view">
-		{#each items as item, i}
-			<GalleryItem item={item} />
+		{#each $gallery.items as item, i}
+			<GalleryItem item={item} index="{i}" />
 		{/each}
 	</div>
 	<InfiniteScroll
-		more={items.length !== count}
-		on:load={() => {page++; fetch()}}
+		more={$gallery.items.length !== count}
+		on:load={() => {$gallery.page++; fetch()}}
 		threshold={700 > window.innerHeight ? 800 : window.innerHeight - 100}
 	/>
+	<GalleryDetail />
 </div>
 
 <style lang="scss">
