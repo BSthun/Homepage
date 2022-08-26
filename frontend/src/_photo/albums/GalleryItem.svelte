@@ -1,5 +1,6 @@
 <script lang="ts">
 	import moment from 'moment';
+	import { trackLog } from '../../utils/api/track';
 	import { getContext } from 'svelte';
 	
 	export let item: Object;
@@ -8,6 +9,7 @@
 	const gallery = getContext('gallery');
 	
 	const onClick = () => {
+		$: trackLog("gallery/expand", null, item.id)
 		gallery.update((value) => ({
 			...value,
 			expand: index,

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { trackLog } from '../../utils/api/track';
 	import { getContext, onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 	import InfiniteScroll from '../../components/extension/InfiniteScroll.svelte';

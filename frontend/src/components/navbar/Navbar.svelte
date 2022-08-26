@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { trackLog } from '../../utils/api/track';
 	import { useLocation } from 'svelte-navigator';
 	import ImgBSthunFlat from '../../images/logo/bsthun-flat-white.svg';
 	import NavigatorItem from './NavigatorItem.svelte';
@@ -40,6 +41,8 @@
 		} else {
 			toggled = false;
 		}
+		
+		trackLog('navbar/toggle', null, toggled);
 	};
 </script>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import moment from 'moment';
+	import { trackLog } from '../../utils/api/track';
 	import { getContext } from 'svelte';
 	import Zoom from 'svelte-zoom';
 	import CircularProgress from '../../components/indicator/CircularProgress.svelte';
@@ -22,11 +23,13 @@
 		if (i > 0 && $gallery.expand == $gallery.items.length - 1 && $gallery.expand < $gallery.count) {
 			$gallery.fetch();
 		}
+		trackLog('gallery/expand', null, $gallery.items[$gallery.expand].id);
 	};
 	
-	const download = (url) => {
-		window.location.href = url + "?download=1";
-	}
+	const download = (id, url) => {
+		trackLog('gallery/download', null, id);
+		window.location.href = url + '?download=1';
+	};
 	
 	$: item = $gallery.items[$gallery.expand];
 	$: {
@@ -61,16 +64,24 @@
 		</div>
 		<div class={plane ? "plane plane-toggled" : "plane"}>
 			<div class="plane-close">
-				<div class="plane-detail-toggle" on:click={() => plane = !plane}>
+				<div
+					class="plane-detail-toggle"
+					on:click={() => { plane = !plane; trackLog('gallery/plane', null, plane); }}
+				>
 					<p>{plane ? "COLLAPSE" : "VIEW DETAIL / DOWNLOAD"}</p>
 				</div>
-				<span class="material-symbols-outlined" on:click={() => ($gallery.expand = null)}>close</span>
+				<span
+					class="material-symbols-outlined"
+					on:click={() => {$gallery.expand = null; trackLog('gallery/close', null, null);	}}
+				>
+					close
+				</span>
 			</div>
 			<div class="plane-info">
 				<span class="material-symbols-outlined">schedule</span>
 				<div>
 					<p>Timestamp</p>
-					<p>{moment(item.exif.timestamp).calendar()}</p>
+					<p>{moment(item.exif.timestamp).format("MMM D YYYY, h:mm a")}</p>
 				</div>
 			</div>
 			<div class="plane-info">
@@ -122,11 +133,11 @@
 					<p>{item.exif.lens_model}</p>
 				</div>
 			</div>
-			<div class="plane-download" on:click={() => download(item.root + item.image_path)}>
+			<div class="plane-download" on:click={() => download(item.id, item.root + item.image_path)}>
 				<span class="material-symbols-outlined">image</span>
 				<p>Download Image</p>
 			</div>
-			<div class="plane-download" on:click={() => download(item.root + item.raw_path)}>
+			<div class="plane-download" on:click={() => download(item.id, item.root + item.raw_path)}>
 				<span class="material-symbols-outlined">add_photo_alternate</span>
 				<p>Download Raw</p>
 			</div>
@@ -265,6 +276,7 @@
 		font-size: 16px;
 		@include tweak-clickable;
 	}
+	
 	.center {
 		display: flex;
 		justify-content: center;

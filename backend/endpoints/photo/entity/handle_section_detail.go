@@ -19,7 +19,7 @@ func SectionDetailHandler(c *fiber.Ctx) error {
 	// * Parse query
 	query := new(payload.SectionQuery)
 	if err := c.QueryParser(query); err != nil {
-		return response.Error(false, "Unable to parse body", err)
+		return response.Error(false, "Unable to parse query", err)
 	}
 	s.SetDetail("section-id", query.SectionId)
 
