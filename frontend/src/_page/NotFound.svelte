@@ -1,10 +1,21 @@
 <script lang="ts">
+	import { getContext, onMount } from 'svelte';
 	import Container from '../components/layout/Container.svelte';
 	
 	export let title = '404 Page Not Found';
 	export let description = 'The page you are looking for is currently not exist on this website, try checking the URL and navigate again.';
-	export let code = 'ERR_FRONT_NONEXISTENT_PAGE';
+	export let code = 'ERR_NONEXISTENT_PAGE';
+	
+	const bind = getContext('bind');
+	
+	onMount(() => {
+		$bind.setLoading(false);
+	})
 </script>
+
+<svelte:head>
+	<title>Not Found - BSthun</title>
+</svelte:head>
 
 <div class="notfound">
 	<Container>
@@ -20,6 +31,8 @@
 </div>
 
 <style lang="scss">
+	@import 'src/styles/_index.scss';
+	
 	.notfound {
 		height: 100vh;
 		background-color: $color-grey-900;

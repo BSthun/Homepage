@@ -1,8 +1,9 @@
 <script lang="ts">
-	import ImgBSthunFlat from '../../images/logo/bsthun-flat-white.svg';
+	import { trackLog } from '../../utils/api/track';
 	import { useLocation } from 'svelte-navigator';
-	import type { NavbarItem } from './types';
+	import ImgBSthunFlat from '../../images/logo/bsthun-flat-white.svg';
 	import NavigatorItem from './NavigatorItem.svelte';
+	import type { NavbarItem } from './types';
 	
 	const location = useLocation();
 	
@@ -27,9 +28,9 @@
 		},
 		{
 			context: null,
-			title: 'Photograph',
+			title: 'Photo',
 			la: 'las la-camera',
-			href: '/photograph',
+			href: '/photo',
 		},
 	];
 	
@@ -40,6 +41,8 @@
 		} else {
 			toggled = false;
 		}
+		
+		trackLog('navbar/toggle', null, toggled);
 	};
 </script>
 
@@ -51,14 +54,15 @@
 		</div>
 		<div class={`navigator ${toggled && 'scaled'}`}>
 			{#each items as item, i}
-				<NavigatorItem active={item.href === '/' ? $location.pathname === '/': $location.pathname.startsWith(item.href)}
-				               exact={item.href === $location.pathname}
-				               title={item.title}
-				               href={item.href}
-				               la={item.la}
-				               order={i + 1}
-				               toggled={toggled}
-				               toggle={toggle}
+				<NavigatorItem
+				  active={item.href === '/' ? $location.pathname === '/': $location.pathname.startsWith(item.href)}
+				  exact={item.href === $location.pathname}
+				  title={item.title}
+				  href={item.href}
+				  la={item.la}
+				  order={i + 1}
+				  toggled={toggled}
+				  toggle={toggle}
 				/>
 			{/each}
 		</div>
@@ -72,16 +76,17 @@
 </nav>
 
 <style lang="scss">
-	//.navbar {
-	//	height: $size-navbar-height;
-	//}
+	@import 'src/styles/_index.scss';
 	
 	nav {
 		position: fixed;
+		top: 0;
 		height: $size-navbar-height;
 		width: 100%;
 		color: $color-grey-200;
-		background-color: $color-navbar-bg-scrolled;
+		background: $color-navbar-bg-scrolled;
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
 		border-bottom: 1px solid $color-border;
 		z-index: 1201;
 		
@@ -157,7 +162,7 @@
 				z-index: 1200;
 				border-radius: $size-infinity;
 				left: #{24px - 128px};
-				top: #{$size-navbar-height / 2 - 128px};
+				top: #{$size-navbar-height * 0.5 - 128px};
 				width: 256px;
 				height: 256px;
 				background-color: $color-bluegrey-700;

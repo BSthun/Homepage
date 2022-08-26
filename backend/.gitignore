@@ -1,0 +1,6 @@
+# Local directory
+/local
+/static
+
+# Configurations
+/config.yaml

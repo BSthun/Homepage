@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { trackLog } from '../../utils/api/track';
 	import { navigate } from 'svelte-navigator';
 	
 	export let la: string;
@@ -15,25 +16,27 @@
 	
 	const nav = () => {
 		navigate(href, { replace: exact });
+		trackLog('navbar/navigate', window.location.pathname, href);
 		toggle();
 	};
 </script>
 
 <svelte:window bind:innerWidth={ww} />
 
-<div class="link"
-     on:click={() => nav()}
-     style={ww < 768 ? `opacity: ${toggled ? 1 : 0}; transform: translateY(${toggled ? 0 : 12}px); transition: all .3s ease-in-out ${toggled ? order * 0.1: 0.2 - order * 0.05}s` : ''}
+<div
+	class="link"
+	on:click={() => nav()}
+	style={ww < 768 ? `opacity: ${toggled ? 1 : 0}; transform: translateY(${toggled ? 0 : 12}px); transition: all .3s ease-in-out ${toggled ? order * 0.1: 0.2 - order * 0.05}s` : ''}
 >
 	<i class="{la}"></i>
-	<div class="box"
-	     style={`width: ${ww < 768 || active ? w + 4 : 0}px`}
-	>
+	<div class="box" style={`width: ${ww < 768 || active ? w + 4 : 0}px`}>
 		<p bind:offsetWidth={w}>{title}</p>
 	</div>
 </div>
 
 <style lang="scss">
+	@import 'src/styles/_index.scss';
+	
 	.link {
 		display: flex;
 		align-items: center;

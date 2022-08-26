@@ -8,6 +8,8 @@
 </div>
 
 <style lang="scss">
+	@import 'src/styles/_index.scss';
+	
 	.container {
 		width: calc(100% - 32px);
 		height: 100%;
