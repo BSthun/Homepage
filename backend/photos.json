@@ -1,0 +1,94 @@
+
+ ┌───────────────────────────────────────────────────┐ 
+ │                   Fiber v2.36.0                   │ 
+ │               http://127.0.0.1:3001               │ 
+ │       (bound on host 0.0.0.0 and port 3001)       │ 
+ │                                                   │ 
+ │ Handlers ............ 25  Processes ........... 1 │ 
+ │ Prefork ....... Disabled  PID .............. 3083 │ 
+ └───────────────────────────────────────────────────┘ 
+
+
+2022/08/27 10:42:29 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[69.214ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:42:29 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[59.813ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:42:29 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_section_detail.go:32
+[0m[33m[60.456ms] [34;1m[rows:1][0m SELECT * FROM `photo_albums` WHERE `photo_albums`.`id` = 2
+
+2022/08/27 10:42:29 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_section_detail.go:32 [33mSLOW SQL >= 100ms
+[0m[31;1m[119.899ms] [33m[rows:1][35m SELECT photo_sections.*, (SELECT COUNT(*) FROM photo_items WHERE photo_section_id = photo_sections.id) AS photo_count FROM `photo_sections` WHERE id = 2 ORDER BY `photo_sections`.`id` LIMIT 1[0m
+
+2022/08/27 10:42:29 [32m/Volumes/Data/Homepage/source/backend/procedures/photo/check_album_acess.go:15
+[0m[33m[65.859ms] [34;1m[rows:1][0m SELECT COUNT(*) FROM `photo_session_albums` WHERE track_session_id = 8 AND photo_album_id = 2 ORDER BY `photo_session_albums`.`track_session_id` LIMIT 1
+
+2022/08/27 10:42:30 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[59.713ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:42:30 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[65.010ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:42:30 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_section_detail.go:32
+[0m[33m[60.084ms] [34;1m[rows:1][0m SELECT * FROM `photo_albums` WHERE `photo_albums`.`id` = 2
+
+2022/08/27 10:42:30 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_section_detail.go:32 [33mSLOW SQL >= 100ms
+[0m[31;1m[120.256ms] [33m[rows:1][35m SELECT photo_sections.*, (SELECT COUNT(*) FROM photo_items WHERE photo_section_id = photo_sections.id) AS photo_count FROM `photo_sections` WHERE id = 2 ORDER BY `photo_sections`.`id` LIMIT 1[0m
+
+2022/08/27 10:42:30 [32m/Volumes/Data/Homepage/source/backend/procedures/photo/check_album_acess.go:15
+[0m[33m[60.124ms] [34;1m[rows:1][0m SELECT COUNT(*) FROM `photo_session_albums` WHERE track_session_id = 8 AND photo_album_id = 2 ORDER BY `photo_session_albums`.`track_session_id` LIMIT 1
+
+2022/08/27 10:42:37 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[61.235ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:42:37 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[58.323ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:42:38 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_section_detail.go:32
+[0m[33m[60.164ms] [34;1m[rows:1][0m SELECT * FROM `photo_albums` WHERE `photo_albums`.`id` = 2
+
+2022/08/27 10:42:38 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_section_detail.go:32 [33mSLOW SQL >= 100ms
+[0m[31;1m[119.272ms] [33m[rows:1][35m SELECT photo_sections.*, (SELECT COUNT(*) FROM photo_items WHERE photo_section_id = photo_sections.id) AS photo_count FROM `photo_sections` WHERE id = 2 ORDER BY `photo_sections`.`id` LIMIT 1[0m
+
+2022/08/27 10:42:38 [32m/Volumes/Data/Homepage/source/backend/procedures/photo/check_album_acess.go:15
+[0m[33m[62.093ms] [34;1m[rows:1][0m SELECT COUNT(*) FROM `photo_session_albums` WHERE track_session_id = 8 AND photo_album_id = 2 ORDER BY `photo_session_albums`.`track_session_id` LIMIT 1
+
+2022/08/27 10:43:20 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[65.735ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:43:20 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[59.624ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:43:20 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_section_detail.go:32
+[0m[33m[65.349ms] [34;1m[rows:1][0m SELECT * FROM `photo_albums` WHERE `photo_albums`.`id` = 2
+
+2022/08/27 10:43:20 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_section_detail.go:32 [33mSLOW SQL >= 100ms
+[0m[31;1m[124.678ms] [33m[rows:1][35m SELECT photo_sections.*, (SELECT COUNT(*) FROM photo_items WHERE photo_section_id = photo_sections.id) AS photo_count FROM `photo_sections` WHERE id = 2 ORDER BY `photo_sections`.`id` LIMIT 1[0m
+
+2022/08/27 10:43:20 [32m/Volumes/Data/Homepage/source/backend/procedures/photo/check_album_acess.go:15
+[0m[33m[85.672ms] [34;1m[rows:1][0m SELECT COUNT(*) FROM `photo_session_albums` WHERE track_session_id = 8 AND photo_album_id = 2 ORDER BY `photo_session_albums`.`track_session_id` LIMIT 1
+
+2022/08/27 10:43:20 [32m/Volumes/Data/Homepage/source/backend/procedures/photo/check_album_acess.go:30 [33mSLOW SQL >= 100ms
+[0m[31;1m[120.951ms] [33m[rows:1][35m INSERT INTO `photo_session_albums` (`track_session_id`,`photo_album_id`) VALUES (8,2)[0m
+
+2022/08/27 10:43:21 [32m/Volumes/Data/Homepage/source/backend/types/common/session.go:48 [33mSLOW SQL >= 100ms
+[0m[31;1m[126.979ms] [33m[rows:1][35m INSERT INTO `track_logs` (`track_session_id`,`tag`,`detail`,`error`,`created_at`,`updated_at`) VALUES (8,'photo/entity/view-section-detail','{"section-id":2}',NULL,'2022-08-27 10:43:21.024','2022-08-27 10:43:21.024')[0m
+
+2022/08/27 10:43:21 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[66.443ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:43:21 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_photo_detail.go:31
+[0m[33m[60.666ms] [34;1m[rows:20][0m SELECT * FROM `photo_items` WHERE photo_section_id = 2 LIMIT 20
+
+2022/08/27 10:43:21 [32m/Volumes/Data/Homepage/source/backend/types/common/session.go:48 [33mSLOW SQL >= 100ms
+[0m[31;1m[126.284ms] [33m[rows:1][35m INSERT INTO `track_logs` (`track_session_id`,`tag`,`detail`,`error`,`created_at`,`updated_at`) VALUES (8,'photo/entity/view-photo-list','{"page-no":0,"section-id":2}',NULL,'2022-08-27 10:43:21.282','2022-08-27 10:43:21.282')[0m
+
+2022/08/27 10:43:26 [32m/Volumes/Data/Homepage/source/backend/loaders/fiber/middlewares/session.go:25
+[0m[33m[63.085ms] [34;1m[rows:1][0m SELECT * FROM `track_sessions` WHERE `track_sessions`.`id` = '8' ORDER BY `track_sessions`.`id` LIMIT 1
+
+2022/08/27 10:43:26 [32m/Volumes/Data/Homepage/source/backend/endpoints/photo/entity/handle_photo_detail.go:31
+[0m[33m[68.171ms] [34;1m[rows:20][0m SELECT * FROM `photo_items` WHERE photo_section_id = 2 LIMIT 20 OFFSET 20
+
+2022/08/27 10:43:26 [32m/Volumes/Data/Homepage/source/backend/types/common/session.go:48 [33mSLOW SQL >= 100ms
+[0m[31;1m[120.476ms] [33m[rows:1][35m INSERT INTO `track_logs` (`track_session_id`,`tag`,`detail`,`error`,`created_at`,`updated_at`) VALUES (8,'photo/entity/view-photo-list','{"page-no":1,"section-id":2}',NULL,'2022-08-27 10:43:26.899','2022-08-27 10:43:26.899')[0m

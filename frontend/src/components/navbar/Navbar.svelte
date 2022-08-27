@@ -35,14 +35,16 @@
 	];
 	
 	let toggled = false;
-	let toggle = () => {
+	let toggle = (log = true) => {
 		if (window.innerWidth < 768) {
 			toggled = !toggled;
 		} else {
 			toggled = false;
 		}
 		
-		trackLog('navbar/toggle', null, toggled);
+		if (log) {
+			trackLog('navbar/toggle', null, toggled);
+		}
 	};
 </script>
 
@@ -55,14 +57,14 @@
 		<div class={`navigator ${toggled && 'scaled'}`}>
 			{#each items as item, i}
 				<NavigatorItem
-				  active={item.href === '/' ? $location.pathname === '/': $location.pathname.startsWith(item.href)}
-				  exact={item.href === $location.pathname}
-				  title={item.title}
-				  href={item.href}
-				  la={item.la}
-				  order={i + 1}
-				  toggled={toggled}
-				  toggle={toggle}
+					active={item.href === '/' ? $location.pathname === '/': $location.pathname.startsWith(item.href)}
+					exact={item.href === $location.pathname}
+					title={item.title}
+					href={item.href}
+					la={item.la}
+					order={i + 1}
+					toggled={toggled}
+					toggle={toggle}
 				/>
 			{/each}
 		</div>
