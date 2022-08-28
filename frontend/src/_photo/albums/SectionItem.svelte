@@ -3,15 +3,12 @@
 	import { navigate } from 'svelte-navigator';
 	import SectionMeta from './SectionMeta.svelte';
 	
-	export let item: object;
+	export let item: Object;
+	export let nav: Function;
 	
 	const thumbnails = item.thumbnail_url.split(',');
 	let thumbnail = 0;
 	let interval: NodeJS.Timer;
-	
-	const onClick = () => {
-		navigate('/photo/section/' + item.id);
-	};
 	
 	onMount(() => {
 		interval = setInterval(() => {
@@ -24,7 +21,7 @@
 	});
 </script>
 
-<div class="section-item" on:click={() => onClick()}>
+<div class="section-item" on:click={() => nav(item.id)}>
 	<div
 		class="image"
 		style={`background-image: url(${thumbnails[thumbnail]})`}

@@ -24,6 +24,7 @@ type AlbumSection struct {
 
 type SectionQuery struct {
 	SectionId uint64 `json:"section_id" query:"section_id"`
+	Token     string `json:"token" query:"token"`
 }
 
 type SectionPhotoQuery struct {

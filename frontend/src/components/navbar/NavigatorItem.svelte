@@ -17,7 +17,7 @@
 	const nav = () => {
 		navigate(href, { replace: exact });
 		trackLog('navbar/navigate', window.location.pathname, href);
-		toggle();
+		toggle(false);
 	};
 </script>
 
