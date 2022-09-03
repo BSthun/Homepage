@@ -14,6 +14,8 @@ import (
 	"strings"
 	"time"
 
+	_ "golang.org/x/image/tiff"
+
 	"github.com/rwcarlsen/goexif/exif"
 )
 
