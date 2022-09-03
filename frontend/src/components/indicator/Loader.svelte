@@ -23,7 +23,9 @@
 		{#if (typeof load === "string")}
 			<i class="las la-exclamation-circle" style="font-size: 36px"></i>
 			<h3>{load}</h3>
-			<p class="desc">{loadDesc}</p>
+			{#if (typeof loadDesc === "string")}
+				<p class="desc">{loadDesc}</p>
+			{/if}
 		{/if}
 	</div>
 {/if}

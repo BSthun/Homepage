@@ -20,7 +20,6 @@
 			!navigator.userAgent.includes('Safari/'))) {
 			$bind.setLoading('In-app browser is not supported',
 				"This site may use some browser-specific features. For better user experience, please open the link in device browser instead.");
-			return
 		}
 		
 		caller(axios.get('/account/state'))

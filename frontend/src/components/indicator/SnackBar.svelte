@@ -16,15 +16,22 @@
 	}));
 </script>
 
+<div class="snackbar">
 <Snackbar bind:this={snackbar}>
 	<Label>{message}</Label>
 	<Actions on:click={snackbar.close()}>
 		<i class="las la-times clickable"></i>
 	</Actions>
 </Snackbar>
+</div>
 
 <style lang="scss">
 	.clickable {
 		cursor: pointer;
+	}
+	
+	.snackbar {
+		position: relative;
+		z-index: 1001;
 	}
 </style>
