@@ -26,6 +26,11 @@ var Session = func() fiber.Handler {
 				newSession = true
 			} else if *session.Token != c.Cookies("session_token") {
 				newSession = true
+			} else if (*session.UpdatedAt).Before(time.Now().Add(-2 * time.Hour)) {
+				if result := mysql.DB.Model(session).Update("token", text.Random(text.RandomSet.MixedAlphaNum, 16)); result.Error != nil {
+					return response.Error(true, "Failed to create session", result.Error)
+				}
+				ApplyCookie(c, session)
 			}
 		}
 
@@ -41,31 +46,7 @@ var Session = func() fiber.Handler {
 			if result := mysql.DB.Create(session); result.Error != nil {
 				return response.Error(true, "Failed to create session", result.Error)
 			}
-
-			c.Cookie(&fiber.Cookie{
-				Name:        "session_id",
-				Value:       strconv.FormatUint(*session.Id, 10),
-				Path:        "/",
-				Domain:      "",
-				MaxAge:      0,
-				Expires:     time.Now().Add(7 * 24 * time.Hour),
-				Secure:      false,
-				HTTPOnly:    false,
-				SameSite:    "",
-				SessionOnly: false,
-			})
-			c.Cookie(&fiber.Cookie{
-				Name:        "session_token",
-				Value:       *session.Token,
-				Path:        "/",
-				Domain:      "",
-				MaxAge:      0,
-				Expires:     time.Now().Add(7 * 24 * time.Hour),
-				Secure:      false,
-				HTTPOnly:    false,
-				SameSite:    "",
-				SessionOnly: false,
-			})
+			ApplyCookie(c, session)
 		} else {
 			ips := strings.Split(*session.IpAddress, ",")
 			if !value.Contain(ips, c.Get("X-Real-IP")) {
@@ -84,3 +65,30 @@ var Session = func() fiber.Handler {
 		return c.Next()
 	}
 }()
+
+func ApplyCookie(c *fiber.Ctx, session *model.TrackSession) {
+	c.Cookie(&fiber.Cookie{
+		Name:        "session_id",
+		Value:       strconv.FormatUint(*session.Id, 10),
+		Path:        "/",
+		Domain:      "",
+		MaxAge:      0,
+		Expires:     time.Now().Add(365 * 24 * time.Hour),
+		Secure:      false,
+		HTTPOnly:    false,
+		SameSite:    "",
+		SessionOnly: false,
+	})
+	c.Cookie(&fiber.Cookie{
+		Name:        "session_token",
+		Value:       *session.Token,
+		Path:        "/",
+		Domain:      "",
+		MaxAge:      0,
+		Expires:     time.Now().Add(365 * 24 * time.Hour),
+		Secure:      false,
+		HTTPOnly:    false,
+		SameSite:    "",
+		SessionOnly: false,
+	})
+}

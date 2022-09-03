@@ -51,10 +51,10 @@ func AlbumDetailHandler(c *fiber.Ctx) error {
 			Id:           *albumSection.Id,
 			Title:        *albumSection.Title,
 			Subtitle:     *albumSection.Subtitle,
-			Date:         albumSection.Date,
-			PhotoCount:   albumSection.PhotoCount,
-			ThumbnailUrl: albumSection.ThumbnailUrl,
-			UpdatedAt:    albumSection.UpdatedAt,
+			Date:         *albumSection.Date,
+			PhotoCount:   *albumSection.PhotoCount,
+			ThumbnailUrl: value.Val(albumSection.ThumbnailUrl),
+			UpdatedAt:    *albumSection.UpdatedAt,
 		}, nil
 	})
 

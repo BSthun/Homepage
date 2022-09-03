@@ -13,13 +13,22 @@
 	setContext('bind', bind);
 	
 	onMount(() => {
-		$bind.setLoading(true)
+		$bind.setLoading(true);
+		
+		if (navigator.userAgent.includes('wv') ||
+			(navigator.userAgent.includes('Mobile/') &&
+			!navigator.userAgent.includes('Safari/'))) {
+			$bind.setLoading('In-app browser is not supported',
+				"This site may use some browser-specific features. For better user experience, please open the link in device browser instead.");
+			return
+		}
+		
 		caller(axios.get('/account/state'))
 			.then((res) => {
 				state.set(res.data);
 			})
 			.catch((err) => {
-				$bind.openSnackbar(err.message)
+				$bind.openSnackbar(err.message);
 			});
 	});
 </script>

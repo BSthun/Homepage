@@ -16,8 +16,7 @@ type PhotoItem struct {
 	ImagePath      *string       `gorm:"type:TEXT; not null" json:"image_path"`
 	ThumbnailPath  *string       `gorm:"type:TEXT; not null" json:"thumbnail_path"`
 	RawPath        *string       `gorm:"type:TEXT; not null" json:"raw_path"`
-	Exif           *present.Exif `gorm:"type:TEXT; not null" json:"exif"`
-	Ratio          *float32      `gorm:"type:FLOAT; not null" json:"ratio"`
+	Exif           *present.Exif `gorm:"type:JSON; not null" json:"exif"`
 	CreatedAt      *time.Time    `gorm:"not null"` // Embedded field
 	UpdatedAt      *time.Time    `gorm:"not null"` // Embedded field
 }

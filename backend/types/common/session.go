@@ -6,6 +6,7 @@ import (
 	"backend/loaders/mysql"
 	"backend/types/model"
 	"backend/types/response"
+	"backend/utils/config"
 	"backend/utils/value"
 )
 
@@ -25,6 +26,10 @@ func (r *Session) SetDetail(key string, value any) {
 }
 
 func (r *Session) Commit(err error) *response.ErrorInstance {
+	if config.C.Environment == 1 {
+		return nil
+	}
+
 	log := &model.TrackLog{
 		TrackSession:   nil,
 		TrackSessionId: &r.Id,

@@ -22,24 +22,24 @@
 	<div class="overlay">
 		<h4>{item.title}</h4>
 		<div class="r-1">
-			<h5>{moment(item.exif.timestamp).calendar()}</h5>
+			<h5>{moment(item.exif.t).calendar()}</h5>
 		</div>
-		<div class="r-2" style={item.ratio < 1 && "display: none;"}>
+		<div class="r-2">
 			<div class="r-1">
 				<span class="material-symbols-outlined">camera</span>
-				<h5>ƒ/{item.exif.aperture}</h5>
+				<h5>ƒ/{item.exif.apt}</h5>
 			</div>
 			<div class="r-1">
 				<span class="material-symbols-outlined">shutter_speed</span>
-				<h5>{item.exif.exposure_time}s</h5>
+				<h5>{item.exif.ss}s</h5>
 			</div>
 			<div class="r-1">
 				<span class="material-symbols-outlined">crop</span>
-				<h5>{item.exif.focal_length}mm</h5>
+				<h5>{item.exif.fl}mm</h5>
 			</div>
 			<div class="r-1">
 				<span class="material-symbols-outlined">deblur</span>
-				<h5>ISO {item.exif.iso_speed}</h5>
+				<h5>ISO {item.exif.iso}</h5>
 			</div>
 		</div>
 	</div>
@@ -87,7 +87,7 @@
 	
 	.overlay {
 		position: absolute;
-		bottom: -64px;
+		bottom: -96px;
 		left: 25px;
 		transition: bottom 300ms ease-in-out;
 	}
@@ -106,6 +106,8 @@
 	
 	.r-2 {
 		display: flex;
+		flex-wrap: wrap;
+		white-space: nowrap;
 		
 		@include breakpoint('md', 'dn') {
 			display: none;
