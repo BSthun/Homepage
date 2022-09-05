@@ -8,7 +8,6 @@ import (
 
 type Exif struct {
 	Aperture      string    `json:"apt"`
-	Brightness    string    `json:"bgn"`
 	Timestamp     time.Time `json:"t"`
 	ShutterSpeed  string    `json:"ss"`
 	FocalLength   string    `json:"fl"`

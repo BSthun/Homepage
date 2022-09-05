@@ -26,8 +26,8 @@
 		trackLog('gallery/expand', null, $gallery.items[$gallery.expand].id);
 	};
 	
-	const download = (id, url) => {
-		trackLog('gallery/download', null, id);
+	const download = (id, url, mode) => {
+		trackLog('gallery/download/' + mode, null, id);
 		window.location.href = url + '?download=1';
 	};
 	
@@ -113,13 +113,6 @@
 				</div>
 			</div>
 			<div class="plane-info">
-				<span class="material-symbols-outlined">light_mode</span>
-				<div>
-					<p>Brightness</p>
-					<p>{item.exif.bgn}</p>
-				</div>
-			</div>
-			<div class="plane-info">
 				<span class="material-symbols-outlined">photo_camera</span>
 				<div>
 					<p>Camera</p>
@@ -133,11 +126,11 @@
 					<p>{item.exif.l}</p>
 				</div>
 			</div>
-			<div class="plane-download" on:click={() => download(item.id, item.root + item.image_path)}>
+			<div class="plane-download" on:click={() => download(item.id, item.root + item.image_path, "img")}>
 				<span class="material-symbols-outlined">image</span>
 				<p>Download Image</p>
 			</div>
-			<div class="plane-download" on:click={() => download(item.id, item.root + item.raw_path)}>
+			<div class="plane-download" on:click={() => download(item.id, item.root + item.raw_path, "raw")}>
 				<span class="material-symbols-outlined">add_photo_alternate</span>
 				<p>Download Raw</p>
 			</div>

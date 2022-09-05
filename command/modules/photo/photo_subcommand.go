@@ -122,8 +122,8 @@ func (r *Subcommand) Run() error {
 				Lens:            exif.LensModel,
 				Camera:          exif.Make + exif.Model,
 			},
-			CreatedAt: time.Now().UTC(),
-			UpdatedAt: time.Now().UTC(),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
 		})
 
 		byte, err := json.Marshal(photos[i].Exif)
