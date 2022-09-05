@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"image"
 	_ "image/jpeg"
 	_ "image/png"
 	"log"
@@ -44,7 +43,7 @@ func (r *Subcommand) Run() error {
 
 	var photos []*PhotoItem
 
-	fmt.Println("photo_section_id;shooter_id;root;image_path;thumbnail_path;raw_path;exif;ratio;created_at;updated_at")
+	fmt.Println("photo_section_id;shooter_id;root;image_path;thumbnail_path;raw_path;exif;created_at;updated_at")
 	for i, file := range files {
 		if i == -1 {
 			continue
@@ -62,11 +61,11 @@ func (r *Subcommand) Run() error {
 
 		imgFile.Seek(0, 0)
 
-		im, _, err := image.DecodeConfig(imgFile)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "%s: %v\n", imgFile.Name(), err)
-			continue
-		}
+		// im, _, err := image.DecodeConfig(imgFile)
+		// if err != nil {
+		// 	fmt.Fprintf(os.Stderr, "%s: %v\n", imgFile.Name(), err)
+		// 	continue
+		// }
 
 		jsonByte, err := metaData.MarshalJSON()
 		if err != nil {
@@ -76,20 +75,29 @@ func (r *Subcommand) Run() error {
 		var exif *ExifRaw
 		err = json.Unmarshal(jsonByte, &exif)
 
-		t, err2 := time.Parse("2006:01:02 15:04:05", exif.DateTimeOriginal)
+		t, err2 := time.Parse("2006:01:02 15:04:05 -0700", exif.DateTimeOriginal+" +0700")
 		if err2 != nil {
 			log.Fatal(err.Error())
 		}
 
-		var aperture string = "1.2"
+		var aperture = "1.2"
 		if exif.ApertureValue != nil {
 			aperture = strings.Split(exif.ApertureValue[0], "/")[0]
+
+			// Force 1.8
+			aperture = "1.8"
 		}
 
-		var fl string = "35"
-		var fl35 string = "52"
+		var fl = "35"
+		var fl35 = "52"
 		if exif.FocalLength != nil {
-			fl = strings.Split(exif.FocalLength[0], "/")[0]
+			foc := strings.Split(exif.FocalLength[0], "/")
+			fl = foc[0]
+			if len(foc) > 1 {
+				foc0, _ := strconv.ParseInt(foc[0], 10, 32)
+				foc1, _ := strconv.ParseInt(foc[1], 10, 32)
+				fl = fmt.Sprintf("%d", foc0/foc1)
+			}
 			fl35 = strconv.Itoa(exif.FocalLengthIn35mmFilm[0])
 		}
 
@@ -98,32 +106,28 @@ func (r *Subcommand) Run() error {
 		}
 
 		photos = append(photos, &PhotoItem{
-			PhotoSectionId: 2,
-			Ratio:          float32(im.Width) / float32(im.Height),
-			Root:           "https://macmini.lan.bsthun.com/static",
-			ImagePath:      "/csfd2022/" + file.Name(),
-			ThumbnailPath:  "/csfd2022/" + strings.Split(file.Name(), ".")[0] + "_thumbnail.jpg",
-			RawPath:        "/csfd2022/" + strings.Split(file.Name(), ".")[0] + ".ARW",
+			PhotoSectionId: 3,
+			Root:           "https://proxy.bsthun.com/mixkoraspi/photo/csfdwalk2022",
+			ImagePath:      "/image/" + file.Name(),
+			ThumbnailPath:  "/thumbnail/" + strings.Split(file.Name(), ".")[0] + "_thumbnail.jpg",
+			RawPath:        "/raw/" + strings.Split(file.Name(), ".")[0] + ".dng",
 			ShooterId:      1,
 			Exif: &Exif{
 				Aperture:        aperture,
-				Brightness:      exif.BrightnessValue[0],
-				Credit:          exif.Artist + ", " + exif.Copyright,
-				Timestamp:       t,
-				ExposureTime:    exif.ExposureTime[0],
+				Timestamp:       t.UTC(),
+				ShutterSpeed:    exif.ExposureTime[0],
 				FocalLength:     fl,
 				FocalLength35mm: fl35,
-				IsoSpeed:        strconv.Itoa(exif.IsoSpeedRatings[0]),
-				LensModel:       exif.LensModel,
-				CameraMaker:     exif.Make,
-				CameraModel:     exif.Model,
+				Iso:             strconv.Itoa(exif.IsoSpeedRatings[0]),
+				Lens:            exif.LensModel,
+				Camera:          exif.Make + exif.Model,
 			},
-			CreatedAt: time.Now(),
-			UpdatedAt: time.Now(),
+			CreatedAt: time.Now().UTC(),
+			UpdatedAt: time.Now().UTC(),
 		})
 
 		byte, err := json.Marshal(photos[i].Exif)
-		fmt.Printf("%d;%d;%s;%s;%s;%s;%s;%f;%s;%s\n", photos[i].PhotoSectionId, photos[i].ShooterId, photos[i].Root, photos[i].ImagePath, photos[i].ThumbnailPath, photos[i].RawPath, string(byte), photos[i].Ratio, photos[i].CreatedAt.Format(time.RFC3339), photos[i].UpdatedAt.Format(time.RFC3339))
+		fmt.Printf("%d;%d;%s;%s;%s;%s;%s;%s;%s\n", photos[i].PhotoSectionId, photos[i].ShooterId, photos[i].Root, photos[i].ImagePath, photos[i].ThumbnailPath, photos[i].RawPath, string(byte), photos[i].CreatedAt.Format(time.RFC3339), photos[i].UpdatedAt.Format(time.RFC3339))
 	}
 
 	// jsbyte, _ := json.Marshal(photos)

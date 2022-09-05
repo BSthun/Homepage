@@ -4,7 +4,6 @@ import "time"
 
 type PhotoItem struct {
 	PhotoSectionId uint64    `gorm:"not null" json:"photo_section_id"`
-	Ratio          float32   `gorm:"type:FLOAT; not null" json:"ratio"`
 	Root           string    `gorm:"type:TEXT; not null" json:"root"`
 	ImagePath      string    `gorm:"type:TEXT; not null" json:"image_path"`
 	ThumbnailPath  string    `gorm:"type:TEXT; not null" json:"thumbnail_path"`
@@ -37,7 +36,6 @@ type ExifRaw struct {
 
 type Exif struct {
 	Aperture        string    `json:"apt"`
-	Brightness      string    `json:"bgn"`
 	Timestamp       time.Time `json:"t"`
 	ShutterSpeed    string    `json:"ss"`
 	FocalLength     string    `json:"fl"`
