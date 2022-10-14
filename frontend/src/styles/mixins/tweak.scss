@@ -5,7 +5,7 @@
 	border-radius: $size-infinity;
 	padding: 4px;
 	transition: background-color 300ms;
-	
+
 	&:hover {
 		background-color: $background;
 	}
@@ -14,7 +14,7 @@
 @mixin tweak-clickable {
 	cursor: pointer;
 	transition: background-color 300ms;
-	
+
 	&:hover {
 		background-color: #88888820;
 	}

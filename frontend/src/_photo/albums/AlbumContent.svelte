@@ -1,4 +1,3 @@
 <script lang="ts">
-	export let state: object;
+	export let state: object
 </script>
-

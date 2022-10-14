@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { getContext, onMount } from 'svelte';
-	import Container from '../components/layout/Container.svelte';
-	
-	export let title = '404 Page Not Found';
-	export let description = 'The page you are looking for is currently not exist on this website, try checking the URL and navigate again.';
-	export let code = 'ERR_NONEXISTENT_PAGE';
-	
-	const bind = getContext('bind');
-	
+	import { getContext, onMount } from 'svelte'
+	import Container from '../components/layout/Container.svelte'
+
+	export let title = '404 Page Not Found'
+	export let description =
+		'The page you are looking for is currently not exist on this website, try checking the URL and navigate again.'
+	export let code = 'ERR_NONEXISTENT_PAGE'
+
+	const bind = getContext('bind')
+
 	onMount(() => {
-		$bind.setLoading(false);
+		$bind.setLoading(false)
 	})
 </script>
 
@@ -21,7 +22,7 @@
 	<Container>
 		<div class="box-wrapper">
 			<div class="box">
-				<div class="bar"></div>
+				<div class="bar" />
 				<h1>{title}</h1>
 				<p>{description}</p>
 				<code>{code}</code>
@@ -32,13 +33,13 @@
 
 <style lang="scss">
 	@import 'src/styles/_index.scss';
-	
+
 	.notfound {
 		height: 100vh;
 		background-color: $color-grey-900;
 		z-index: 150;
 	}
-	
+
 	.box-wrapper {
 		width: 100%;
 		height: 100%;
@@ -46,7 +47,7 @@
 		justify-content: center;
 		align-items: center;
 	}
-	
+
 	.box {
 		width: 450px;
 		padding: 28px 20px 20px 20px;
@@ -56,21 +57,21 @@
 		background-color: $color-grey-800;
 		@include shadow-light-border;
 	}
-	
+
 	.bar {
 		position: absolute;
 		inset: 0;
 		height: 8px;
 		background-color: $color-primary;
 	}
-	
+
 	h1 {
 		font-size: 24px;
 		font-weight: 400;
 		color: $color-grey-300;
 		margin: 0 0 16px 0;
 	}
-	
+
 	p {
 		font-size: 16px;
 		font-weight: 400;
@@ -78,9 +79,8 @@
 		color: $color-grey-100;
 		margin: 0 0 16px 0;
 	}
-	
+
 	code {
 		color: $color-grey-500;
 	}
-
 </style>

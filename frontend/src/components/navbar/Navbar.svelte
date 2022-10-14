@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { trackLog } from '../../utils/api/track';
-	import { useLocation } from 'svelte-navigator';
-	import ImgBSthunFlat from '../../images/logo/bsthun-flat-white.svg';
-	import NavigatorItem from './NavigatorItem.svelte';
-	import type { NavbarItem } from './types';
-	
-	const location = useLocation();
-	
+	import { trackLog } from '../../utils/api/track'
+	import { useLocation } from 'svelte-navigator'
+	import ImgBSthunFlat from '../../images/logo/bsthun-flat-white.svg'
+	import NavigatorItem from './NavigatorItem.svelte'
+	import type { NavbarItem } from './types'
+
+	const location = useLocation()
+
 	const items: NavbarItem[] = [
 		{
 			context: null,
@@ -32,54 +32,56 @@
 			la: 'las la-camera',
 			href: '/photo',
 		},
-	];
-	
-	let toggled = false;
+	]
+
+	let toggled = false
 	let toggle = (log = true) => {
 		if (window.innerWidth < 768) {
-			toggled = !toggled;
+			toggled = !toggled
 		} else {
-			toggled = false;
+			toggled = false
 		}
-		
+
 		if (log) {
-			trackLog('navbar/toggle', null, toggled);
+			trackLog('navbar/toggle', null, toggled)
 		}
-	};
+	}
 </script>
 
 <nav class="navbar">
 	<div>
 		<div class="title">
-			<img alt="BSthun Flat Logo" src={ImgBSthunFlat}>
+			<img alt="BSthun Flat Logo" src={ImgBSthunFlat} />
 			<h1>BSthun</h1>
 		</div>
 		<div class={`navigator ${toggled && 'scaled'}`}>
 			{#each items as item, i}
 				<NavigatorItem
-					active={item.href === '/' ? $location.pathname === '/': $location.pathname.startsWith(item.href)}
+					active={item.href === '/'
+						? $location.pathname === '/'
+						: $location.pathname.startsWith(item.href)}
 					exact={item.href === $location.pathname}
 					title={item.title}
 					href={item.href}
 					la={item.la}
 					order={i + 1}
-					toggled={toggled}
-					toggle={toggle}
+					{toggled}
+					{toggle}
 				/>
 			{/each}
 		</div>
-		
+
 		<div class="hamburger" on:click={toggle}>
-			<i class="las la-grip-lines"></i>
+			<i class="las la-grip-lines" />
 		</div>
-		
-		<div class={`circular ${toggled && 'scaled'}`}></div>
+
+		<div class={`circular ${toggled && 'scaled'}`} />
 	</div>
 </nav>
 
 <style lang="scss">
 	@import 'src/styles/_index.scss';
-	
+
 	nav {
 		position: fixed;
 		top: 0;
@@ -91,7 +93,7 @@
 		-webkit-backdrop-filter: blur(4px);
 		border-bottom: 1px solid $color-border;
 		z-index: 1201;
-		
+
 		> div {
 			position: relative;
 			width: 100%;
@@ -101,38 +103,38 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			
+
 			.title {
 				display: flex;
 				margin-left: 16px;
 				z-index: 1204;
-				
+
 				@include breakpoint('md', 'dn') {
 					margin-left: 52px;
 				}
-				
+
 				img {
 					width: 32px;
 				}
-				
+
 				h1 {
 					margin-left: 8px;
 					letter-spacing: 1px;
 					line-height: 1.33;
 				}
 			}
-			
+
 			.navigator {
 				display: flex;
 				z-index: 1203;
-				
+
 				&:not(.scaled) {
 					@include breakpoint('md', 'dn') {
 						transition: visibility 1s step-end;
 						visibility: hidden;
 					}
 				}
-				
+
 				@include breakpoint('md', 'dn') {
 					position: absolute;
 					top: 0;
@@ -146,19 +148,19 @@
 					transition: none;
 				}
 			}
-			
+
 			.hamburger {
 				position: absolute;
 				z-index: 1205;
 				left: 16px;
 				font-size: 24px;
 				cursor: pointer;
-				
+
 				@include breakpoint('md', 'up') {
 					display: none;
 				}
 			}
-			
+
 			.circular {
 				position: absolute;
 				z-index: 1200;
@@ -168,14 +170,14 @@
 				width: 256px;
 				height: 256px;
 				background-color: $color-bluegrey-700;
-				
+
 				transform: scale3d(0, 0, 1);
 				transform-origin: center;
 				transition-property: all;
 				transition-duration: 0.5s;
 				transition-timing-function: $animate-easing-nav;
-				transition-delay: .2s;
-				
+				transition-delay: 0.2s;
+
 				&.scaled {
 					transform: scale3d(10, 10, 1);
 					transition-delay: 0s;

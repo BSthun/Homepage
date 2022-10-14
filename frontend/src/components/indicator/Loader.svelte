@@ -1,29 +1,29 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import CircularProgress from '../indicator/CircularProgress.svelte';
-	
-	const bind = getContext('bind');
-	let load: boolean | string = false;
-	let loadDesc: string = '';
-	
+	import { getContext } from 'svelte'
+	import CircularProgress from '../indicator/CircularProgress.svelte'
+
+	const bind = getContext('bind')
+	let load: boolean | string = false
+	let loadDesc: string = ''
+
 	$: bind.update((value) => ({
 		...value,
 		setLoading: (m, n = null) => {
-			load = m;
-			loadDesc = n;
+			load = m
+			loadDesc = n
 		},
-	}));
+	}))
 </script>
 
-{#if (load !== null && load !== false)}
+{#if load !== null && load !== false}
 	<div class="loader">
-		{#if (load === true)}
+		{#if load === true}
 			<CircularProgress />
 		{/if}
-		{#if (typeof load === "string")}
-			<i class="las la-exclamation-circle" style="font-size: 36px"></i>
+		{#if typeof load === 'string'}
+			<i class="las la-exclamation-circle" style="font-size: 36px" />
 			<h3>{load}</h3>
-			{#if (typeof loadDesc === "string")}
+			{#if typeof loadDesc === 'string'}
 				<p class="desc">{loadDesc}</p>
 			{/if}
 		{/if}
@@ -32,7 +32,7 @@
 
 <style lang="scss">
 	@import '../../styles/index';
-	
+
 	.loader {
 		position: fixed;
 		inset: 0;
@@ -44,7 +44,7 @@
 		gap: 12px;
 		z-index: 1000;
 	}
-	
+
 	.desc {
 		text-align: center;
 		padding: 0 15px;
