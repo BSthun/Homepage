@@ -26,8 +26,8 @@
 		trackLog('gallery/expand', null, $gallery.items[$gallery.expand].id);
 	};
 	
-	const download = (id, url) => {
-		trackLog('gallery/download', null, id);
+	const download = (id, url, mode) => {
+		trackLog('gallery/download/' + mode, null, id);
 		window.location.href = url + '?download=1';
 	};
 	
@@ -81,63 +81,56 @@
 				<span class="material-symbols-outlined">schedule</span>
 				<div>
 					<p>Timestamp</p>
-					<p>{moment(item.exif.timestamp).format("MMM D YYYY, h:mm a")}</p>
+					<p>{moment(item.exif.t).format("MMM D YYYY, h:mm a")}</p>
 				</div>
 			</div>
 			<div class="plane-info">
 				<span class="material-symbols-outlined">camera</span>
 				<div>
 					<p>Aperture</p>
-					<p>ƒ/{item.exif.aperture}</p>
+					<p>ƒ/{item.exif.apt}</p>
 				</div>
 			</div>
 			<div class="plane-info">
 				<span class="material-symbols-outlined">shutter_speed</span>
 				<div>
 					<p>Shutter Speed</p>
-					<p>{item.exif.exposure_time}s</p>
+					<p>{item.exif.ss}s</p>
 				</div>
 			</div>
 			<div class="plane-info">
 				<span class="material-symbols-outlined">crop</span>
 				<div>
 					<p>Focal Length</p>
-					<p>{item.exif.focal_length}mm ({item.exif.focal_length_35mm}mm FF)</p>
+					<p>{item.exif.fl}mm ({item.exif.fl_ff}mm FF)</p>
 				</div>
 			</div>
 			<div class="plane-info">
 				<span class="material-symbols-outlined">deblur</span>
 				<div>
 					<p>ISO Speed</p>
-					<p>{item.exif.iso_speed}</p>
-				</div>
-			</div>
-			<div class="plane-info">
-				<span class="material-symbols-outlined">light_mode</span>
-				<div>
-					<p>Brightness (RAW)</p>
-					<p>{item.exif.brightness}</p>
+					<p>{item.exif.iso}</p>
 				</div>
 			</div>
 			<div class="plane-info">
 				<span class="material-symbols-outlined">photo_camera</span>
 				<div>
 					<p>Camera</p>
-					<p>{item.exif.camera_maker} {item.exif.camera_model}</p>
+					<p>{item.exif.c}</p>
 				</div>
 			</div>
 			<div class="plane-info">
 				<span class="material-symbols-outlined">lens</span>
 				<div>
 					<p>Lens</p>
-					<p>{item.exif.lens_model}</p>
+					<p>{item.exif.l}</p>
 				</div>
 			</div>
-			<div class="plane-download" on:click={() => download(item.id, item.root + item.image_path)}>
+			<div class="plane-download" on:click={() => download(item.id, item.root + item.image_path, "img")}>
 				<span class="material-symbols-outlined">image</span>
 				<p>Download Image</p>
 			</div>
-			<div class="plane-download" on:click={() => download(item.id, item.root + item.raw_path)}>
+			<div class="plane-download" on:click={() => download(item.id, item.root + item.raw_path, "raw")}>
 				<span class="material-symbols-outlined">add_photo_alternate</span>
 				<p>Download Raw</p>
 			</div>

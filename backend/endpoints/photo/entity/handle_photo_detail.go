@@ -41,7 +41,6 @@ func PhotoListHandler(c *fiber.Ctx) error {
 			ImagePath:     *photoItem.ImagePath,
 			ThumbnailPath: *photoItem.ThumbnailPath,
 			RawPath:       *photoItem.RawPath,
-			Ratio:         *photoItem.Ratio,
 			Exif:          photoItem.Exif,
 		}, nil
 	})

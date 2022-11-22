@@ -18,7 +18,7 @@
 	};
 	
 	const sectionNav = (id) => {
-		navigate('/photo/section/' + id + (query.get('token') ? '?token=' + query.get('token') : ''));
+		navigate('/photo/section/' + id);
 	};
 	
 	const mount = () => {
@@ -31,6 +31,7 @@
 		}))
 			.then((res) => {
 				state = res.data;
+				navigate('/photo/album/' + state.album.slug, { replace: true });
 				$bind.setLoading(false);
 			})
 			.catch((err) => {

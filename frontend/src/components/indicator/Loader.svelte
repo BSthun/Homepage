@@ -4,11 +4,13 @@
 	
 	const bind = getContext('bind');
 	let load: boolean | string = false;
+	let loadDesc: string = '';
 	
 	$: bind.update((value) => ({
 		...value,
-		setLoading: (m) => {
+		setLoading: (m, n = null) => {
 			load = m;
+			loadDesc = n;
 		},
 	}));
 </script>
@@ -21,6 +23,9 @@
 		{#if (typeof load === "string")}
 			<i class="las la-exclamation-circle" style="font-size: 36px"></i>
 			<h3>{load}</h3>
+			{#if (typeof loadDesc === "string")}
+				<p class="desc">{loadDesc}</p>
+			{/if}
 		{/if}
 	</div>
 {/if}
@@ -38,5 +43,10 @@
 		align-items: center;
 		gap: 12px;
 		z-index: 1000;
+	}
+	
+	.desc {
+		text-align: center;
+		padding: 0 15px;
 	}
 </style>

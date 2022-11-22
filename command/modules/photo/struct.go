@@ -4,7 +4,6 @@ import "time"
 
 type PhotoItem struct {
 	PhotoSectionId uint64    `gorm:"not null" json:"photo_section_id"`
-	Ratio          float32   `gorm:"type:FLOAT; not null" json:"ratio"`
 	Root           string    `gorm:"type:TEXT; not null" json:"root"`
 	ImagePath      string    `gorm:"type:TEXT; not null" json:"image_path"`
 	ThumbnailPath  string    `gorm:"type:TEXT; not null" json:"thumbnail_path"`
@@ -36,15 +35,12 @@ type ExifRaw struct {
 }
 
 type Exif struct {
-	Aperture        string    `json:"aperture"`
-	Brightness      string    `json:"brightness"`
-	Credit          string    `json:"credit"`
-	Timestamp       time.Time `json:"timestamp"`
-	ExposureTime    string    `json:"exposure_time"`
-	FocalLength     string    `json:"focal_length"`
-	FocalLength35mm string    `json:"focal_length_35mm"`
-	IsoSpeed        string    `json:"iso_speed"`
-	LensModel       string    `json:"lens_model"`
-	CameraMaker     string    `json:"camera_maker"`
-	CameraModel     string    `json:"camera_model"`
+	Aperture        string    `json:"apt"`
+	Timestamp       time.Time `json:"t"`
+	ShutterSpeed    string    `json:"ss"`
+	FocalLength     string    `json:"fl"`
+	FocalLength35mm string    `json:"fl_ff"`
+	Iso             string    `json:"iso"`
+	Lens            string    `json:"l"`
+	Camera          string    `json:"c"`
 }

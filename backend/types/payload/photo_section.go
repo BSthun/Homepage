@@ -13,13 +13,13 @@ type ExtendedPhotoSection struct {
 }
 
 type AlbumSection struct {
-	Id           uint64     `json:"id"`
-	Title        string     `json:"title"`
-	Subtitle     string     `json:"subtitle"`
-	Date         *time.Time `json:"date"`
-	PhotoCount   *uint64    `json:"photo_count"`
-	ThumbnailUrl *string    `json:"thumbnail_url"`
-	UpdatedAt    *time.Time `json:"updated_at"`
+	Id           uint64    `json:"id"`
+	Title        string    `json:"title"`
+	Subtitle     string    `json:"subtitle"`
+	Date         time.Time `json:"date"`
+	PhotoCount   uint64    `json:"photo_count"`
+	ThumbnailUrl string    `json:"thumbnail_url"`
+	UpdatedAt    time.Time `json:"updated_at"`
 }
 
 type SectionQuery struct {
