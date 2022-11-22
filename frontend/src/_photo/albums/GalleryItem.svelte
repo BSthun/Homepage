@@ -1,20 +1,20 @@
 <script lang="ts">
-	import moment from 'moment';
-	import { trackLog } from '../../utils/api/track';
-	import { getContext } from 'svelte';
-	
-	export let item: Object;
-	export let index: number;
-	
-	const gallery = getContext('gallery');
-	
+	import moment from 'moment'
+	import { trackLog } from '../../utils/api/track'
+	import { getContext } from 'svelte'
+
+	export let item: Object
+	export let index: number
+
+	const gallery = getContext('gallery')
+
 	const onClick = () => {
-		trackLog('gallery/expand', null, item.id);
+		trackLog('gallery/expand', null, item.id)
 		gallery.update((value) => ({
 			...value,
 			expand: index,
-		}));
-	};
+		}))
+	}
 </script>
 
 <div class="gallery-item" on:click={onClick}>
@@ -47,68 +47,68 @@
 
 <style lang="scss">
 	@import '../../styles/index';
-	
+
 	.gallery-item {
 		border-radius: 4px;
 		overflow: hidden;
 		position: relative;
 		cursor: pointer;
-		
+
 		@include breakpoint('md', 'up') {
 			height: 400px;
 		}
-		
+
 		@include breakpoint('md', 'dn') {
 			width: 100%;
 		}
-		
+
 		&:hover {
 			img {
 				filter: blur(4px) brightness(0.8);
 			}
-			
+
 			.overlay {
 				bottom: 25px;
 			}
 		}
 	}
-	
+
 	.img {
 		transition: filter 300ms ease-in-out;
-		
+
 		@include breakpoint('md', 'up') {
 			height: 100%;
 		}
-		
+
 		@include breakpoint('md', 'dn') {
 			width: 100%;
 		}
 	}
-	
+
 	.overlay {
 		position: absolute;
 		bottom: -96px;
 		left: 25px;
 		transition: bottom 300ms ease-in-out;
 	}
-	
+
 	.r-1 {
 		display: flex;
 		align-items: center;
 		margin-top: 4px;
 		margin-right: 16px;
-		
+
 		.material-symbols-outlined {
 			padding-right: 4px;
 			font-size: 18px;
 		}
 	}
-	
+
 	.r-2 {
 		display: flex;
 		flex-wrap: wrap;
 		white-space: nowrap;
-		
+
 		@include breakpoint('md', 'dn') {
 			display: none;
 		}

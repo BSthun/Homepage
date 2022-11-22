@@ -1,26 +1,30 @@
-import type { AxiosInstance, AxiosResponse } from 'axios';
-import instance from 'axios';
-import { ApiError } from './interface';
-import type { InfoResponse } from './interface';
+import type { AxiosInstance, AxiosResponse } from 'axios'
+import instance from 'axios'
+import { ApiError } from './interface'
+import type { InfoResponse } from './interface'
 
 export const axios: AxiosInstance = instance.create({
-	withCredentials: true, baseURL: '/api', validateStatus: () => true,
-});
+	withCredentials: true,
+	baseURL: '/api',
+	validateStatus: () => true,
+})
 
-export const caller = function <T>(c: Promise<AxiosResponse<InfoResponse<T>>>): Promise<InfoResponse<T>> {
+export const caller = function <T>(
+	c: Promise<AxiosResponse<InfoResponse<T>>>
+): Promise<InfoResponse<T>> {
 	return new Promise<InfoResponse<T>>((resolve, reject) => {
 		c.then(({ data, statusText }) => {
 			if (data.success === true) {
-				resolve(data);
+				resolve(data)
 			}
 			if (data.success === false && data.message) {
-				reject(new ApiError(data.message, data.code));
+				reject(new ApiError(data.message, data.code))
 			}
 
 			// In case of no data value
-			reject(new ApiError(statusText, 'NO_DATA_ERROR'));
+			reject(new ApiError(statusText, 'NO_DATA_ERROR'))
 		}).catch((e) => {
-			reject(new ApiError(e.message, 'AXIOS_ERROR'));
-		});
-	});
-};
+			reject(new ApiError(e.message, 'AXIOS_ERROR'))
+		})
+	})
+}

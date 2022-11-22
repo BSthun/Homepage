@@ -1,16 +1,16 @@
-import commonjs from '@rollup/plugin-commonjs';
-import image from '@rollup/plugin-image';
-import resolve from '@rollup/plugin-node-resolve';
-import * as fs from 'fs';
-import css from 'rollup-plugin-css-only';
-import dev from 'rollup-plugin-dev';
-import livereload from 'rollup-plugin-livereload';
-import svelte from 'rollup-plugin-svelte';
-import { terser } from 'rollup-plugin-terser';
-import typescript from 'rollup-plugin-typescript2';
-import preprocess from 'svelte-preprocess';
+import commonjs from '@rollup/plugin-commonjs'
+import image from '@rollup/plugin-image'
+import resolve from '@rollup/plugin-node-resolve'
+import * as fs from 'fs'
+import css from 'rollup-plugin-css-only'
+import dev from 'rollup-plugin-dev'
+import livereload from 'rollup-plugin-livereload'
+import svelte from 'rollup-plugin-svelte'
+import { terser } from 'rollup-plugin-terser'
+import typescript from 'rollup-plugin-typescript2'
+import preprocess from 'svelte-preprocess'
 
-const production = !process.env.ROLLUP_WATCH;
+const production = !process.env.ROLLUP_WATCH
 
 export default {
 	input: 'src/main.ts',
@@ -34,18 +34,18 @@ export default {
 				},
 			}),
 			onwarn: (warning, handler) => {
-				const { code, message } = warning;
+				const { code, message } = warning
 				if (code === 'css-unused-selector') {
-					return;
+					return
 				}
-				handler(warning);
+				handler(warning)
 			},
 		}),
-		
+
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
-		
+
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration -
@@ -60,36 +60,37 @@ export default {
 			sourceMap: !production,
 			inlineSources: !production,
 		}),
-		
+
 		image(),
-		
+
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
-		!production && dev({
-			dirs: ['public'],
-			basePath: '/',
-			silent: false,
-			host: '0.0.0.0',
-			port: 3000,
-			spa: true,
-			server: {
-				https: {
-					key: fs.readFileSync('./res/key.pem'),
-					cert: fs.readFileSync('./res/cert.pem'),
+		!production &&
+			dev({
+				dirs: ['public'],
+				basePath: '/',
+				silent: false,
+				host: '0.0.0.0',
+				port: 3000,
+				spa: true,
+				server: {
+					https: {
+						key: fs.readFileSync('./res/key.pem'),
+						cert: fs.readFileSync('./res/cert.pem'),
+					},
 				},
-			},
-			proxy: [
-				{
-					from: '/api',
-					to: 'http://127.0.0.1:3001/api',
-				},
-			],
-		}),
-		
+				proxy: [
+					{
+						from: '/api',
+						to: 'http://127.0.0.1:3001/api',
+					},
+				],
+			}),
+
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
 		!production && livereload('public'),
-		
+
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
 		production && terser(),
@@ -97,4 +98,4 @@ export default {
 	watch: {
 		clearScreen: false,
 	},
-};
+}

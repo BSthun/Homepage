@@ -1,24 +1,22 @@
 <script>
-	import {
-		getContext,
-		onMount,
-	} from 'svelte';
-	
-	const bind = getContext('bind');
-	let count = 0;
-	
+	import { getContext, onMount } from 'svelte'
+
+	const bind = getContext('bind')
+	let count = 0
+
 	function handleClick() {
-		count += 1;
+		count += 1
 	}
-	
+
 	onMount(() => {
-		$bind.setLoading(false);
+		$bind.setLoading(false)
 	})
 </script>
 
 <div class="home">
 	<button on:click={handleClick}>
-		Clicked {count} {count === 1 ? 'time' : 'times'}
+		Clicked {count}
+		{count === 1 ? 'time' : 'times'}
 	</button>
 </div>
 
@@ -28,10 +26,10 @@
 
 <style lang="scss">
 	@import 'src/styles/_index.scss';
-	
+
 	.home {
 		@include default-paging;
-		
+
 		h1 {
 			padding: 2px;
 		}

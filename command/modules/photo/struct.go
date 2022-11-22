@@ -4,7 +4,6 @@ import "time"
 
 type PhotoItem struct {
 	PhotoSectionId uint64    `gorm:"not null" json:"photo_section_id"`
-	Root           string    `gorm:"type:TEXT; not null" json:"root"`
 	ImagePath      string    `gorm:"type:TEXT; not null" json:"image_path"`
 	ThumbnailPath  string    `gorm:"type:TEXT; not null" json:"thumbnail_path"`
 	RawPath        string    `gorm:"type:TEXT; not null" json:"raw_path"`

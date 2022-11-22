@@ -1,35 +1,39 @@
 <script lang="ts">
-	import { onMount, setContext } from 'svelte';
-	import { writable } from 'svelte/store';
-	import AppRouter from './AppRouter.svelte';
-	import CircularProgress from './components/indicator/CircularProgress.svelte';
-	import SnackBar from './components/indicator/SnackBar.svelte';
-	import Loader from './components/indicator/Loader.svelte';
-	import { axios, caller } from './utils/api';
-	
-	let state = writable<any>(null);
-	let bind = writable<any>({});
-	setContext('state', state);
-	setContext('bind', bind);
-	
+	import { onMount, setContext } from 'svelte'
+	import { writable } from 'svelte/store'
+	import AppRouter from './AppRouter.svelte'
+	import CircularProgress from './components/indicator/CircularProgress.svelte'
+	import SnackBar from './components/indicator/SnackBar.svelte'
+	import Loader from './components/indicator/Loader.svelte'
+	import { axios, caller } from './utils/api'
+
+	let state = writable<any>(null)
+	let bind = writable<any>({})
+	setContext('state', state)
+	setContext('bind', bind)
+
 	onMount(() => {
-		$bind.setLoading(true);
-		
-		if (navigator.userAgent.includes('wv') ||
+		$bind.setLoading(true)
+
+		if (
+			navigator.userAgent.includes('wv') ||
 			(navigator.userAgent.includes('Mobile/') &&
-			!navigator.userAgent.includes('Safari/'))) {
-			$bind.setLoading('In-app browser is not supported',
-				"This site may use some browser-specific features. For better user experience, please open the link in device browser instead.");
+				!navigator.userAgent.includes('Safari/'))
+		) {
+			$bind.setLoading(
+				'In-app browser is not supported',
+				'This site may use some browser-specific features. For better user experience, please open the link in device browser instead.'
+			)
 		}
-		
+
 		caller(axios.get('/account/state'))
 			.then((res) => {
-				state.set(res.data);
+				state.set(res.data)
 			})
 			.catch((err) => {
-				$bind.openSnackbar(err.message);
-			});
-	});
+				$bind.openSnackbar(err.message)
+			})
+	})
 </script>
 
 <svelte:head>
@@ -37,7 +41,7 @@
 </svelte:head>
 
 <div>
-	{#if ($state !== null)}
+	{#if $state !== null}
 		<AppRouter />
 	{:else}
 		<div class="loading">

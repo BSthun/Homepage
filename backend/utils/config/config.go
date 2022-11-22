@@ -11,7 +11,7 @@ import (
 	"backend/utils/text"
 )
 
-var C = new(config)
+var C = new(Model)
 
 func init() {
 	// Load configurations to struct
