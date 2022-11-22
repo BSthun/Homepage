@@ -4,13 +4,12 @@
 	import { navigate } from 'svelte-navigator'
 	import type { Writable } from 'svelte/store'
 	import Container from '../components/layout/Container.svelte'
+	import AlbumItem from './components/AlbumItem.svelte'
 
 	const bind: Writable<any> = getContext('bind')
 
 	let state: any = {
-		album: {
-			name: 'Album',
-		},
+		albums: [],
 	}
 
 	const mount = () => {
@@ -35,6 +34,11 @@
 <div class="album">
 	<Container>
 		<h1 class="title">Photo</h1>
+		<div class="list">
+			{#each state.albums as album}
+				<AlbumItem {album} />
+			{/each}
+		</div>
 	</Container>
 </div>
 
@@ -50,5 +54,12 @@
 	.title {
 		border-bottom: white 1px solid;
 		padding-bottom: 16px;
+	}
+
+	.list {
+		display: grid;
+		gap: 16px;
+		margin: 16px 0;
+		grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
 	}
 </style>

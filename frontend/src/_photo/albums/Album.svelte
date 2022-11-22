@@ -76,11 +76,6 @@
 		margin-top: 24px;
 		display: grid;
 		gap: 12px;
-
-		grid-template-columns: repeat(2, 50% [col-start]);
-
-		@include breakpoint('md', 'dn') {
-			grid-template-columns: repeat(1, 100% [col-start]);
-		}
+		grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
 	}
 </style>

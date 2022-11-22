@@ -9,6 +9,8 @@ type PhotoAlbum struct {
 	AccessToken  *string    `gorm:"type:VARCHAR(255); null" json:"access_token"`
 	CoverPhoto   *PhotoItem `gorm:"foreignKey:CoverPhotoId" json:"cover_photo"`
 	CoverPhotoId *uint64    `gorm:"not null" json:"cover_photo_id"`
+	SectionCount *uint64    `gorm:"not null" json:"section_count"`
+	PhotoCount   *uint64    `gorm:"not null" json:"photo_count"`
 	CreatedAt    *time.Time `gorm:"not null"` // Embedded field
 	UpdatedAt    *time.Time `gorm:"not null"` // Embedded field
 }

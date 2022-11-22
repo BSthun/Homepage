@@ -27,8 +27,10 @@ func AlbumListHandler(c *fiber.Ctx) error {
 			Id:           *photoItem.Id,
 			Name:         *photoItem.Name,
 			Slug:         *photoItem.Slug,
-			SectionCount: 0,
+			SectionCount: *photoItem.SectionCount,
+			PhotoCount:   *photoItem.PhotoCount,
 			ThumbnailUrl: *photoItem.CoverPhoto.PhotoSection.Path + *photoItem.CoverPhoto.ThumbnailPath,
+			UpdatedAt:    *photoItem.UpdatedAt,
 		}, nil
 	})
 

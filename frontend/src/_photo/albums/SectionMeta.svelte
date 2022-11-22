@@ -28,27 +28,17 @@
 <style lang="scss">
 	@import 'src/styles/_index.scss';
 
+	.section-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
 	.row {
 		display: flex;
-		margin-top: 8px;
 
 		@include breakpoint('md', 'dn') {
 			flex-direction: column;
-		}
-
-		.r-1 {
-			display: flex;
-			align-items: center;
-
-			i {
-				font-size: 22px;
-				padding-right: 6px;
-			}
-
-			h4 {
-				font-weight: 400;
-				padding-right: 12px;
-			}
 		}
 	}
 </style>
