@@ -38,6 +38,7 @@
 	.album-item {
 		display: flex;
 		flex-direction: column;
+		cursor: pointer;
 	}
 
 	.cover {
