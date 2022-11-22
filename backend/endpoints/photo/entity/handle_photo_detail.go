@@ -28,7 +28,7 @@ func PhotoListHandler(c *fiber.Ctx) error {
 
 	// * Query photo detail
 	var photoItems []*model.PhotoItem
-	if result := mysql.DB.Offset(20*query.PageNo).Limit(20).Find(&photoItems, "photo_section_id = ?", query.SectionId); result.Error != nil {
+	if result := mysql.DB.Offset(20*query.PageNo).Limit(20).Preload("PhotoSection").Find(&photoItems, "photo_section_id = ?", query.SectionId); result.Error != nil {
 		return response.Error(false, "Unable to query photo items", result.Error)
 	}
 
@@ -37,7 +37,7 @@ func PhotoListHandler(c *fiber.Ctx) error {
 		return &payload.PhotoItem{
 			Id:            *photoItem.Id,
 			Title:         splitPath[len(splitPath)-1],
-			Root:          *photoItem.Root,
+			Root:          *photoItem.PhotoSection.Path,
 			ImagePath:     *photoItem.ImagePath,
 			ThumbnailPath: *photoItem.ThumbnailPath,
 			RawPath:       *photoItem.RawPath,

@@ -1,13 +1,31 @@
 <script lang="ts">
+	import { axios, caller } from '../utils/api'
 	import { getContext, onMount } from 'svelte'
+	import { navigate } from 'svelte-navigator'
 	import type { Writable } from 'svelte/store'
 	import Container from '../components/layout/Container.svelte'
 
 	const bind: Writable<any> = getContext('bind')
 
-	onMount(() => {
-		$bind.setLoading(false)
-	})
+	let state: any = {
+		album: {
+			name: 'Album',
+		},
+	}
+
+	const mount = () => {
+		$bind.setLoading(true)
+		caller(axios.get(`/photo/entity/album/list`))
+			.then((res) => {
+				state = res.data
+				$bind.setLoading(false)
+			})
+			.catch((err) => {
+				$bind.setLoading(err.message)
+			})
+	}
+
+	onMount(mount)
 </script>
 
 <svelte:head>

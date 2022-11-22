@@ -27,11 +27,9 @@
 	class="link"
 	on:click={() => nav()}
 	style={ww < 768
-		? `opacity: ${toggled ? 1 : 0}; transform: translateY(${
-				toggled ? 0 : 12
-		  }px); transition: all .3s ease-in-out ${
-				toggled ? order * 0.1 : 0.2 - order * 0.05
-		  }s`
+		? `opacity: ${toggled ? 1 : 0};
+		transform: translateY(${toggled ? 0 : 12}px);
+		 transition: all .3s ease-in-out ${toggled ? order * 0.1 : 0.2 - order * 0.05}s`
 		: ''}
 >
 	<i class={la} />
@@ -49,6 +47,7 @@
 		margin-right: 16px;
 		color: $color-grey-100;
 		opacity: 0.8;
+		cursor: pointer;
 
 		&:hover {
 			opacity: 1;

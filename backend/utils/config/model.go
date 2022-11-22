@@ -1,6 +1,6 @@
 package config
 
-type config struct {
+type Model struct {
 	Environment uint8  `yaml:"environment" validate:"gte=1,lte=2"`
 	LogLevel    uint32 `yaml:"log_level" validate:"required"`
 

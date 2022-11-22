@@ -41,7 +41,7 @@ func AlbumDetailHandler(c *fiber.Ctx) error {
 	var albumSections []*payload.ExtendedPhotoSection
 
 	if result := mysql.DB.Model(new(model.PhotoSection)).
-		Select("photo_sections.*, (SELECT COUNT(*) FROM photo_items WHERE photo_section_id = photo_sections.id) AS photo_count, (SElECT GROUP_CONCAT(thumbnail_1) FROM (SELECT CONCAT(root, thumbnail_path) AS thumbnail_1 FROM photo_items WHERE photo_items.photo_section_id = photo_sections.id ORDER BY RAND() LIMIT 10) T2) as thumbnail_url").
+		Select("photo_sections.*, (SELECT COUNT(*) FROM photo_items WHERE photo_section_id = photo_sections.id) AS photo_count, (SElECT GROUP_CONCAT(thumbnail_1) FROM (SELECT CONCAT(photo_sections.path, photo_items.thumbnail_path) AS thumbnail_1 FROM photo_items WHERE photo_items.photo_section_id = photo_sections.id ORDER BY RAND() LIMIT 10) T2) as thumbnail_url").
 		Find(&albumSections, "photo_album_id = ?", photoAlbum.Id); result.Error != nil {
 		return response.Error(true, "Unable to query list of album sections")
 	}

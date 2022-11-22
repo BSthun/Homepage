@@ -71,7 +71,7 @@
 			{/each}
 		</div>
 
-		<div class="hamburger" on:click={toggle}>
+		<div class="hamburger" on:click={toggle} on:keypress={toggle}>
 			<i class="las la-grip-lines" />
 		</div>
 
