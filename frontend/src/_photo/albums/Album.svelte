@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext, onMount } from 'svelte';
-	import { useLocation, useParams } from 'svelte-navigator';
+	import { navigate, useLocation, useParams } from 'svelte-navigator';
 	import Container from '../../components/layout/Container.svelte';
 	import { axios, caller } from '../../utils/api';
 	import SectionItem from './SectionItem.svelte';
@@ -17,6 +17,10 @@
 		},
 	};
 	
+	const sectionNav = (id) => {
+		navigate('/photo/section/' + id + (query.get('token') ? '?token=' + query.get('token') : ''));
+	};
+	
 	const mount = () => {
 		$bind.setLoading(true);
 		caller(axios.get(`/photo/entity/album/detail`, {
@@ -31,7 +35,7 @@
 			})
 			.catch((err) => {
 				$bind.setLoading(err.message);
-			})
+			});
 	};
 	
 	onMount(mount);
@@ -46,7 +50,7 @@
 		<h1 class="title">Photo</h1>
 		<div class="grid">
 			{#each state.album.sections || [] as item, i}
-				<SectionItem item={item} />
+				<SectionItem item={item} nav={sectionNav} />
 			{/each}
 		</div>
 	</Container>

@@ -87,7 +87,7 @@
 			<div class="plane-info">
 				<span class="material-symbols-outlined">camera</span>
 				<div>
-					<p>Apearture</p>
+					<p>Aperture</p>
 					<p>ƒ/{item.exif.aperture}</p>
 				</div>
 			</div>

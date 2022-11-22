@@ -20,10 +20,10 @@ func SectionDetailHandler(c *fiber.Ctx) error {
 	}
 
 	s.SetDetail("ev", body.Event)
-	if body.BeginningState != "" {
+	if body.BeginningState != nil {
 		s.SetDetail("begin", body.BeginningState)
 	}
-	if body.EndingState != "" {
+	if body.EndingState != nil {
 		s.SetDetail("end", body.EndingState)
 	}
 
