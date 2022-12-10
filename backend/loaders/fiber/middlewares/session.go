@@ -26,10 +26,12 @@ var Session = func() fiber.Handler {
 				newSession = true
 			} else if *session.Token != c.Cookies("session_token") {
 				newSession = true
-			} else if (*session.UpdatedAt).Before(time.Now().Add(-2 * time.Hour)) {
-				if result := mysql.DB.Model(session).Update("token", text.Random(text.RandomSet.MixedAlphaNum, 16)); result.Error != nil {
+			} else if (*session.UpdatedAt).Before(time.Now().Add(180 * 24 * time.Hour)) {
+				token := text.Random(text.RandomSet.MixedAlphaNum, 16)
+				if result := mysql.DB.Model(session).Update("token", token); result.Error != nil {
 					return response.Error(true, "Failed to create session", result.Error)
 				}
+				session.Token = token
 				ApplyCookie(c, session)
 			}
 		}
