@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"encoding/json"
 	"strconv"
 	"strings"
 	"time"
@@ -19,6 +20,7 @@ var Session = func() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var session *model.TrackSession
 		var newSession bool
+		var referenceId *uint64
 		if c.Cookies("session_id") == "" {
 			newSession = true
 		} else {
@@ -26,10 +28,11 @@ var Session = func() fiber.Handler {
 				newSession = true
 			} else if *session.Token != c.Cookies("session_token") {
 				newSession = true
-			} else if (*session.UpdatedAt).Before(time.Now().Add(180 * 24 * time.Hour)) {
+				referenceId = session.Id
+			} else if (*session.UpdatedAt).Before(time.Now().Add(-24 * time.Hour)) {
 				token := text.Random(text.RandomSet.MixedAlphaNum, 16)
 				if result := mysql.DB.Model(session).Update("token", token); result.Error != nil {
-					return response.Error(true, "Failed to create session", result.Error)
+					return response.Error(true, "Failed to refresh session token", result.Error)
 				}
 				session.Token = token
 				ApplyCookie(c, session)
@@ -38,12 +41,22 @@ var Session = func() fiber.Handler {
 
 		if newSession {
 			session = &model.TrackSession{
-				Id:        nil,
-				Token:     text.Random(text.RandomSet.MixedAlphaNum, 16),
-				UserAgent: value.Ptr(c.Get("User-Agent")),
-				IpAddress: value.Ptr(c.Get("X-Real-IP")),
-				CreatedAt: nil,
-				UpdatedAt: nil,
+				Id:         nil,
+				Token:      text.Random(text.RandomSet.MixedAlphaNum, 16),
+				UserAgent:  value.Ptr(c.Get("User-Agent")),
+				IpAddress:  value.Ptr(c.Get("X-Real-IP")),
+				Attributes: value.Ptr("{}"),
+				CreatedAt:  nil,
+				UpdatedAt:  nil,
+			}
+			if referenceId != nil {
+				if bytes, err := json.Marshal(map[string]any{
+					"reference_id": referenceId,
+				}); err != nil {
+					return response.Error(true, "Failed to marshal session attributes", err)
+				} else {
+					session.Attributes = value.Ptr(string(bytes))
+				}
 			}
 			if result := mysql.DB.Create(session); result.Error != nil {
 				return response.Error(true, "Failed to create session", result.Error)

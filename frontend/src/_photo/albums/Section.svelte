@@ -3,7 +3,7 @@
 	import { useLocation, useParams } from 'svelte-navigator'
 	import Container from '../../components/layout/Container.svelte'
 	import { axios, caller } from '../../utils/api'
-	import SectionGallery from './Gallery.svelte'
+	import Gallery from './Gallery.svelte'
 	import SectionMeta from './SectionMeta.svelte'
 
 	const params = useParams()
@@ -51,7 +51,7 @@
 			<SectionMeta item={state} />
 		</div>
 		{#if state.section.id !== undefined}
-			<SectionGallery id={state.section.id} count={state.section.photo_count} />
+			<Gallery id={state.section.id} count={state.section.photo_count} />
 		{/if}
 	</Container>
 </div>
