@@ -60,6 +60,10 @@
 		display: grid;
 		gap: 16px;
 		margin: 16px 0;
-		grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+		grid-template-columns: repeat(2, 1fr);
+
+		@include breakpoint('md', 'dn') {
+			grid-template-columns: repeat(1, 1fr);
+		}
 	}
 </style>

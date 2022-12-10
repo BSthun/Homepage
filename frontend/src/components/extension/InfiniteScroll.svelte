@@ -9,12 +9,7 @@
 	let component
 
 	const onScroll = (e) => {
-		if (
-			document.documentElement.scrollHeight -
-				window.innerHeight -
-				window.scrollY <=
-			threshold
-		) {
+		if (document.documentElement.scrollHeight - window.innerHeight - window.scrollY <= threshold) {
 			if (!isLoadMore && more) {
 				dispatch('load')
 			}
@@ -32,8 +27,8 @@
 	}
 
 	onDestroy(() => {
-		window.addEventListener('scroll', onScroll)
-		window.addEventListener('resize', onScroll)
+		window.removeEventListener('scroll', onScroll)
+		window.removeEventListener('resize', onScroll)
 	})
 </script>
 

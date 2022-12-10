@@ -82,7 +82,9 @@ func (r *Subcommand) Run() error {
 
 		var aperture = "1.2"
 		if exifRaw.ApertureValue != nil {
-			aperture = strings.Split(exifRaw.ApertureValue[0], "/")[0]
+			// fmt.Println(exifRaw.ApertureValue)
+			// aperture = strings.Split(exifRaw.ApertureValue[0], "/")[0]
+			aperture = "1.8"
 		}
 
 		fl := "35"
@@ -105,7 +107,7 @@ func (r *Subcommand) Run() error {
 		}
 
 		photos = append(photos, &PhotoItem{
-			PhotoSectionId: 4,
+			PhotoSectionId: 5,
 			ImagePath:      "/image/" + file.Name(),
 			ThumbnailPath:  "/thumbnail/" + strings.Split(file.Name(), ".")[0] + "_thumbnail.jpg",
 			RawPath:        "/raw/" + strings.Split(file.Name(), ".")[0] + ".arw",

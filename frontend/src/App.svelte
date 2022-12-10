@@ -17,8 +17,7 @@
 
 		if (
 			navigator.userAgent.includes('wv') ||
-			(navigator.userAgent.includes('Mobile/') &&
-				!navigator.userAgent.includes('Safari/'))
+			(navigator.userAgent.includes('Mobile/') && !navigator.userAgent.includes('Safari/'))
 		) {
 			$bind.setLoading(
 				'In-app browser is not supported',

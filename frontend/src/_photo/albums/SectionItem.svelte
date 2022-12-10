@@ -23,10 +23,7 @@
 </script>
 
 <div class="album-item" on:click={() => nav(item.id)}>
-	<div
-		class="cover"
-		style={`background-image: url('${thumbnails[thumbnail]}')`}
-	/>
+	<div class="cover" style={`background-image: url('${thumbnails[thumbnail]}')`} />
 	<div class="info">
 		<SectionMeta item={{ section: item }} />
 	</div>

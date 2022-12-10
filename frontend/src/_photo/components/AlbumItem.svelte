@@ -6,10 +6,7 @@
 </script>
 
 <div class="album-item" on:click={() => navigate('/photo/album/' + album.slug)}>
-	<div
-		class="image"
-		style={`background-image: url(${album.thumbnail_url})`}
-	/>
+	<div class="image" style={`background-image: url(${album.thumbnail_url})`} />
 	<div class="info">
 		<h1>{album.name}</h1>
 		<div class="r-1">
@@ -64,11 +61,7 @@
 
 	.overlay {
 		position: absolute;
-		background: linear-gradient(
-			0deg,
-			rgba(0, 0, 0, 0.7) 0%,
-			rgba(0, 0, 0, 0) 100%
-		);
+		background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
 		bottom: 0;
 		left: 0;
 		right: 0;
