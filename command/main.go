@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"os"
 
+	"command/modules/compare"
 	"command/modules/photo"
-	"command/types/cmm"
+	"command/types/common"
 )
 
 func main() {
@@ -21,8 +22,9 @@ func cmd(args []string) error {
 		return errors.New("no sub-command found")
 	}
 
-	cmds := []cmm.Subcommand{
+	cmds := []common.Subcommand{
 		photo.NewPhoto(),
+		compare.NewPhotoCompare(),
 	}
 
 	subcommand := os.Args[1]

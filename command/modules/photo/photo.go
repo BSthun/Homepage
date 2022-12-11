@@ -1,10 +1,10 @@
 package photo
 
 import (
-	"command/types/cmm"
+	"command/types/common"
 )
 
-func NewPhoto() cmm.Subcommand {
+func NewPhoto() common.Subcommand {
 	sc := &Subcommand{
 		Dir: "",
 	}

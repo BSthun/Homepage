@@ -1,4 +1,4 @@
-package cmm
+package common
 
 type Subcommand interface {
 	Parse([]string) error

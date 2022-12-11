@@ -16,6 +16,8 @@ import (
 	_ "golang.org/x/image/tiff"
 
 	"github.com/rwcarlsen/goexif/exif"
+
+	"command/procedures/file"
 )
 
 type Subcommand struct {
@@ -36,7 +38,7 @@ func (r *Subcommand) Parse(args []string) error {
 func (r *Subcommand) Run() error {
 	// fmt.Printf("INFO | Variable DIR: %s\n", r.Dir)
 
-	files, err := GetFiles(r.Dir)
+	files, err := file.GetDscFiles(r.Dir)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -107,10 +109,10 @@ func (r *Subcommand) Run() error {
 		}
 
 		photos = append(photos, &PhotoItem{
-			PhotoSectionId: 5,
-			ImagePath:      "/image/" + file.Name(),
-			ThumbnailPath:  "/thumbnail/" + strings.Split(file.Name(), ".")[0] + "_thumbnail.jpg",
-			RawPath:        "/raw/" + strings.Split(file.Name(), ".")[0] + ".arw",
+			PhotoSectionId: 6,
+			ImagePath:      "img/" + file.Name(),
+			ThumbnailPath:  "tmb/" + strings.Split(file.Name(), ".")[0] + ".jpg",
+			RawPath:        "raw/" + strings.Split(file.Name(), ".")[0] + ".arw",
 			ShooterId:      1,
 			Exif: &Exif{
 				Aperture:        aperture,

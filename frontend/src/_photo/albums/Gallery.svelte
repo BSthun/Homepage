@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CircularProgress from '../../components/indicator/CircularProgress.svelte'
 	import { getContext, onMount, setContext } from 'svelte'
 	import { writable, type Writable } from 'svelte/store'
 	import InfiniteScroll from '../../components/extension/InfiniteScroll.svelte'
@@ -51,6 +52,11 @@
 			<GalleryItem {item} index={i} />
 		{/each}
 	</div>
+	{#if $gallery.fetching === true}
+		<div style="display: flex; justify-content: center; margin: 12px 0">
+			<CircularProgress />
+		</div>
+	{/if}
 	<InfiniteScroll
 		more={$gallery.items.length !== count}
 		on:load={$gallery.fetch()}
