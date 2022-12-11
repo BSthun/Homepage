@@ -51,7 +51,7 @@
 			<SectionMeta item={state} />
 		</div>
 		{#if state.section.id !== undefined}
-			<Gallery id={state.section.id} count={state.section.photo_count} />
+			<Gallery {state} />
 		{/if}
 	</Container>
 </div>

@@ -10,7 +10,7 @@
 		<Link to={'/photo/album/' + item.album.slug}>
 			<div class="r-1 bordered">
 				<i class="las la-arrow-left" />
-				<div class="">
+				<div>
 					<div class="r-1 subtitle">
 						<i class="las la-images" />
 						Album
