@@ -43,7 +43,12 @@
 	})
 	setContext('gallery', gallery)
 
-	onMount($gallery.fetch)
+	const mount = () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' })
+		$gallery.fetch()
+	}
+
+	onMount(mount)
 </script>
 
 <div class="gallery">

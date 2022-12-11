@@ -23,6 +23,7 @@
 	}
 
 	const mount = () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' })
 		$bind.setLoading(true)
 		caller(
 			axios.get(`/photo/entity/album/detail`, {
