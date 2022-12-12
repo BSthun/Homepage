@@ -3,7 +3,13 @@
 </script>
 
 <div>
-	<CircularProgress style="height: 32px; width: 32px;" class="colored" indeterminate fourColor />
+	<CircularProgress
+		style="height: 32px; width: 32px;"
+		class="colored"
+		indeterminate
+		fourColor
+		aria-label="Progress Bar"
+	/>
 </div>
 
 <style global lang="scss">

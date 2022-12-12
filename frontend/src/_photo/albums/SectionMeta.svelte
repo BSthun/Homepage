@@ -21,15 +21,15 @@
 		</Link>
 	{/if}
 	<h1>{item.section.title}</h1>
-	<h4>{item.section.subtitle}</h4>
+	<h2>{item.section.subtitle}</h2>
 	<div class="row">
 		<div class="r-1">
 			<i class="las la-image" />
-			<h4>{item.section.photo_count}</h4>
+			<p>{item.section.photo_count}</p>
 		</div>
 		<div class="r-1">
 			<i class="las la-clock" />
-			<h4>{moment(item.section.date).calendar()}</h4>
+			<p>{moment(item.section.date).calendar()}</p>
 		</div>
 	</div>
 </div>
@@ -41,10 +41,15 @@
 		display: flex;
 		flex-direction: column;
 		gap: 4px;
+
+		h2 {
+			font-size: 1rem;
+		}
 	}
 
 	.row {
 		display: flex;
+		font-size: 1rem;
 
 		@include breakpoint('md', 'dn') {
 			flex-direction: column;

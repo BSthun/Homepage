@@ -4,12 +4,12 @@
 	import { getContext, onDestroy, onMount } from 'svelte'
 	import SectionMeta from './SectionMeta.svelte'
 
-	export let item: Object
+	export let item: any
 	export let nav: Function
 
 	const thumbnails = item.thumbnail_url.split(',')
 	let thumbnail = 0
-	let interval: number
+	let interval: NodeJS.Timer
 
 	onMount(() => {
 		interval = setInterval(() => {

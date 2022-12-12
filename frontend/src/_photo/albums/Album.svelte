@@ -55,7 +55,7 @@
 		<Link to="/photo">
 			<div class="r-1 bordered">
 				<i class="las la-arrow-left" />
-				<h4>All albums</h4>
+				<p>All albums</p>
 			</div>
 		</Link>
 		<h1 class="title">{state.album.name}</h1>
@@ -98,6 +98,10 @@
 
 		&:hover {
 			background-color: rgba(255, 255, 255, 0.1);
+		}
+
+		> p {
+			font-size: 16px;
 		}
 	}
 </style>
