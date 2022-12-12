@@ -9,9 +9,7 @@ export const axios: AxiosInstance = instance.create({
 	validateStatus: () => true,
 })
 
-export const caller = function <T>(
-	c: Promise<AxiosResponse<InfoResponse<T>>>
-): Promise<InfoResponse<T>> {
+export const caller = function <T>(c: Promise<AxiosResponse<InfoResponse<T>>>): Promise<InfoResponse<T>> {
 	return new Promise<InfoResponse<T>>((resolve, reject) => {
 		c.then(({ data, statusText }) => {
 			if (data.success === true) {

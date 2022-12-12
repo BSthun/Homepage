@@ -4,12 +4,12 @@
 	import { getContext, onDestroy, onMount } from 'svelte'
 	import SectionMeta from './SectionMeta.svelte'
 
-	export let item: Object
+	export let item: any
 	export let nav: Function
 
 	const thumbnails = item.thumbnail_url.split(',')
 	let thumbnail = 0
-	let interval: number
+	let interval: NodeJS.Timer
 
 	onMount(() => {
 		interval = setInterval(() => {
@@ -23,10 +23,7 @@
 </script>
 
 <div class="album-item" on:click={() => nav(item.id)}>
-	<div
-		class="cover"
-		style={`background-image: url('${thumbnails[thumbnail]}')`}
-	/>
+	<div class="cover" style={`background-image: url('${thumbnails[thumbnail]}')`} />
 	<div class="info">
 		<SectionMeta item={{ section: item }} />
 	</div>

@@ -18,9 +18,7 @@ $breakpoint-directions: (
 );
 
 @mixin breakpoint($breakpoint, $direction) {
-	@if map-has-key($breakpoints, $breakpoint) and
-		map-has-key($breakpoint-directions, $direction)
-	{
+	@if map-has-key($breakpoints, $breakpoint) and map-has-key($breakpoint-directions, $direction) {
 		@if $direction == 'up' {
 			@media (#{inspect(map-get($breakpoint-directions, $direction))}: #{inspect(map-get($breakpoints, $breakpoint))}) {
 				@content;

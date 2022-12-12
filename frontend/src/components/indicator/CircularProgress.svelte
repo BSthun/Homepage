@@ -8,6 +8,7 @@
 		class="colored"
 		indeterminate
 		fourColor
+		aria-label="Progress Bar"
 	/>
 </div>
 
@@ -16,8 +17,6 @@
 	@use '@material/theme/index' as theme;
 
 	.colored {
-		@include circular-progress.indeterminate-colors(
-			theme.$grey-50 theme.$grey-50 theme.$grey-50 theme.$grey-50
-		);
+		@include circular-progress.indeterminate-colors(theme.$grey-50 theme.$grey-50 theme.$grey-50 theme.$grey-50);
 	}
 </style>

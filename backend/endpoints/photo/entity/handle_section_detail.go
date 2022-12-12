@@ -36,6 +36,7 @@ func SectionDetailHandler(c *fiber.Ctx) error {
 	// * Check album permission
 	if photoSection.PhotoAlbum.AccessToken != nil {
 		if err := photo.CheckAlbumAccess(s, *photoSection.PhotoAlbum.Id, *photoSection.PhotoAlbum.AccessToken, query.Token); err != nil {
+			_ = s.Commit(err)
 			return err
 		}
 	}

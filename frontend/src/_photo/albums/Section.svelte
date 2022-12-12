@@ -3,11 +3,14 @@
 	import { useLocation, useParams } from 'svelte-navigator'
 	import Container from '../../components/layout/Container.svelte'
 	import { axios, caller } from '../../utils/api'
-	import SectionGallery from './Gallery.svelte'
+	import Gallery from './Gallery.svelte'
 	import SectionMeta from './SectionMeta.svelte'
 
 	const params = useParams()
+	const location = useLocation()
 	const bind = getContext('bind')
+
+	let query = new URLSearchParams($location.search)
 
 	let state: any = {
 		section: {
@@ -22,6 +25,7 @@
 			axios.get(`/photo/entity/section/detail`, {
 				params: {
 					section_id: $params['section-id'],
+					token: query.get('token'),
 				},
 			})
 		)
@@ -47,10 +51,7 @@
 			<SectionMeta item={state} />
 		</div>
 		{#if state.section.id !== undefined}
-			<SectionGallery
-				id={state.section.id}
-				count={state.section.photo_count}
-			/>
+			<Gallery {state} />
 		{/if}
 	</Container>
 </div>

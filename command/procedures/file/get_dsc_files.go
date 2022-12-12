@@ -1,4 +1,4 @@
-package photo
+package file
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func GetFiles(dir string) ([]fs.FileInfo, error) {
+func GetDscFiles(dir string) ([]fs.FileInfo, error) {
 	// * Get absolute file path
 	abs, err := filepath.Abs(dir)
 	if err != nil {
@@ -31,7 +31,7 @@ func GetFiles(dir string) ([]fs.FileInfo, error) {
 	// * Filter only image files
 	var filtered []fs.FileInfo
 	for _, file := range files {
-		if strings.HasPrefix(file.Name(), "DSC") && strings.HasSuffix(file.Name(), ".jpg") {
+		if strings.HasPrefix(file.Name(), "DSC") {
 			filtered = append(filtered, file)
 		}
 	}

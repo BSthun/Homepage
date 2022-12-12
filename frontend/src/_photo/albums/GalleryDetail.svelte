@@ -20,11 +20,7 @@
 		if (i > 0 && $gallery.expand != $gallery.items.length - 1) {
 			$gallery.expand += 1
 		}
-		if (
-			i > 0 &&
-			$gallery.expand == $gallery.items.length - 1 &&
-			$gallery.expand < $gallery.count
-		) {
+		if (i > 0 && $gallery.expand == $gallery.items.length - 1 && $gallery.expand < $gallery.count) {
 			$gallery.fetch()
 		}
 		trackLog('gallery/expand', null, $gallery.items[$gallery.expand].id)
@@ -63,14 +59,8 @@
 			{:else}
 				<Zoom alt={item.title} src={item.root + item.image_path} />
 			{/if}
-			<span
-				class="material-symbols-outlined back"
-				on:click={() => forward(-1)}>arrow_back</span
-			>
-			<span
-				class="material-symbols-outlined forward"
-				on:click={() => forward(1)}>arrow_forward</span
-			>
+			<span class="material-symbols-outlined back" on:click={() => forward(-1)}>arrow_back</span>
+			<span class="material-symbols-outlined forward" on:click={() => forward(1)}>arrow_forward</span>
 		</div>
 		<div class={plane ? 'plane plane-toggled' : 'plane'}>
 			<div class="plane-close">
@@ -142,22 +132,12 @@
 					<p>{item.exif.l}</p>
 				</div>
 			</div>
-			<div
-				class="plane-download"
-				on:click={() =>
-					download(item.id, item.root + item.image_path, 'img')}
-			>
+			<div class="plane-download" on:click={() => download(item.id, item.root + item.image_path, 'img')}>
 				<span class="material-symbols-outlined">image</span>
 				<p>Download Image</p>
 			</div>
-			<div
-				class="plane-download"
-				on:click={() =>
-					download(item.id, item.root + item.raw_path, 'raw')}
-			>
-				<span class="material-symbols-outlined"
-					>add_photo_alternate</span
-				>
+			<div class="plane-download" on:click={() => download(item.id, item.root + item.raw_path, 'raw')}>
+				<span class="material-symbols-outlined">add_photo_alternate</span>
 				<p>Download Raw</p>
 			</div>
 		</div>

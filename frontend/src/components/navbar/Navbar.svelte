@@ -57,9 +57,7 @@
 		<div class={`navigator ${toggled && 'scaled'}`}>
 			{#each items as item, i}
 				<NavigatorItem
-					active={item.href === '/'
-						? $location.pathname === '/'
-						: $location.pathname.startsWith(item.href)}
+					active={item.href === '/' ? $location.pathname === '/' : $location.pathname.startsWith(item.href)}
 					exact={item.href === $location.pathname}
 					title={item.title}
 					href={item.href}

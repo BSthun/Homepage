@@ -33,6 +33,7 @@ func AlbumDetailHandler(c *fiber.Ctx) error {
 	// * Check album permission
 	if photoAlbum.AccessToken != nil {
 		if err := photo.CheckAlbumAccess(s, *photoAlbum.Id, *photoAlbum.AccessToken, query.Token); err != nil {
+			_ = s.Commit(err)
 			return err
 		}
 	}
