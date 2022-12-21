@@ -24,4 +24,5 @@ func Init(router fiber.Router) {
 	// * Tracking
 	tracking := router.Group("/track", middlewares.Session)
 	tracking.Put("/log/click", trackLog.SectionDetailHandler)
+	tracking.Put("/sig/err", trackLog.SigErrorHandler)
 }
