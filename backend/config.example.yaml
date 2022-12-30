@@ -26,4 +26,5 @@ jwt_secret: Mwggv7uxq7GAMcsTYJkKaR8R03
 
 # MySQL configuration
 mysql_dsn: root:12345678@tcp(localhost:3306)/homepage?charset=utf8mb4&parseTime=True&loc=Local
+mysql_strapi_dsn: root:12345678@tcp(localhost:3306)/homepage_strapi?charset=utf8mb4&parseTime=True&loc=Local
 mysql_migrate: true
