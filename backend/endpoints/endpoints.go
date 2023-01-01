@@ -4,8 +4,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"backend/endpoints/account/state"
-	photoEntity "backend/endpoints/photo/entity"
-	trackLog "backend/endpoints/track/log"
+	"backend/endpoints/diary"
+	"backend/endpoints/photo/entity"
+	"backend/endpoints/track/log"
 	"backend/loaders/fiber/middlewares"
 )
 
@@ -13,6 +14,10 @@ func Init(router fiber.Router) {
 	// * Account
 	account := router.Group("/account", middlewares.Session)
 	account.Get("/state", accountState.StateHandler)
+
+	// * Diary
+	diary := router.Group("/diary", middlewares.Session)
+	diary.Get("/graph", diaryEndpoints.ActivityGraphHandler)
 
 	// * Photo
 	photo := router.Group("/photo", middlewares.Session)

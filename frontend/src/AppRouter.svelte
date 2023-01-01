@@ -1,5 +1,6 @@
 <script>
 	import { Route, Router } from 'svelte-navigator'
+	import Diary from './_diary/Diary.svelte'
 	import Home from './_home/Home.svelte'
 	import NotFound from './_page/NotFound.svelte'
 	import SignalError from './_page/SignalError.svelte'
@@ -22,6 +23,9 @@
 	</Route>
 	<Route path="/photo/section/:section-id">
 		<Section />
+	</Route>
+	<Route path="/diary">
+		<Diary />
 	</Route>
 	<Route path="/page/signal/err">
 		<SignalError />
