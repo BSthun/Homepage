@@ -1,21 +1,23 @@
 @import '../variable';
 
 @mixin tweak-clickable-icon($background) {
-	cursor: pointer;
 	border-radius: $size-infinity;
 	padding: 4px;
-	transition: background-color 300ms;
-
-	&:hover {
-		background-color: $background;
-	}
+	@include tweak-clickable($background);
 }
 
-@mixin tweak-clickable {
+@mixin tweak-clickable($background) {
 	cursor: pointer;
 	transition: background-color 300ms;
 
 	&:hover {
 		background-color: #88888820;
 	}
+}
+
+@mixin tweak-cta-button() {
+	cursor: pointer;
+	border-radius: 4px;
+	padding: 8px 16px;
+	border: none;
 }

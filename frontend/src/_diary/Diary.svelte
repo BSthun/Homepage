@@ -4,6 +4,7 @@
 	import type { Writable } from 'svelte/store'
 	import Container from '../components/layout/Container.svelte'
 	import Graph from './components/Graph.svelte'
+	import ViewLocker from './components/ViewLocker.svelte'
 
 	const bind: Writable<any> = getContext('bind')
 
@@ -67,6 +68,7 @@
 
 		<div class="lister">
 			<Graph state={{ local, remote }} setYear={(year) => (local.year = year)} />
+			<ViewLocker />
 		</div>
 	</Container>
 </div>

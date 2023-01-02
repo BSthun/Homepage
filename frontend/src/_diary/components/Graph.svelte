@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Select from '@smui/select'
+	import Tooltip, { Wrapper, Title, Content, Link, RichActions } from '@smui/tooltip'
 	import { getContext, onMount } from 'svelte'
 	import type { Writable } from 'svelte/store'
 	import Container from '../../components/layout/Container.svelte'
@@ -11,6 +11,26 @@
 <div class="wrapper">
 	<div class="heading">
 		<h3>Activity Graph</h3>
+		<Wrapper rich style="flex: 1">
+			<span class="material-symbols-outlined icon">help</span>
+			<Tooltip>
+				<Content style="width: 260px">
+					3 aspects of daily activity represented<br />in the color mixture of each squares.
+					<div class="r-1">
+						<div class="preview-square" style="background-color: dodgerblue" />
+						Self
+					</div>
+					<div class="r-1">
+						<div class="preview-square" style="background-color: forestgreen" />
+						Social
+					</div>
+					<div class="r-1">
+						<div class="preview-square" style="background-color: indianred" />
+						Work
+					</div>
+				</Content>
+			</Tooltip>
+		</Wrapper>
 		<select label="Activity Year" on:change={(e) => setYear(e.target.value)}>
 			{#each state.local.yearOptions as year}
 				<option value={year} selected={year === state.local.year}>{year}</option>
@@ -71,6 +91,18 @@
 		margin-bottom: 16px;
 	}
 
+	.icon {
+		margin-left: 6px;
+		font-size: 18px;
+		@include tweak-clickable-icon($color-grey-800);
+	}
+
+	.preview-square {
+		width: 14px;
+		height: 14px;
+		margin-right: 6px;
+	}
+
 	.graph {
 		display: inline-grid;
 		grid-template-areas:
@@ -97,6 +129,10 @@
 			calc($week-width * 4) /* Oct */
 			calc($week-width * 4) /* Nov */
 			calc($week-width * 5) /* Dec */;
+
+		> span {
+			font-size: 14px;
+		}
 	}
 
 	.squares {

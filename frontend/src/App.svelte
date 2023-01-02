@@ -57,4 +57,5 @@
 	@import 'node_modules/@smui/circular-progress/style';
 	@import 'node_modules/@smui/snackbar/style';
 	@import 'node_modules/@smui/select/style';
+	@import 'node_modules/@smui/tooltip/style';
 </style>

@@ -58,9 +58,9 @@ func ActivityGraphHandler(c *fiber.Ctx) error {
 			}
 			dayGraph = append(dayGraph, lightenGraph)
 		} else if iter.Before(time.Now()) {
-			dayGraph = append(dayGraph, 1184274 /* #121212 */)
+			dayGraph = append(dayGraph, 0 /* #121212 */)
 		} else {
-			dayGraph = append(dayGraph, 1579032 /* #181818 */)
+			dayGraph = append(dayGraph, 0 /* #181818 */)
 		}
 	}
 
