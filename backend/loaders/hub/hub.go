@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"backend/types/enum"
+	"backend/utils/text"
 )
 
 var Hub *hubModel
@@ -22,8 +23,13 @@ func Init() {
 		logrus.Warn("Unable to get Spotify token: ", err)
 	}
 
-	s := gocron.NewScheduler(time.UTC)
+	s := gocron.NewScheduler(text.BangkokTime)
 	_, _ = s.Every(1 * time.Minute).Do(func() {
+		if time.Now().After(Hub.SpotifyTokenExpired) {
+			if err := spotifyToken(); err != nil {
+				logrus.Warn("Unable to refresh Spotify token: ", err)
+			}
+		}
 		state, err := spotifyPlayback()
 		if err != nil {
 			logrus.Warn("Unable to get Spotify playback state: ", err)

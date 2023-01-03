@@ -2,12 +2,12 @@ package text
 
 import "time"
 
-var bangkokTime *time.Location
+var BangkokTime *time.Location
 
 func init() {
-	bangkokTime, _ = time.LoadLocation("Asia/Bangkok")
+	BangkokTime, _ = time.LoadLocation("Asia/Bangkok")
 }
 
 func GetDateString() string {
-	return time.Now().In(bangkokTime).Format("2006-01-02")
+	return time.Now().In(BangkokTime).Format("2006-01-02")
 }
