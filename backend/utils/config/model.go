@@ -12,6 +12,10 @@ type Model struct {
 
 	JwtSecret string `yaml:"jwt_secret" validate:"required"`
 
-	MySqlDsn     string `yaml:"mysql_dsn" validate:"required"`
-	MySqlMigrate bool   `yaml:"mysql_migrate"`
+	MySqlDsn       string `yaml:"mysql_dsn" validate:"required"`
+	MySqlStrapiDsn string `yaml:"mysql_strapi_dsn" validate:"required"`
+	MySqlMigrate   bool   `yaml:"mysql_migrate"`
+
+	SpotifyAuthorization string `yaml:"spotify_authorization" validate:"required"`
+	SpotifyRefreshToken  string `yaml:"spotify_refresh_token" validate:"required"`
 }

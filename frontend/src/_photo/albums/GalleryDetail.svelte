@@ -273,7 +273,7 @@
 		align-items: center;
 		gap: 6px;
 		font-size: 16px;
-		@include tweak-clickable;
+		@include tweak-clickable($color-default-clickable);
 	}
 
 	.center {

@@ -3,13 +3,13 @@ package payload
 import "time"
 
 type AlbumList struct {
-	Id           uint64    `json:"id"`
-	Name         string    `json:"name"`
-	Slug         string    `json:"slug"`
-	ThumbnailUrl string    `json:"thumbnail_url"`
-	SectionCount uint64    `json:"section_count"`
-	PhotoCount   uint64    `json:"photo_count"`
-	UpdatedAt    time.Time `json:"updated_at"`
+	Id            uint64    `json:"id"`
+	Name          string    `json:"name"`
+	Slug          string    `json:"slug"`
+	CoverPhotoUrl string    `json:"cover_photo_url"`
+	SectionCount  uint64    `json:"section_count"`
+	PhotoCount    uint64    `json:"photo_count"`
+	UpdatedAt     time.Time `json:"updated_at"`
 }
 
 type AlbumDetail struct {

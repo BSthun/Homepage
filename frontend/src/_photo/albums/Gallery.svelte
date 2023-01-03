@@ -83,6 +83,8 @@
 </div>
 
 <style lang="scss">
+	@import '../../styles/index';
+
 	.gallery-view {
 		margin-top: 16px;
 		display: flex;
@@ -94,9 +96,6 @@
 	}
 
 	.more {
-		cursor: pointer;
-		border-radius: 12px;
-		padding: 8px 16px;
-		border: none;
+		@include tweak-cta-button();
 	}
 </style>

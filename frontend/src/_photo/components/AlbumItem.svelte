@@ -6,7 +6,7 @@
 </script>
 
 <div class="album-item" on:click={() => navigate('/photo/album/' + album.slug)}>
-	<div class="image" style={`background-image: url(${album.thumbnail_url})`} />
+	<div class="image" style={`background-image: url(${album.cover_photo_url})`} />
 	<div class="info">
 		<h1>{album.name}</h1>
 		<div class="r-1">

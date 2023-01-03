@@ -16,6 +16,7 @@ import (
 )
 
 var DB *gorm.DB
+var StrapiDB *gorm.DB
 
 func Init() {
 	// Initialize GORM instance using previously opened SQL connection
@@ -47,12 +48,29 @@ func Init() {
 		},
 	)
 
+	strapiDialector := mysql.New(
+		mysql.Config{
+			DSN:               config.C.MySqlStrapiDsn,
+			DefaultStringSize: 255,
+		},
+	)
+
+	// * Open main database connection
 	if db, err := gorm.Open(dialector, &gorm.Config{
 		Logger: gormLogger,
 	}); err != nil {
 		loggerUtils.Log(logrus.Fatal, "UNABLE TO LOAD GORM MYSQL DATABASE")
 	} else {
 		DB = db
+	}
+
+	// * Open strapi database connection
+	if db, err := gorm.Open(strapiDialector, &gorm.Config{
+		Logger: gormLogger,
+	}); err != nil {
+		loggerUtils.Log(logrus.Fatal, "UNABLE TO LOAD STRAPI GORM MYSQL DATABASE")
+	} else {
+		StrapiDB = db
 	}
 
 	// Initialize model migrations
@@ -70,10 +88,10 @@ func migrate() error {
 	if err := DB.AutoMigrate(
 		new(model.PhotoAlbum),
 		new(model.PhotoItem),
-		new(model.PhotoItemPerson),
 		new(model.PhotoPerson),
 		new(model.PhotoSection),
 		new(model.PhotoSessionAlbum),
+		new(model.DiarySpotifyAnalytics),
 		new(model.TrackSession),
 		new(model.TrackLog),
 	); err != nil {

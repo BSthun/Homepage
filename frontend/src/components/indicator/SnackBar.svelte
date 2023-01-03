@@ -19,7 +19,7 @@
 
 <div class="snackbar">
 	<Snackbar bind:this={snackbar}>
-		<Label>{message}</Label>
+		<Label>{@html message}</Label>
 		<Actions on:click={(e) => snackbar.close()}>
 			<i class="las la-times clickable" />
 		</Actions>
