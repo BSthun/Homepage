@@ -91,6 +91,7 @@ func migrate() error {
 		new(model.PhotoPerson),
 		new(model.PhotoSection),
 		new(model.PhotoSessionAlbum),
+		new(model.DiarySpotifyAnalytics),
 		new(model.TrackSession),
 		new(model.TrackLog),
 	); err != nil {

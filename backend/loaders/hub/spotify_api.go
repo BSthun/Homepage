@@ -57,11 +57,11 @@ func spotifyToken() error {
 	return nil
 }
 
-func spotifyPlayback() *present.SpotifyPlaybackState {
+func spotifyPlayback() (*present.SpotifyPlaybackState, error) {
 	// * Construct request
 	req, err := http.NewRequest("GET", "https://api.spotify.com/v1/me/player", nil)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	req.Header.Set("Authorization", "Bearer "+Hub.SpotifyAccessToken)
 
@@ -71,7 +71,7 @@ func spotifyPlayback() *present.SpotifyPlaybackState {
 	}
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	defer func() {
 		_ = resp.Body.Close()
@@ -80,14 +80,14 @@ func spotifyPlayback() *present.SpotifyPlaybackState {
 	// * Read response body
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	// * Parse response body
 	var data *present.SpotifyPlaybackState
-	if err := json.Unmarshal(body, data); err != nil {
-		return nil
+	if err := json.Unmarshal(body, &data); err != nil {
+		return nil, err
 	}
 
-	return data
+	return data, nil
 }

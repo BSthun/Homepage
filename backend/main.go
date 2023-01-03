@@ -12,7 +12,7 @@ import (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	hub.Init()
 	mysql.Init()
+	hub.Init()
 	fiber.Init()
 }
