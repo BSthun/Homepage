@@ -60,7 +60,7 @@ func AlbumDetailHandler(c *fiber.Ctx) error {
 	})
 
 	_ = s.Commit(nil)
-	return c.JSON(response.Info(map[string]any{
+	return c.JSON(response.Success(map[string]any{
 		"album": &payload.AlbumDetail{
 			Id:       *photoAlbum.Id,
 			Name:     *photoAlbum.Name,

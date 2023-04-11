@@ -20,7 +20,7 @@ func StateHandler(c *fiber.Ctx) error {
 		return response.Error(true, "WEBVIEW_UNLOADED")
 	}
 
-	return c.JSON(response.Info(map[string]any{
+	return c.JSON(response.Success(map[string]any{
 		"state": "ok",
 	}))
 }

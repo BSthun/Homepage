@@ -28,7 +28,7 @@ func SectionDetailHandler(c *fiber.Ctx) error {
 	}
 
 	_ = s.Commit(nil)
-	return c.JSON(response.Info(map[string]any{
+	return c.JSON(response.Success(map[string]any{
 		"accepted": true,
 	}))
 }

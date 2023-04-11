@@ -83,6 +83,13 @@ func spotifyPlayback() (*present.SpotifyPlaybackState, error) {
 		return nil, err
 	}
 
+	// * Check if body is isset
+	if len(body) == 0 {
+		return &present.SpotifyPlaybackState{
+			IsPlaying: false,
+		}, nil
+	}
+
 	// * Parse response body
 	var data *present.SpotifyPlaybackState
 	if err := json.Unmarshal(body, &data); err != nil {

@@ -1,7 +1,6 @@
 package hub
 
 import (
-	"strings"
 	"time"
 
 	"github.com/go-co-op/gocron"
@@ -37,7 +36,7 @@ func Init() {
 		}
 
 		// * Check if playback is active
-		if !state.IsPlaying {
+		if !state.IsPlaying || state.Item == nil {
 			return
 		}
 
@@ -51,8 +50,8 @@ func Init() {
 		for _, artist := range state.Item.Artists {
 			spotifyRecord(enum.SpotifyEntityArtist, artist.Id)
 		}
-		if state.Context.Type == "playlist" {
-			spotifyRecord(enum.SpotifyEntityPlaylist, strings.Split(state.Context.Uri, ":")[2])
+		if state.Context != nil {
+			spotifyRecord(enum.SpotifyEntityContext, state.Context.Uri)
 		}
 		spotifyRecord(enum.SpotifyEntityDevice, state.Device.Name)
 		spotifyRecord(enum.SpotifyEntityRepeat, state.RepeatState)

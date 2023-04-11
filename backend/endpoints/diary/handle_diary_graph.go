@@ -52,22 +52,22 @@ func ActivityGraphHandler(c *fiber.Ctx) error {
 	dayGraph := make([]uint32, 0)
 	for iter := time.Date(year, 1, 1, 0, 0, 0, 0, time.UTC); iter.Year() == year; iter = iter.AddDate(0, 0, 1) {
 		if day, ok := dayMapper[iter.Format("2006-01-02")]; ok {
-			lightenGraph := *day.Graph + 1579032
-			if lightenGraph > 16777215 {
-				lightenGraph = 16777215 /* #FFFFFF */
+			lightenGraph := *day.Graph + 0x181818
+			if lightenGraph > 0xFFFFFF {
+				lightenGraph = 0xFFFFFF
 			}
 			dayGraph = append(dayGraph, lightenGraph)
 		} else if iter.Before(time.Now()) {
-			dayGraph = append(dayGraph, 0 /* #121212 */)
+			dayGraph = append(dayGraph, 0x121212)
 		} else {
-			dayGraph = append(dayGraph, 0 /* #181818 */)
+			dayGraph = append(dayGraph, 0x181818)
 		}
 	}
 
 	// * Commit session
 	_ = s.Commit(nil)
 
-	return c.JSON(response.Info(map[string]any{
+	return c.JSON(response.Success(map[string]any{
 		"days_graph": dayGraph,
 	}))
 }
