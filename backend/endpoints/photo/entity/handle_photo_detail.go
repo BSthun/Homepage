@@ -32,6 +32,7 @@ func PhotoListHandler(c *fiber.Ctx) error {
 		return response.Error(false, "Unable to query photo items", result.Error)
 	}
 
+	// * Fetch photo info
 	items, _ := value.Iterate(photoItems, func(photoItem *model.PhotoItem) (*payload.PhotoItem, *response.ErrorInstance) {
 		splitPath := strings.Split(*photoItem.ImagePath, "/")
 		return &payload.PhotoItem{
@@ -46,7 +47,7 @@ func PhotoListHandler(c *fiber.Ctx) error {
 	})
 
 	_ = s.Commit(nil)
-	return c.JSON(response.Info(map[string]any{
+	return c.JSON(response.Success(map[string]any{
 		"items": items,
 	}))
 }

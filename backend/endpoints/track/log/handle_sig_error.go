@@ -22,7 +22,7 @@ func SigErrorHandler(c *fiber.Ctx) error {
 	s.SetDetail("t", body.Title)
 
 	_ = s.Commit(nil)
-	return c.JSON(response.Info(map[string]any{
+	return c.JSON(response.Success(map[string]any{
 		"accepted": true,
 	}))
 }

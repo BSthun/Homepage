@@ -45,7 +45,7 @@ func SectionDetailHandler(c *fiber.Ctx) error {
 	// TODO: Implement JWT access token
 
 	_ = s.Commit(nil)
-	return c.JSON(response.Info(map[string]any{
+	return c.JSON(response.Success(map[string]any{
 		"section": &payload.AlbumSection{
 			Id:           *photoSection.Id,
 			Title:        *photoSection.Title,
