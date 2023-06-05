@@ -1,2 +1,6 @@
 # Finder Desktop Service
 .DS_Store
+.idea
+.vscode
+
+/temp
