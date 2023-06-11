@@ -5,7 +5,7 @@ import (
 
 	"backend/types/common"
 	"backend/types/response"
-	"share/payload"
+	"share/types/payload"
 )
 
 func SigErrorHandler(c *fiber.Ctx) error {

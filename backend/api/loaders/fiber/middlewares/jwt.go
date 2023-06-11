@@ -1,13 +1,13 @@
 package middlewares
 
 import (
+	"backend/loaders/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/jwt/v3"
 
 	"backend/types/common"
 
 	"backend/types/response"
-	"backend/utils/config"
 )
 
 var Jwt = func() fiber.Handler {

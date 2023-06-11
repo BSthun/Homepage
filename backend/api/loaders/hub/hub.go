@@ -1,13 +1,13 @@
 package hub
 
 import (
+	"share/utils/text"
 	"time"
 
 	"github.com/go-co-op/gocron"
 	"github.com/sirupsen/logrus"
 
-	"backend/utils/text"
-	"share/enum"
+	"share/types/enum"
 )
 
 var Hub *hubModel

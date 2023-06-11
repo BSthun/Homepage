@@ -2,6 +2,9 @@ package middlewares
 
 import (
 	"encoding/json"
+	"share/types/model"
+	"share/utils/text"
+	value2 "share/utils/value"
 	"strconv"
 	"strings"
 	"time"
@@ -10,10 +13,7 @@ import (
 
 	"backend/loaders/mysql"
 	"backend/types/common"
-	"backend/types/model"
 	"backend/types/response"
-	"backend/utils/text"
-	"backend/utils/value"
 )
 
 var Session = func() fiber.Handler {
@@ -43,9 +43,9 @@ var Session = func() fiber.Handler {
 			session = &model.TrackSession{
 				Id:         nil,
 				Token:      text.Random(text.RandomSet.MixedAlphaNum, 16),
-				UserAgent:  value.Ptr(c.Get("User-Agent")),
-				IpAddress:  value.Ptr(c.Get("X-Real-IP")),
-				Attributes: value.Ptr("{}"),
+				UserAgent:  value2.Ptr(c.Get("User-Agent")),
+				IpAddress:  value2.Ptr(c.Get("X-Real-IP")),
+				Attributes: value2.Ptr("{}"),
 				CreatedAt:  nil,
 				UpdatedAt:  nil,
 			}
@@ -55,7 +55,7 @@ var Session = func() fiber.Handler {
 				}); err != nil {
 					return response.Error(true, "Failed to marshal session attributes", err)
 				} else {
-					session.Attributes = value.Ptr(string(bytes))
+					session.Attributes = value2.Ptr(string(bytes))
 				}
 			}
 			if result := mysql.DB.Create(session); result.Error != nil {
@@ -64,9 +64,9 @@ var Session = func() fiber.Handler {
 			ApplyCookie(c, session)
 		} else {
 			ips := strings.Split(*session.IpAddress, ",")
-			if !value.Contain(ips, c.Get("X-Real-IP")) {
+			if !value2.Contain(ips, c.Get("X-Real-IP")) {
 				ips = append(ips, c.Get("X-Real-IP"))
-				session.IpAddress = value.Ptr(strings.Join(ips, ","))
+				session.IpAddress = value2.Ptr(strings.Join(ips, ","))
 				if result := mysql.DB.Save(session); result.Error != nil {
 					return response.Error(true, "Failed to update session", result.Error)
 				}

@@ -3,8 +3,8 @@ package photo
 import (
 	"backend/loaders/mysql"
 	"backend/types/common"
-	"backend/types/model"
 	"backend/types/response"
+	"share/types/model"
 )
 
 func CheckAlbumAccess(session *common.Session, albumId uint64, albumToken string, queryToken string) *response.ErrorInstance {

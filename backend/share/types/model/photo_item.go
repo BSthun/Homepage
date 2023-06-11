@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"share/extern"
+	"share/types/extern"
 )
 
 type PhotoItem struct {
@@ -15,6 +15,7 @@ type PhotoItem struct {
 	ImagePath      *string       `gorm:"type:TEXT; not null" json:"image_path"`
 	ThumbnailPath  *string       `gorm:"type:TEXT; not null" json:"thumbnail_path"`
 	RawPath        *string       `gorm:"type:TEXT; null" json:"raw_path"`
+	Blurhash       *string       `gorm:"type:TEXT; null" json:"blurhash"`
 	Exif           *extern.Exif  `gorm:"type:JSON; not null" json:"exif"`
 	CreatedAt      *time.Time    `gorm:"not null"` // Embedded field
 	UpdatedAt      *time.Time    `gorm:"not null"` // Embedded field

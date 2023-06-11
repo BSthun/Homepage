@@ -1,8 +1,9 @@
 package diaryEndpoints
 
 import (
-	extendedModel "backend/types/model_extended"
 	"fmt"
+	"share/types/model_extended"
+	"share/utils/text"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,8 +11,7 @@ import (
 	"backend/loaders/mysql"
 	"backend/types/common"
 	"backend/types/response"
-	"backend/utils/text"
-	"share/payload"
+	"share/types/payload"
 )
 
 func ActivityGraphHandler(c *fiber.Ctx) error {

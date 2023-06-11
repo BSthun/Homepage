@@ -1,6 +1,7 @@
 package fiber
 
 import (
+	"backend/loaders/config"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -9,7 +10,6 @@ import (
 	"backend/endpoints"
 	"backend/loaders/fiber/middlewares"
 	"backend/types/response"
-	"backend/utils/config"
 	"backend/utils/logger"
 )
 

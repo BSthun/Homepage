@@ -3,14 +3,13 @@ package file
 import (
 	"fmt"
 	"io/fs"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-func GetDscFiles(dir string) ([]fs.FileInfo, error) {
+func GetDscFiles(dir string) ([]fs.DirEntry, error) {
 	// * Get absolute file path
 	abs, err := filepath.Abs(dir)
 	if err != nil {
@@ -23,15 +22,15 @@ func GetDscFiles(dir string) ([]fs.FileInfo, error) {
 	}
 
 	// * Read directory information
-	files, err := ioutil.ReadDir(abs)
+	files, err := os.ReadDir(abs)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// * Filter only image files
-	var filtered []fs.FileInfo
+	var filtered []fs.DirEntry
 	for _, file := range files {
-		if strings.HasPrefix(file.Name(), "DSC") {
+		if !strings.HasPrefix(file.Name(), ".") {
 			filtered = append(filtered, file)
 		}
 	}

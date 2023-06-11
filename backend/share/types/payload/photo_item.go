@@ -1,6 +1,8 @@
 package payload
 
-import "share/extern"
+import (
+	"share/types/extern"
+)
 
 type PhotoItem struct {
 	Id            uint64       `json:"id"`

@@ -1,10 +1,9 @@
 package middlewares
 
 import (
+	"backend/loaders/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-
-	"backend/utils/config"
 )
 
 var Recover = func() fiber.Handler {

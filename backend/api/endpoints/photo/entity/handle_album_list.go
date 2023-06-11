@@ -2,13 +2,13 @@ package photoEntity
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"share/types/model"
+	"share/utils/value"
 
 	"backend/loaders/mysql"
 	"backend/types/common"
-	"backend/types/model"
 	"backend/types/response"
-	"backend/utils/value"
-	"share/payload"
+	"share/types/payload"
 )
 
 func AlbumListHandler(c *fiber.Ctx) error {

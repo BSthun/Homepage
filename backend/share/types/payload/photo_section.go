@@ -3,7 +3,7 @@ package payload
 import (
 	"time"
 
-	"backend/types/model"
+	"share/types/model"
 )
 
 type ExtendedPhotoSection struct {

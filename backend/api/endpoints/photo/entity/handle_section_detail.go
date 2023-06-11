@@ -2,13 +2,13 @@ package photoEntity
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"share/types/model"
 
 	"backend/loaders/mysql"
 	"backend/procedures/photo"
 	"backend/types/common"
-	"backend/types/model"
 	"backend/types/response"
-	"share/payload"
+	"share/types/payload"
 )
 
 func SectionDetailHandler(c *fiber.Ctx) error {

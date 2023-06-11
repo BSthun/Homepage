@@ -1,6 +1,6 @@
 package model
 
-import "share/enum"
+import "share/types/enum"
 
 type DiarySpotifyAnalytics struct {
 	Date   *string             `gorm:"type:VARCHAR(255); index:entity,unique; not null" json:"timestamp"` // yyyy-mm-dd

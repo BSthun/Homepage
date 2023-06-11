@@ -1,6 +1,7 @@
 package hub
 
 import (
+	"backend/loaders/config"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -8,8 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"backend/utils/config"
-	"share/extern"
+	"share/types/extern"
 )
 
 func spotifyToken() error {

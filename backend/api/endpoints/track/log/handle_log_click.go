@@ -5,7 +5,7 @@ import (
 
 	"backend/types/common"
 	"backend/types/response"
-	"share/payload"
+	"share/types/payload"
 )
 
 func SectionDetailHandler(c *fiber.Ctx) error {

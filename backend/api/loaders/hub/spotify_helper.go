@@ -4,12 +4,12 @@ import (
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"share/types/model"
+	"share/utils/text"
+	"share/utils/value"
 
 	"backend/loaders/mysql"
-	"backend/types/model"
-	"backend/utils/text"
-	"backend/utils/value"
-	"share/enum"
+	"share/types/enum"
 )
 
 func spotifyRecord(entity enum.SpotifyEntity, val string) {

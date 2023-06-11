@@ -1,16 +1,16 @@
 package photoEntity
 
 import (
+	"share/types/model"
+	"share/utils/value"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
 
 	"backend/loaders/mysql"
 	"backend/types/common"
-	"backend/types/model"
 	"backend/types/response"
-	"backend/utils/value"
-	"share/payload"
+	"share/types/payload"
 )
 
 func PhotoListHandler(c *fiber.Ctx) error {
