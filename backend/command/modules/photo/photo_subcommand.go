@@ -4,24 +4,27 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/buckket/go-blurhash"
 	"image"
 	_ "image/jpeg"
 	_ "image/png"
 	"log"
 	"os"
 	"path/filepath"
-	"share/types/extern"
-	"share/types/model"
-	"share/utils/value"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/buckket/go-blurhash"
+
+	"share/types/extern"
+	"share/types/model"
+	"share/utils/value"
+
 	_ "golang.org/x/image/tiff"
 
-	"command/procedures/file"
 	"github.com/rwcarlsen/goexif/exif"
+
+	"command/procedures/file"
 )
 
 type Subcommand struct {
@@ -49,7 +52,7 @@ func (r *Subcommand) Run() error {
 
 	var photos []*model.PhotoItem
 
-	//fmt.Println("photo_section_id;shooter_id;image_path;thumbnail_path;raw_path;blurhash;exif;created_at;updated_at")
+	fmt.Println("photo_section_id;shooter_id;image_path;thumbnail_path;raw_path;blurhash;exif;created_at;updated_at")
 	for i, fileInfo := range files {
 		if i == -1 {
 			continue
@@ -75,7 +78,25 @@ func (r *Subcommand) Run() error {
 			log.Fatal(err.Error())
 		}
 
-		hash, err := blurhash.Encode(5, 5, img)
+		bounds := img.Bounds()
+		width := bounds.Dx()
+		height := bounds.Dy()
+		w := bounds.Dx()
+		h := bounds.Dy()
+
+		for w >= 10 && h >= 10 {
+			w /= 10
+			h /= 10
+		}
+
+		if w > 10 {
+			w = 9
+		}
+		if h > 10 {
+			h = 9
+		}
+
+		hash, err := blurhash.Encode(w, h, img)
 		if err != nil {
 			log.Fatal(err.Error())
 		}
@@ -101,7 +122,7 @@ func (r *Subcommand) Run() error {
 		}
 
 		fl := "35"
-		fl35 := "52"
+		flff := "52"
 		if exifRaw.FocalLength != nil {
 			foc := strings.Split(exifRaw.FocalLength[0], "/")
 			fl = foc[0]
@@ -110,13 +131,23 @@ func (r *Subcommand) Run() error {
 				foc1, _ := strconv.ParseInt(foc[1], 10, 32)
 				fl = fmt.Sprintf("%d", foc0/foc1)
 			}
-			fl35 = strconv.Itoa(exifRaw.FocalLengthIn35mmFilm[0])
+			if len(exifRaw.FocalLengthIn35mmFilm) > 0 {
+				flff = strconv.Itoa(exifRaw.FocalLengthIn35mmFilm[0])
+			} else {
+				flff = fl
+			}
 		} else {
 			exifRaw.LensModel = "RISESPRAY 35mm F1.2"
 		}
 
 		if exifRaw.LensModel == "----" {
 			exifRaw.LensModel = "RISESPRAY 35mm F1.2"
+		}
+
+		if len(exifRaw.IsoSpeedRatings) == 0 {
+			exifRaw.LensModel = "N/A"
+			exifRaw.IsoSpeedRatings = []int{0}
+			exifRaw.ExposureTime = []string{"N/A"}
 		}
 
 		currentTime := time.Now()
@@ -140,18 +171,21 @@ func (r *Subcommand) Run() error {
 				Timestamp:     t.UTC(),
 				ShutterSpeed:  exifRaw.ExposureTime[0],
 				FocalLength:   fl,
-				FocalLengthFF: fl35,
+				FocalLengthFF: flff,
 				Iso:           strconv.Itoa(exifRaw.IsoSpeedRatings[0]),
 				Lens:          exifRaw.LensModel,
 				Camera:        camera,
+				Software:      exifRaw.Software,
+				Width:         width,
+				Height:        height,
 			},
 			CreatedAt: &currentTime,
 			UpdatedAt: &currentTime,
 		})
 
-		//bytes, err := json.Marshal(photos[i].Exif)
-		//fmt.Printf("%d;%d;%s;%s;%s;%s;%s;%s;%s\n", *photos[i].PhotoSectionId, *photos[i].ShooterId, *photos[i].ImagePath, *photos[i].ThumbnailPath, *photos[i].Blurhash, *photos[i].RawPath, string(bytes), photos[i].CreatedAt.Format(time.RFC3339), photos[i].UpdatedAt.Format(time.RFC3339))
-		fmt.Printf("UPDATE photo_items SET blurhash = '%s' WHERE image_path = '%s'\n", *photos[i].Blurhash, *photos[i].ImagePath)
+		bytes, err := json.Marshal(photos[i].Exif)
+		fmt.Printf("%d;%d;%s;%s;%s;\"%s\";%s;%s;%s\n", *photos[i].PhotoSectionId, *photos[i].ShooterId, *photos[i].ImagePath, *photos[i].ThumbnailPath, *photos[i].RawPath, *photos[i].Blurhash, string(bytes), photos[i].CreatedAt.Format(time.RFC3339), photos[i].UpdatedAt.Format(time.RFC3339))
+		// fmt.Printf("UPDATE photo_items SET blurhash = '%s' WHERE image_path = '%s'\n", *photos[i].Blurhash, *photos[i].ImagePath)
 	}
 
 	// jsbyte, _ := json.Marshal(photos)

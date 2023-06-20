@@ -15,6 +15,9 @@ type Exif struct {
 	Iso           string    `json:"iso"`
 	Lens          string    `json:"l"`
 	Camera        string    `json:"c"`
+	Software      string    `json:"s"`
+	Width         int       `json:"w"`
+	Height        int       `json:"h"`
 }
 
 func (r *Exif) Scan(src any) error {
