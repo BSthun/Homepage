@@ -11,6 +11,7 @@ type PhotoItem struct {
 	ImagePath     string       `json:"image_path"`
 	ThumbnailPath string       `json:"thumbnail_path"`
 	RawPath       string       `json:"raw_path"`
+	Blurhash      string       `json:"blurhash"`
 	Exif          *extern.Exif `json:"exif"`
 }
 

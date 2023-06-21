@@ -1,10 +1,14 @@
 <script lang="ts">
 	import moment from 'moment'
-	import { trackLog } from '../../utils/api/track'
 	import { getContext } from 'svelte'
+	import { BlurhashImage } from 'svelte-blurhash'
+	import { trackLog } from '../../utils/api/track'
 
 	export let item: any
 	export let index: number
+
+	let windowWidth: number
+	let divWidth: number
 
 	const gallery = getContext('gallery')
 
@@ -15,10 +19,55 @@
 			expand: index,
 		}))
 	}
+
+	$: calculated = (() => {
+		if (item.exif.w === 0) {
+			return null
+		}
+		if (windowWidth < 768) {
+			return {
+				width: '100%',
+				height: (divWidth / item.exif.w) * item.exif.h,
+			}
+		}
+
+		const maxWidth = 1024 / 2
+		const base = {
+			width: (400 / item.exif.h) * item.exif.w,
+			height: 400,
+		}
+		if (base.width > maxWidth) {
+			base.height = (maxWidth / base.width) * base.height
+			base.width = maxWidth
+		}
+
+		return base
+	})()
 </script>
 
-<div class="gallery-item" on:click={onClick}>
-	<img alt={item.title} class="img" src={item.root + item.thumbnail_path} />
+<svelte:window bind:innerWidth={windowWidth} />
+
+<div
+	class="gallery-item"
+	on:click={onClick}
+	bind:offsetWidth={divWidth}
+	style={item.exif.w !== 0 ? 'height: fit-content' : ''}
+>
+	<!-- TODO: Migrate all image to have width and height exif properties -->
+	{#if item.exif.w !== 0}
+		<div class="blurhash">
+			<BlurhashImage
+				hash={item.blurhash}
+				src={item.root + item.thumbnail_path}
+				width={calculated.width}
+				height={calculated.height}
+				fadeDuration={600}
+			/>
+		</div>
+	{:else}
+		<img class="img" alt={item.title} src={item.root + item.thumbnail_path} />
+	{/if}
+
 	<div class="overlay">
 		<h4>{item.title}</h4>
 		<div class="r-1">
@@ -63,7 +112,8 @@
 		}
 
 		&:hover {
-			img {
+			.img,
+			.blurhash {
 				filter: blur(4px) brightness(0.8);
 			}
 
@@ -73,7 +123,8 @@
 		}
 	}
 
-	.img {
+	.img,
+	.blurhash {
 		transition: filter 300ms ease-in-out;
 
 		@include breakpoint('md', 'up') {

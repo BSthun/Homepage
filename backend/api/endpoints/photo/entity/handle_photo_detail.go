@@ -1,9 +1,10 @@
 package photoEntity
 
 import (
+	"strings"
+
 	"share/types/model"
 	"share/utils/value"
-	"strings"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -42,6 +43,7 @@ func PhotoListHandler(c *fiber.Ctx) error {
 			ImagePath:     *photoItem.ImagePath,
 			ThumbnailPath: *photoItem.ThumbnailPath,
 			RawPath:       *photoItem.RawPath,
+			Blurhash:      *photoItem.Blurhash,
 			Exif:          photoItem.Exif,
 		}, nil
 	})
