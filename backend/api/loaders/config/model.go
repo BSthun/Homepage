@@ -16,6 +16,6 @@ type Model struct {
 	MySqlStrapiDsn string `yaml:"mysql_strapi_dsn" validate:"required"`
 	MySqlMigrate   bool   `yaml:"mysql_migrate"`
 
-	SpotifyAuthorization string `yaml:"spotify_authorization" validate:"required"`
-	SpotifyRefreshToken  string `yaml:"spotify_refresh_token" validate:"required"`
+	SpotifyAuthorization string `yaml:"spotify_authorization" validate:"omitempty"`
+	SpotifyRefreshToken  string `yaml:"spotify_refresh_token" validate:"required_unless=SpotifyAuthorization ''"`
 }

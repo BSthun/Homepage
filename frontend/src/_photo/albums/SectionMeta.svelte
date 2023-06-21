@@ -2,7 +2,7 @@
 	import moment from 'moment'
 	import { Link } from 'svelte-navigator'
 
-	export let item: object
+	export let item: any
 </script>
 
 <div class="section-meta">

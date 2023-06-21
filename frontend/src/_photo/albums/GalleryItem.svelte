@@ -3,7 +3,7 @@
 	import { trackLog } from '../../utils/api/track'
 	import { getContext } from 'svelte'
 
-	export let item: Object
+	export let item: any
 	export let index: number
 
 	const gallery = getContext('gallery')

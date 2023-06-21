@@ -3,12 +3,15 @@ package text
 import (
 	"math/rand"
 	"strings"
+	"time"
 )
+
+var Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 func Random(characters string, number int) *string {
 	var generated strings.Builder
 	for i := 0; i < number; i++ {
-		random := rand.Intn(len(characters))
+		random := Rand.Intn(len(characters))
 		randomChar := characters[random]
 		generated.WriteString(string(randomChar))
 	}
