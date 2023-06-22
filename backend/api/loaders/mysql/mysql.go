@@ -1,11 +1,12 @@
 package mysql
 
 import (
-	"backend/loaders/config"
 	"log"
 	"os"
-	model2 "share/types/model"
 	"time"
+
+	"backend/loaders/config"
+	"share/types/model"
 
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
@@ -86,14 +87,14 @@ func Init() {
 func migrate() error {
 	// * Migrate model
 	if err := DB.AutoMigrate(
-		new(model2.PhotoAlbum),
-		new(model2.PhotoItem),
-		new(model2.PhotoPerson),
-		new(model2.PhotoSection),
-		new(model2.PhotoSessionAlbum),
-		new(model2.DiarySpotifyAnalytics),
-		new(model2.TrackSession),
-		new(model2.TrackLog),
+		new(model.PhotoAlbum),
+		new(model.PhotoItem),
+		new(model.PhotoPerson),
+		new(model.PhotoSection),
+		new(model.PhotoSessionAlbum),
+		new(model.DiarySpotifyAnalytics),
+		new(model.TrackSession),
+		new(model.TrackLog),
 	); err != nil {
 		return err
 	}

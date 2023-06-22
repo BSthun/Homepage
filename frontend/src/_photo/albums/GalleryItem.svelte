@@ -20,6 +20,10 @@
 		}))
 	}
 
+	const onHover = (event: 'me' | 'ml' | 'ts' | 'te') => {
+		trackLog('gallery/item/' + event, null, item.id)
+	}
+
 	$: calculated = (() => {
 		if (item.exif.w === 0) {
 			return null
@@ -50,6 +54,7 @@
 <div
 	class="gallery-item"
 	on:click={onClick}
+	on:mouseenter={() => onHover('me')}
 	bind:offsetWidth={divWidth}
 	style={item.exif.w !== 0 ? 'height: fit-content' : ''}
 >
@@ -97,6 +102,17 @@
 <style lang="scss">
 	@import '../../styles/index';
 
+	@mixin itemActive {
+		.img,
+		.blurhash {
+			filter: blur(4px) brightness(0.8);
+		}
+
+		.overlay {
+			bottom: 25px;
+		}
+	}
+
 	.gallery-item {
 		border-radius: 4px;
 		overflow: hidden;
@@ -112,19 +128,21 @@
 		}
 
 		&:hover {
-			.img,
-			.blurhash {
-				filter: blur(4px) brightness(0.8);
+			@media (pointer: fine) {
+				@include itemActive;
 			}
+		}
 
-			.overlay {
-				bottom: 25px;
+		&:active {
+			@media (hover: none) {
+				@include itemActive;
 			}
 		}
 	}
 
 	.img,
 	.blurhash {
+		pointer-events: none;
 		transition: filter 300ms ease-in-out;
 
 		@include breakpoint('md', 'up') {
