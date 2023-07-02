@@ -2,10 +2,14 @@
 	import { onDestroy, onMount } from 'svelte'
 	import { navigate } from 'svelte-navigator'
 
-	export let album: Object
+	export let album: any
+
+	const onCardAction = () => {
+		navigate('/photo/album/' + album.slug)
+	}
 </script>
 
-<div class="album-item" on:click={() => navigate('/photo/album/' + album.slug)}>
+<div class="album-item" on:click={onCardAction} on:keypress={onCardAction}>
 	<div class="image" style={`background-image: url(${album.cover_photo_url})`} />
 	<div class="info">
 		<h1>{album.name}</h1>

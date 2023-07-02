@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Link } from 'svelte-navigator'
 	import CircularProgress from '../../components/indicator/CircularProgress.svelte'
-	import { getContext, onMount, setContext } from 'svelte'
+	import { getContext, onDestroy, onMount, setContext } from 'svelte'
 	import { writable, type Writable } from 'svelte/store'
 	import InfiniteScroll from '../../components/extension/InfiniteScroll.svelte'
 	import { axios, caller } from '../../utils/api'
@@ -12,6 +12,7 @@
 
 	const bind: Writable<any> = getContext('bind')
 
+	// * Gallery Context
 	const gallery = writable<any>({
 		count: state.section.id,
 		page: 0,
@@ -43,16 +44,57 @@
 	})
 	setContext('gallery', gallery)
 
+	// * Gallery Item Geometry Context
+	let windowWidth
+	const geometry = writable<any>({
+		itemWidth: null,
+		calculate: (width: number, height: number) => {
+			if (windowWidth < 768) {
+				return {
+					width: '100%',
+					height: ($geometry.itemWidth / width) * height,
+				}
+			}
+
+			const maxWidth = 1024 / 2
+			const base = {
+				width: (400 / height) * width,
+				height: 400,
+			}
+			if (base.width > maxWidth) {
+				base.height = (maxWidth / base.width) * base.height
+				base.width = maxWidth
+			}
+
+			return base
+		},
+	})
+	setContext('geometry', geometry)
+
+	const onContextMenu = (e) => {
+		if (e.target.nodeName === 'IMG') {
+			e.preventDefault()
+		}
+	}
+
 	const mount = () => {
 		window.scrollTo({ top: 0, behavior: 'smooth' })
+		window.addEventListener('contextmenu', onContextMenu)
 		$gallery.fetch()
 	}
 
+	const destroy = () => {
+		window.removeEventListener('contextmenu', onContextMenu)
+	}
+
 	onMount(mount)
+	onDestroy(destroy)
 </script>
 
+<svelte:window bind:innerWidth={windowWidth} />
+
 <div class="gallery">
-	<div class="gallery-view">
+	<div class="gallery-view" bind:offsetWidth={$geometry.itemWidth}>
 		{#each $gallery.items as item, i}
 			<GalleryItem {item} index={i} />
 		{/each}

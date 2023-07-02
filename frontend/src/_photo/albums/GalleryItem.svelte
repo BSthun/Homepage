@@ -1,12 +1,14 @@
 <script lang="ts">
 	import moment from 'moment'
-	import { trackLog } from '../../utils/api/track'
 	import { getContext } from 'svelte'
+	import { BlurhashImage } from 'svelte-blurhash'
+	import { trackLog } from '../../utils/api/track'
 
-	export let item: Object
+	export let item: any
 	export let index: number
 
 	const gallery = getContext('gallery')
+	const geometry = getContext('geometry')
 
 	const onClick = () => {
 		trackLog('gallery/expand', null, item.id)
@@ -15,10 +17,35 @@
 			expand: index,
 		}))
 	}
+
+	const onHover = (event: 'me' | 'ml' | 'ts' | 'te') => {
+		trackLog('gallery/item/' + event, null, item.id)
+	}
+
+	$: calculated = item.exif.w == 0 ? null : $geometry.calculate(item.exif.w, item.exif.h)
 </script>
 
-<div class="gallery-item" on:click={onClick}>
-	<img alt={item.title} class="img" src={item.root + item.thumbnail_path} />
+<div
+	class="gallery-item"
+	on:click={onClick}
+	on:mouseenter={() => onHover('me')}
+	style={calculated !== null ? 'height: fit-content' : ''}
+>
+	<!-- TODO: Migrate all image to have width and height exif properties -->
+	{#if calculated !== null}
+		<div class="blurhash">
+			<BlurhashImage
+				hash={item.blurhash}
+				src={item.root + item.thumbnail_path}
+				width={calculated.width}
+				height={calculated.height}
+				fadeDuration={600}
+			/>
+		</div>
+	{:else}
+		<img class="img" alt={item.title} src={item.root + item.thumbnail_path} />
+	{/if}
+
 	<div class="overlay">
 		<h4>{item.title}</h4>
 		<div class="r-1">
@@ -48,6 +75,17 @@
 <style lang="scss">
 	@import '../../styles/index';
 
+	@mixin itemActive {
+		.img,
+		.blurhash {
+			filter: blur(4px) brightness(0.8);
+		}
+
+		.overlay {
+			bottom: 25px;
+		}
+	}
+
 	.gallery-item {
 		border-radius: 4px;
 		overflow: hidden;
@@ -63,17 +101,21 @@
 		}
 
 		&:hover {
-			img {
-				filter: blur(4px) brightness(0.8);
+			@media (pointer: fine) {
+				@include itemActive;
 			}
+		}
 
-			.overlay {
-				bottom: 25px;
+		&:active {
+			@media (hover: none) {
+				@include itemActive;
 			}
 		}
 	}
 
-	.img {
+	.img,
+	.blurhash {
+		-webkit-touch-callout: none;
 		transition: filter 300ms ease-in-out;
 
 		@include breakpoint('md', 'up') {

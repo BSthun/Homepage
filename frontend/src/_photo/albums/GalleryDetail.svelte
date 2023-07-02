@@ -1,7 +1,7 @@
 <script lang="ts">
 	import moment from 'moment'
 	import { trackLog } from '../../utils/api/track'
-	import { getContext } from 'svelte'
+	import { getContext, onDestroy } from 'svelte'
 	import Zoom from 'svelte-zoom'
 	import CircularProgress from '../../components/indicator/CircularProgress.svelte'
 
@@ -31,7 +31,26 @@
 		window.location.href = url + '?download=1'
 	}
 
+	let isClosing = false
+	const onHashChange = () => {
+		if (!window.location.hash) {
+			$gallery.expand = null
+			if (isClosing) {
+				isClosing = false
+			} else {
+				trackLog('gallery/close/hash', null, null)
+			}
+		}
+	}
+
+	onDestroy(() => {
+		window.removeEventListener('hashchange', onHashChange)
+	})
+
 	$: item = $gallery.items[$gallery.expand]
+	$: {
+		window.addEventListener('hashchange', onHashChange)
+	}
 	$: {
 		if (item !== undefined) {
 			loading = true
@@ -43,6 +62,7 @@
 		if ($gallery.expand != null) {
 			$gallery.loading = true
 			document.querySelector('body').style.overflow = 'hidden'
+			window.location.hash = 'plane'
 		} else {
 			document.querySelector('body').style.overflow = 'scroll'
 		}
@@ -64,23 +84,33 @@
 		</div>
 		<div class={plane ? 'plane plane-toggled' : 'plane'}>
 			<div class="plane-close">
-				<div
-					class="plane-detail-toggle"
-					on:click={() => {
-						plane = !plane
-						trackLog('gallery/plane', null, plane)
-					}}
-				>
-					<p>{plane ? 'COLLAPSE' : 'VIEW DETAIL / DOWNLOAD'}</p>
-				</div>
+				{#if !plane}
+					<div
+						class="plane-detail-toggle"
+						on:click={() => {
+							plane = !plane
+							trackLog('gallery/plane', null, plane)
+						}}
+					>
+						<p>VIEW DETAIL / DOWNLOAD</p>
+					</div>
+				{:else}
+					<div />
+				{/if}
 				<span
 					class="material-symbols-outlined"
 					on:click={() => {
-						$gallery.expand = null
+						if (plane) {
+							plane = !plane
+							trackLog('gallery/plane', null, plane)
+							return
+						}
 						trackLog('gallery/close', null, null)
+						isClosing = true
+						history.back()
 					}}
 				>
-					close
+					{plane ? 'keyboard_arrow_down' : 'close'}
 				</span>
 			</div>
 			<div class="plane-info">
@@ -179,7 +209,7 @@
 			z-index: 200;
 			color: $color-grey-800;
 			background-color: $color-grey-100;
-			@include tweak-clickable-icon($color-grey-300);
+			@include tweak-clickable-icon(rgba($color-grey-200, 0.7));
 		}
 
 		.back {
@@ -188,6 +218,10 @@
 
 		.forward {
 			right: 4px;
+		}
+
+		:global(img) {
+			-webkit-touch-callout: none;
 		}
 	}
 
