@@ -12,6 +12,7 @@
 
 	const bind: Writable<any> = getContext('bind')
 
+	// * Gallery Context
 	const gallery = writable<any>({
 		count: state.section.id,
 		page: 0,
@@ -43,6 +44,33 @@
 	})
 	setContext('gallery', gallery)
 
+	// * Gallery Item Geometry Context
+	let windowWidth
+	const geometry = writable<any>({
+		itemWidth: null,
+		calculate: (width: number, height: number) => {
+			if (windowWidth < 768) {
+				return {
+					width: '100%',
+					height: ($geometry.itemWidth / width) * height,
+				}
+			}
+
+			const maxWidth = 1024 / 2
+			const base = {
+				width: (400 / height) * width,
+				height: 400,
+			}
+			if (base.width > maxWidth) {
+				base.height = (maxWidth / base.width) * base.height
+				base.width = maxWidth
+			}
+
+			return base
+		},
+	})
+	setContext('geometry', geometry)
+
 	const mount = () => {
 		window.scrollTo({ top: 0, behavior: 'smooth' })
 		$gallery.fetch()
@@ -51,8 +79,10 @@
 	onMount(mount)
 </script>
 
+<svelte:window bind:innerWidth={windowWidth} />
+
 <div class="gallery">
-	<div class="gallery-view">
+	<div class="gallery-view" bind:offsetWidth={$geometry.itemWidth}>
 		{#each $gallery.items as item, i}
 			<GalleryItem {item} index={i} />
 		{/each}

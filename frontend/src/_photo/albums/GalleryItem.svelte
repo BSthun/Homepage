@@ -7,10 +7,8 @@
 	export let item: any
 	export let index: number
 
-	let windowWidth: number
-	let divWidth: number
-
 	const gallery = getContext('gallery')
+	const geometry = getContext('geometry')
 
 	const onClick = () => {
 		trackLog('gallery/expand', null, item.id)
@@ -24,42 +22,17 @@
 		trackLog('gallery/item/' + event, null, item.id)
 	}
 
-	$: calculated = (() => {
-		if (item.exif.w === 0) {
-			return null
-		}
-		if (windowWidth < 768) {
-			return {
-				width: '100%',
-				height: (divWidth / item.exif.w) * item.exif.h,
-			}
-		}
-
-		const maxWidth = 1024 / 2
-		const base = {
-			width: (400 / item.exif.h) * item.exif.w,
-			height: 400,
-		}
-		if (base.width > maxWidth) {
-			base.height = (maxWidth / base.width) * base.height
-			base.width = maxWidth
-		}
-
-		return base
-	})()
+	$: calculated = item.exif.w == 0 ? null : $geometry.calculate(item.exif.w, item.exif.h)
 </script>
-
-<svelte:window bind:innerWidth={windowWidth} />
 
 <div
 	class="gallery-item"
 	on:click={onClick}
 	on:mouseenter={() => onHover('me')}
-	bind:offsetWidth={divWidth}
-	style={item.exif.w !== 0 ? 'height: fit-content' : ''}
+	style={calculated !== null ? 'height: fit-content' : ''}
 >
 	<!-- TODO: Migrate all image to have width and height exif properties -->
-	{#if item.exif.w !== 0}
+	{#if calculated !== null}
 		<div class="blurhash">
 			<BlurhashImage
 				hash={item.blurhash}
