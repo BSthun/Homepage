@@ -221,7 +221,7 @@
 		}
 
 		:global(img) {
-			pointer-events: none;
+			-webkit-touch-callout: none;
 		}
 	}
 

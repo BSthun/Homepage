@@ -115,7 +115,7 @@
 
 	.img,
 	.blurhash {
-		pointer-events: none;
+		-webkit-touch-callout: none;
 		transition: filter 300ms ease-in-out;
 
 		@include breakpoint('md', 'up') {
