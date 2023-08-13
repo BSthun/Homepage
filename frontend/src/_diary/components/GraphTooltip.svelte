@@ -4,7 +4,6 @@
 	import type { Writable } from 'svelte/store'
 
 	const local: Writable<any> = getContext('local')
-	const action: Writable<any> = getContext('action')
 
 	let element: HTMLElement | null = null
 
@@ -22,17 +21,19 @@
 <div class="graph-tooltip">
 	<Wrapper rich>
 		<span class="target" bind:this={element} />
-		<Tooltip persistent>
-			<Title>With a Title!</Title>
+		<Tooltip persistent style="width: 120px">
 			<Content>
-				A persistent rich tooltip shows up when you click or press enter/space bar on an element and goes away
-				when you activate it again or it loses focus. Great for informational popups on those little "i" icons.
+				{$local.activeGraph?.day.title}
 			</Content>
 		</Tooltip>
 	</Wrapper>
 </div>
 
 <style lang="scss">
+	.graph-tooltip {
+		position: absolute;
+	}
+
 	.target {
 		position: fixed;
 	}

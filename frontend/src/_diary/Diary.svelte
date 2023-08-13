@@ -19,6 +19,7 @@
 			(_, i) => (i + 2001).toString()
 		),
 		activeGraph: null,
+		activeGraphClearTimeout: null,
 	})
 	setContext('local', local)
 
@@ -35,10 +36,13 @@
 			fetch()
 		},
 		setActiveGraph: (event: MouseEvent, day: any) => {
+			clearTimeout($local.activeGraphClearTimeout)
 			$local.activeGraph = { event, day }
 		},
 		clearActiveGraph: () => {
-			$local.activeGraph = null
+			$local.activeGraphClearTimeout = setTimeout(() => {
+				$local.activeGraph = null
+			}, 200)
 		},
 	})
 	setContext('action', action)

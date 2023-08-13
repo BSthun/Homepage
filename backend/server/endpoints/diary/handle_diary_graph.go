@@ -79,6 +79,7 @@ func ActivityGraphHandler(c *fiber.Ctx) error {
 
 		dayGraph = append(dayGraph, &payload.DiaryDayGraph{
 			Date:    value.Ptr(iter.Format("2006-01-02")),
+			Title:   value.Ptr(iter.Format("Jan 02, 2006")),
 			Color:   &graph,
 			Summary: nil,
 		})

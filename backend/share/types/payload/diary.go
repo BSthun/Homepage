@@ -6,6 +6,7 @@ type DiaryOverviewQuery struct {
 
 type DiaryDayGraph struct {
 	Date    *string `json:"date"`
+	Title   *string `json:"title"`
 	Color   *int    `json:"graph"`
 	Summary *string `json:"summary"`
 }
