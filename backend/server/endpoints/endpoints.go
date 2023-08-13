@@ -3,6 +3,10 @@ package endpoints
 import (
 	"github.com/gofiber/fiber/v2"
 
+	accountState "server/endpoints/account/state"
+	diaryEndpoints "server/endpoints/diary"
+	photoEntity "server/endpoints/photo/entity"
+	trackLog "server/endpoints/track/log"
 	"server/loaders/fiber/middlewares"
 )
 
