@@ -116,9 +116,11 @@ func (r *Subcommand) Run() error {
 
 		var aperture = "1.2"
 		if exifRaw.ApertureValue != nil {
-			// fmt.Println(exifRaw.ApertureValue)
-			// aperture = strings.Split(exifRaw.ApertureValue[0], "/")[0]
-			aperture = "1.8"
+			aperture = strings.Split(exifRaw.ApertureValue[0], "/")[0]
+		} else if exifRaw.FNumber != nil {
+			frac1, _ := strconv.ParseInt(strings.Split(exifRaw.FNumber[0], "/")[0], 10, 64)
+			frac2, _ := strconv.ParseInt(strings.Split(exifRaw.FNumber[0], "/")[1], 10, 64)
+			aperture = fmt.Sprintf("%.1f", float64(frac1)/float64(frac2))
 		}
 
 		fl := "35"

@@ -2,6 +2,7 @@ package photo
 
 type ExifRaw struct {
 	ApertureValue         []string `json:"ApertureValue"`
+	FNumber               []string `json:"FNumber"`
 	BrightnessValue       []string `json:"BrightnessValue"`
 	Artist                string   `json:"Artist"`
 	Copyright             string   `json:"Copyright"`
